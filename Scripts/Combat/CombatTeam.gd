@@ -63,6 +63,7 @@ func get_next_actor():
 		if not unit_id in acted: # found unit
 			acted.append(unit_id)
 			if acted.size() == unit_num:
+				emit_signal("all_acted")
 				acted = []
 			return units[i % units.size()]
 

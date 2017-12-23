@@ -103,4 +103,6 @@ __meta__ = {
 
 [connection signal="selected" from="ActionSelector" to="." method="_on_ActionSelector_selected"]
 
+[connection signal="all_acted" from="Allies" to="." method="_on_Allies_all_acted"]
+
 

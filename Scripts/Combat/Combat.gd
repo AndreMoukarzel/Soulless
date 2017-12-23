@@ -1,6 +1,7 @@
 extends Node
 
 signal targets_selected
+signal turn_completed
 
 onready var unit_db = get_node("/root/Units")
 
@@ -13,9 +14,8 @@ var active_targets_pos = []
 var current_target_index = 0
 var selected_targets = []
 var target_num = 1
-
-var allies = []
-var enemies = []
+var change_group = false
+var combat_ended = false
 
 class CombatUnit:
 	var id
@@ -47,18 +47,14 @@ func _ready():
 	get_node("ParallaxBackground/TextureRect").set_size(OS.get_window_size())
 	set_process_input(false)
 	
+	var allies = []
 	allies.append(CombatUnit.new(unit_db.new_unit("Soulless"), 0))
 	allies.append(CombatUnit.new(unit_db.new_unit("Auau"), 1))
 	allies.append(CombatUnit.new(unit_db.new_unit("Auau"), 2))
 	allies.append(CombatUnit.new(unit_db.new_unit("Auau"), 3))
 	get_node("Allies").populate(allies, 0)
 	
-	next_turn("Allies")
-
-	var rodinha = get_node("ActionSelector")
-	rodinha.set_position(active_pos)
-	rodinha.update_actions(active_unit.actions, active_unit.skills)
-	rodinha.enable()
+	combat_loop()
 
 
 func _input(event):
@@ -82,28 +78,44 @@ func _input(event):
 		set_process_input(false)
 
 
+func combat_loop():
+	while not combat_ended:
+		while not change_group:
+			next_turn("Allies")
+			yield(self, "turn_completed")
+		change_group = false
+#		while not change_group:
+#			next_turn("Enemies")
+#			yield(self, "turn_completed")
+
+
 func next_turn(group):
 	active_unit = get_node(group).get_next_actor()
 	active_pos = get_node(group).get_node(str(active_unit.id)).get_position()
 	
 	if group == "Allies":
+		var ActSel = get_node("ActionSelector")
+		
 		active_pos.x = -active_pos.x + 20 # compensating because node Allies has scale (-1, 1)
+		ActSel.set_position(active_pos)
+		ActSel.update_actions(active_unit.actions, active_unit.skills)
+		ActSel.enable()
+	else:
+		# Enemy AI here
+		pass
 
 
 # Player selected an action
 func _on_ActionSelector_selected( name ):
-	var rodinha = get_node("ActionSelector")
-	rodinha.disable()
+	get_node("ActionSelector").disable()
 	
 	if name == "Swap":
 		get_targets("Allies")
 		yield(self, "targets_selected")
 		get_node("Allies").swap(active_unit.id, selected_targets[0].id)
-	next_turn("Allies")
 	
-	rodinha.set_position(active_pos)
-	rodinha.update_actions(active_unit.actions, active_unit.skills)
-	rodinha.enable()
+	# Animation and stuff here
+	emit_signal("turn_completed")
 
 
 func get_targets(group, subgroup = null):
@@ -133,3 +145,7 @@ func get_targets(group, subgroup = null):
 	get_node("CanvasLayer/Pointer").set_position(active_targets_pos[0])
 	get_node("CanvasLayer/Pointer").show()
 	set_process_input(true)
+
+
+func _on_Allies_all_acted():
+	change_group = true
