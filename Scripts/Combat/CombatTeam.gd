@@ -2,6 +2,7 @@ extends Node2D
 
 signal all_acted() # All units were selected as next actor in this iteration
 
+const SWAPTIME = 0.5
 var TOPMARGIN = 200
 var BOTMARGIN = 100
 var HORMARGIN = 200
@@ -122,4 +123,17 @@ func swap(unit_id1, unit_id2):
 	units[i1] = units[i2]
 	units[i2] = temp
 	get_cap_index()
-	set_all_positions()
+	
+	var twn = get_node("Tween")
+	var u1 = get_node(str(unit_id1))
+	var u2 = get_node(str(unit_id2))
+	var pos1 = u1.get_position()
+	var pos2 = u2.get_position()
+	
+	u1.set_z(5)
+	u2.set_z(5)
+	twn.interpolate_property(u1, "position", pos1, pos2, SWAPTIME, 4, 2)
+	twn.interpolate_property(u2, "position", pos2, pos1, SWAPTIME, 4, 2)
+	twn.start()
+	u1.set_z(0)
+	u2.set_z(0)

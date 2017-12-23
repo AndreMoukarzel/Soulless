@@ -101,6 +101,13 @@ __meta__ = {
 "_edit_lock_": true
 }
 
+[node name="Tween" type="Tween" parent="Allies"]
+
+playback_process_mode = 1
+playback/active = false
+playback/repeat = false
+playback/speed = 1.0
+
 [connection signal="selected" from="ActionSelector" to="." method="_on_ActionSelector_selected"]
 
 [connection signal="all_acted" from="Allies" to="." method="_on_Allies_all_acted"]
