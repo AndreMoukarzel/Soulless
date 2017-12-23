@@ -17,10 +17,7 @@ signal changed_to(name) # Highlighted action changed
 var hl = 0 # highlighted action
 var action_num = 2
 var actions = []
-
-
-func _ready():
-	update_actions(["Attack", "Claw", "Bite", "Defend", "Flee"])
+var skills = []
 
 
 func _input(event):
@@ -57,7 +54,7 @@ func relable():
 	get_node("ActionBotOcult/Label").set_text(actions[(hl + 2) % action_num])
 
 
-func update_actions(action_list):
+func update_actions(action_list, skill_list):
 	action_num = action_list.size()
 	actions = action_list
 	
