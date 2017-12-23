@@ -110,7 +110,7 @@ func _on_ActionSelector_selected( name ):
 	get_node("ActionSelector").disable()
 	
 	if name == "Swap":
-		get_targets("Allies")
+		get_targets("Allies", true)
 		yield(self, "targets_selected")
 		get_node("Allies").swap(active_unit.id, selected_targets[0].id)
 	
@@ -118,7 +118,7 @@ func _on_ActionSelector_selected( name ):
 	emit_signal("turn_completed")
 
 
-func get_targets(group, subgroup = null):
+func get_targets(group, exclude_active = false, subgroup = null):
 	var team = get_node(group)
 	
 	active_targets = []
@@ -141,6 +141,11 @@ func get_targets(group, subgroup = null):
 			active_targets_pos.append(Vector2(-pos.x, pos.y))
 		else:
 			active_targets_pos.append(Vector2(pos.x, pos.y))
+	
+	if exclude_active and active_unit in active_targets:
+		var i = active_targets.find(active_unit)
+		active_targets.remove(i)
+		active_targets_pos.remove(i)
 	
 	get_node("CanvasLayer/Pointer").set_position(active_targets_pos[0])
 	get_node("CanvasLayer/Pointer").show()
