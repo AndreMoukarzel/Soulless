@@ -15,7 +15,6 @@ var current_target_index = 0
 var selected_targets = []
 var target_num = 1
 var change_group = false
-var combat_ended = false
 
 class CombatUnit:
 	var id
@@ -44,8 +43,9 @@ class CombatUnit:
 
 
 func _ready():
-	get_node("ParallaxBackground/TextureRect").set_size(OS.get_window_size())
 	set_process_input(false)
+	get_node("ParallaxBackground/TextureRect").set_size(OS.get_window_size())
+	get_node("Enemies").set_position(Vector2(OS.get_window_size().x, 0))
 	
 	var allies = []
 	allies.append(CombatUnit.new(unit_db.new_unit("Soulless"), 0))
@@ -53,6 +53,13 @@ func _ready():
 	allies.append(CombatUnit.new(unit_db.new_unit("Auau"), 2))
 	allies.append(CombatUnit.new(unit_db.new_unit("Auau"), 3))
 	get_node("Allies").populate(allies, 0)
+	
+	var enemies = []
+	enemies.append(CombatUnit.new(unit_db.new_unit("Auau"), 4))
+	enemies.append(CombatUnit.new(unit_db.new_unit("Auau"), 5))
+	enemies.append(CombatUnit.new(unit_db.new_unit("Auau"), 6))
+	enemies.append(CombatUnit.new(unit_db.new_unit("Auau"), 7))
+	get_node("Enemies").populate(enemies, 4)
 	
 	combat_loop()
 
@@ -79,14 +86,18 @@ func _input(event):
 
 
 func combat_loop():
+	var combat_ended = 0
+	
 	while not combat_ended:
-		while not change_group:
+		while not change_group and not combat_ended:
 			next_turn("Allies")
 			yield(self, "turn_completed")
+			combat_ended = battle_ended()
 		change_group = false
-#		while not change_group:
-#			next_turn("Enemies")
-#			yield(self, "turn_completed")
+		while not change_group and not combat_ended:
+			next_turn("Enemies")
+			combat_ended = battle_ended()
+		change_group = false
 
 
 func next_turn(group):
@@ -101,22 +112,23 @@ func next_turn(group):
 		ActSel.update_actions(active_unit.actions, active_unit.skills)
 		ActSel.enable()
 	else:
-		# Enemy AI here
-		pass
+		# Test only #
+		get_node(str(group, "/", active_unit.id)).set_rotation(180)
+		#############
+		# choose enemy action here
 
 
-# Player selected an action
-func _on_ActionSelector_selected( name ):
-	get_node("ActionSelector").disable()
+func battle_ended():
+	var dead_allies = get_node("Allies").get_dead_units()
+	var dead_enemies = get_node("Enemies").get_dead_units()
 	
-	if name == "Swap":
-		get_targets("Allies", true)
-		yield(self, "targets_selected")
-		get_node("Allies").swap(active_unit.id, selected_targets[0].id)
-		yield(get_node("Allies/Tween"), "tween_completed")
-	
-	# Animation and stuff here
-	emit_signal("turn_completed")
+	if dead_enemies.size() == get_node("Enemies").unit_num:
+		# Enemies lost
+		return 1
+	if dead_allies.size() == get_node("Allies").unit_num:
+		# Player lost
+		return 2
+	return 0
 
 
 func get_targets(group, exclude_active = false, subgroup = null):
@@ -153,5 +165,25 @@ func get_targets(group, exclude_active = false, subgroup = null):
 	set_process_input(true)
 
 
+####################### EXTERNAL SIGNAL HANDLING #######################
+# Player selected an action
+func _on_ActionSelector_selected( name ):
+	get_node("ActionSelector").disable()
+	
+	if name == "Swap":
+		get_targets("Allies", true)
+		yield(self, "targets_selected")
+		get_node("Allies").swap(active_unit.id, selected_targets[0].id)
+		yield(get_node("Allies/Tween"), "tween_completed")
+	
+	# Animation and stuff here
+	emit_signal("turn_completed")
+
+
 func _on_Allies_all_acted():
 	change_group = true
+
+
+func _on_Enemies_all_acted():
+	change_group = true
+########################################################################

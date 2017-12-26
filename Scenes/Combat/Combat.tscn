@@ -95,6 +95,7 @@ visible = false
 
 [node name="Allies" type="Node2D" parent="."]
 
+editor/display_folded = true
 scale = Vector2( -1, 1 )
 script = ExtResource( 5 )
 __meta__ = {
@@ -108,8 +109,25 @@ playback/active = false
 playback/repeat = false
 playback/speed = 1.0
 
+[node name="Enemies" type="Node2D" parent="."]
+
+editor/display_folded = true
+script = ExtResource( 5 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Tween" type="Tween" parent="Enemies"]
+
+playback_process_mode = 1
+playback/active = false
+playback/repeat = false
+playback/speed = 1.0
+
 [connection signal="selected" from="ActionSelector" to="." method="_on_ActionSelector_selected"]
 
 [connection signal="all_acted" from="Allies" to="." method="_on_Allies_all_acted"]
+
+[connection signal="all_acted" from="Enemies" to="." method="_on_Enemies_all_acted"]
 
 
