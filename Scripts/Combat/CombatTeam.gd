@@ -2,7 +2,7 @@ extends Node2D
 
 signal all_acted() # All units were selected as next actor in this iteration
 
-const SWAPTIME = 0.5
+const SWAPTIME = 0.3
 var TOPMARGIN = 200
 var BOTMARGIN = 100
 var HORMARGIN = 200

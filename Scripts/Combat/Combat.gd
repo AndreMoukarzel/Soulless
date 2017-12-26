@@ -113,6 +113,7 @@ func _on_ActionSelector_selected( name ):
 		get_targets("Allies", true)
 		yield(self, "targets_selected")
 		get_node("Allies").swap(active_unit.id, selected_targets[0].id)
+		yield(get_node("Allies/Tween"), "tween_completed")
 	
 	# Animation and stuff here
 	emit_signal("turn_completed")
