@@ -24,14 +24,14 @@ var unit_database = [
 		RACE : "Kobold",
 		ATR : [3, 1, 10], # [ATK, DEF, HP]
 		BASEATK : "Bite",
-		SKILLS : ["Defense", "Swap", "Flee"]
+		SKILLS : ["Howl", "Bark"]
 	},
 	{ # ID = 1
 		NAME : "Soulless",
 		RACE : "Soulless",
 		ATR : [5, 5, 5], # [ATK, DEF, HP]
 		BASEATK : "Scratch",
-		SKILLS : ["Pounce", "Swap", "Defense", "Flee"]
+		SKILLS : ["Pounce", "Swiggity Swoogity"]
 	}
 ]
 
