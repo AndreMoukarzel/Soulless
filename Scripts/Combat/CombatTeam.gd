@@ -58,9 +58,11 @@ func get_cap_index():
 # Search for next unit, from captain, that has not acted yet
 func get_next_actor():
 	for i in range(cap_index, cap_index + units.size()):
-		var unit_id = units[i % units.size()].id
-		if unit_id == null:
+		if units[i % units.size()] == null:
 			continue
+			
+		var unit_id = units[i % units.size()].id
+		
 		if not unit_id in acted: # found unit
 			acted.append(unit_id)
 			if acted.size() == unit_num:
@@ -137,3 +139,32 @@ func swap(unit_id1, unit_id2):
 	twn.start()
 	u1.set_z(0)
 	u2.set_z(0)
+
+
+# Removes unit from all data
+# Animates unit's escape
+# Does not consider if unit is captain or not
+func flee(unit_id):
+	var found = false
+	
+	for i in range(units.size()):
+		if units[i] == null:
+			continue
+		
+		if units[i].id == unit_id:
+			units[i] = null
+			found = true
+			unit_num -= 1
+			break
+	
+	if not found:
+		return 0
+	
+	var twn = get_node("Tween")
+	var pos = get_node(str(unit_id)).get_position()
+	var i = acted.find(unit_id)
+	
+	if i != -1:
+		acted.remove(i)
+	twn.interpolate_property(get_node(str(unit_id)), "position", pos, Vector2(1000, pos.y), 0.5, Tween.TRANS_LINEAR, Tween.EASE_IN)
+	twn.start()

@@ -58,7 +58,6 @@ func update_actions(action_list, skill_list):
 	action_num = action_list.size()
 	actions = action_list
 	hl = 0
-	print(action_list) # test
 	
 	relable()
 	
