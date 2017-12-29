@@ -104,6 +104,8 @@ func next_turn(group):
 	active_unit = get_node(group).get_next_actor()
 	active_pos = get_node(group).get_node(str(active_unit.id)).get_position()
 	
+	active_unit.def[1] = 0 # in case active_unit defended last turn
+	
 	if group == "Allies":
 		var ActSel = get_node("ActionSelector")
 		
@@ -170,7 +172,9 @@ func get_targets(group, exclude_active = false, subgroup = null):
 func _on_ActionSelector_selected( name ):
 	get_node("ActionSelector").disable()
 	
-	if name == "Swap":
+	if name == "Defend":
+		active_unit.def[1] += 1
+	elif name == "Swap":
 		get_targets("Allies", true)
 		yield(self, "targets_selected")
 		get_node("Allies").swap(active_unit.id, selected_targets[0].id)
