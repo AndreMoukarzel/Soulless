@@ -104,6 +104,17 @@ func get_dead_units():
 	return all
 
 
+func get_unit_pos(unit_id):
+	var pos = get_node(str(unit_id)).get_position()
+	
+	if self.get_name() == "Allies":
+		# Scene's scale is (-1, 1)
+		pos.x = -pos.x
+	pos += self.get_position()
+	
+	return pos
+
+
 func swap(unit_id1, unit_id2):
 	var i1 = -1
 	var i2 = -1

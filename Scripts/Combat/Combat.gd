@@ -150,12 +150,8 @@ func get_targets(group, exclude_active = false, subgroup = null):
 		active_targets = team.get_targetable_units()
 	
 	for target in active_targets:
-		var pos = team.get_node(str(target.id)).get_position()
+		var pos = team.get_unit_pos(target.id)
 		
-		if group == "Allies":
-			pos = Vector2(-pos.x, pos.y)
-		
-		pos += team.get_position()
 		active_targets_pos.append(pos)
 	
 	if exclude_active and active_unit in active_targets:
@@ -178,11 +174,11 @@ func _on_ActionSelector_selected( name ):
 	elif name == "Swap":
 		get_targets("Allies", true)
 		yield(self, "targets_selected")
-		get_node("Allies").swap(active_unit.id, selected_targets[0].id)
+		swap("Allies", active_unit.id, selected_targets[0].id)
 		yield(get_node("Allies/Tween"), "tween_completed")
 	elif name == "Flee":
 		# Define flee chance here
-		get_node("Allies").flee(active_unit.id)
+		flee("Allies", active_unit.id)
 	elif name == "Terrify":
 		pass
 	else:
@@ -200,4 +196,13 @@ func _on_Allies_all_acted():
 
 func _on_Enemies_all_acted():
 	change_group = true
+########################################################################
+########################## AUXILIARY FUNCTIONS #########################
+
+func swap(group, unit_id1, unit_id2):
+	get_node(group).swap(unit_id1, unit_id2)
+
+func flee(group, unit_id):
+	get_node(group).flee(unit_id)
+
 ########################################################################
