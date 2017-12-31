@@ -153,9 +153,10 @@ func get_targets(group, exclude_active = false, subgroup = null):
 		var pos = team.get_node(str(target.id)).get_position()
 		
 		if group == "Allies":
-			active_targets_pos.append(Vector2(-pos.x, pos.y))
-		else:
-			active_targets_pos.append(Vector2(pos.x, pos.y))
+			pos = Vector2(-pos.x, pos.y)
+		
+		pos += team.get_position()
+		active_targets_pos.append(pos)
 	
 	if exclude_active and active_unit in active_targets:
 		var i = active_targets.find(active_unit)
@@ -182,6 +183,12 @@ func _on_ActionSelector_selected( name ):
 	elif name == "Flee":
 		# Define flee chance here
 		get_node("Allies").flee(active_unit.id)
+	elif name == "Terrify":
+		pass
+	else:
+		get_targets("Enemies", false, "targetable")
+		yield(self, "targets_selected")
+		get_node("AttackHandler").attack([active_unit, "Allies", selected_targets[0], "Enemies"], null)
 	
 	# Animation and stuff here
 	emit_signal("turn_completed")

@@ -1,10 +1,11 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://Scripts/Combat/Combat.gd" type="Script" id=1]
 [ext_resource path="res://Resources/Combat/BackGrounds/savanna.JPG" type="Texture" id=2]
 [ext_resource path="res://Resources/Combat/PointingFinger.png" type="Texture" id=3]
 [ext_resource path="res://Scenes/Combat/ActionSelector.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Scripts/Combat/CombatTeam.gd" type="Script" id=5]
+[ext_resource path="res://Scripts/Combat/AttackHandler.gd" type="Script" id=6]
 
 [sub_resource type="Animation" id=1]
 
@@ -123,6 +124,10 @@ playback_process_mode = 1
 playback/active = false
 playback/repeat = false
 playback/speed = 1.0
+
+[node name="AttackHandler" type="Node" parent="."]
+
+script = ExtResource( 6 )
 
 [connection signal="selected" from="ActionSelector" to="." method="_on_ActionSelector_selected"]
 
