@@ -1,5 +1,7 @@
 extends Node
 
+onready var dmg_scn = preload("res://Scenes/Combat/Damage.tscn")
+
 # atk_info is [Attacker, Attacker's Team, Target, Target's Team]
 func attack(atk_info, skill_info):
 	var attacker = atk_info[0]
@@ -11,5 +13,12 @@ func attack(atk_info, skill_info):
 	var target_node = target_team.get_node(str(target.id))
 	
 	# Only for testing #
-	target.hp -= (attacker.atk[0] - target.def[0])
+	var value = attacker.atk[0] - target.def[0]
+	target.hp -= value
+	var dmg = dmg_scn.instance()
+	dmg.get_node("Label").set_text(str(value))
+	dmg.set_position(Vector2(1000, 300))
+	get_parent().get_node("CanvasLayer").add_child(dmg)
+	yield(dmg.get_node("AnimationPlayer"), "animation_finished")
+	dmg.queue_free()
 	####################
