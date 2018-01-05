@@ -49,16 +49,16 @@ func _ready():
 	
 	var allies = []
 	allies.append(CombatUnit.new(unit_db.new_unit("Soulless"), 0))
-	allies.append(CombatUnit.new(unit_db.new_unit("Auau"), 1))
-	allies.append(CombatUnit.new(unit_db.new_unit("Auau"), 2))
-	allies.append(CombatUnit.new(unit_db.new_unit("Auau"), 3))
+	allies.append(CombatUnit.new(unit_db.new_unit("Bunny"), 1))
+	allies.append(CombatUnit.new(unit_db.new_unit("Bunny"), 2))
+	allies.append(CombatUnit.new(unit_db.new_unit("Bunny"), 3))
 	get_node("Allies").populate(allies, 0)
 	
 	var enemies = []
-	enemies.append(CombatUnit.new(unit_db.new_unit("Auau"), 4))
-	enemies.append(CombatUnit.new(unit_db.new_unit("Auau"), 5))
-	enemies.append(CombatUnit.new(unit_db.new_unit("Auau"), 6))
-	enemies.append(CombatUnit.new(unit_db.new_unit("Auau"), 7))
+	enemies.append(CombatUnit.new(unit_db.new_unit("Bunny"), 4))
+	enemies.append(CombatUnit.new(unit_db.new_unit("Bunny"), 5))
+	enemies.append(CombatUnit.new(unit_db.new_unit("Bunny"), 6))
+	enemies.append(CombatUnit.new(unit_db.new_unit("Bunny"), 7))
 	get_node("Enemies").populate(enemies, 4)
 	
 	combat_loop()

@@ -13,20 +13,17 @@ func define_unit(name, race):
 
 func define_textures(folder):
 	get_node("Torso").set_texture(load(str(folder, "torso.png")))
-	get_node("Torso/Hip").set_texture(load(str(folder, "hip.png")))
-	get_node("Torso/Hip/LegUpFront").set_texture(load(str(folder, "leg_up.png")))
-	get_node("Torso/Hip/LegUpFront/LegDown").set_texture(load(str(folder, "leg_down.png")))
-	get_node("Torso/Hip/LegUpFront/LegDown/Foot").set_texture(load(str(folder, "foot_back.png")))
-	get_node("Torso/Hip/LegUpFront/LegDown/Foot/Tip").set_texture(load(str(folder, "foot_tip.png")))
-	get_node("Torso/Hip/LegUpBack").set_texture(load(str(folder, "leg_up.png")))
-	get_node("Torso/Hip/LegUpBack/LegDown").set_texture(load(str(folder, "leg_down.png")))
-	get_node("Torso/Hip/LegUpBack/LegDown/Foot").set_texture(load(str(folder, "foot_back.png")))
-	get_node("Torso/Hip/LegUpBack/LegDown/Foot/Tip").set_texture(load(str(folder, "foot_tip.png")))
-	get_node("Torso/ArmUpFront").set_texture(load(str(folder, "arm_up_l.png")))
-	get_node("Torso/ArmUpFront/ArmDown").set_texture(load(str(folder, "arm_down.png")))
-	get_node("Torso/ArmUpBack").set_texture(load(str(folder, "arm_up_r.png")))
-	get_node("Torso/ArmUpBack/ArmDown").set_texture(load(str(folder, "arm_down.png")))
 	get_node("Torso/Head").set_texture(load(str(folder, "head.png")))
+	get_node("Torso/Head/EarFront").set_texture(load(str(folder, "ear.png")))
+	get_node("Torso/Head/EarBack").set_texture(load(str(folder, "ear.png")))
+	get_node("Torso/ArmFront").set_texture(load(str(folder, "arm.png")))
+	get_node("Torso/ArmFront/Hand").set_texture(load(str(folder, "hand.png")))
+	get_node("Torso/ArmBack").set_texture(load(str(folder, "arm.png")))
+	get_node("Torso/ArmBack/Hand").set_texture(load(str(folder, "hand.png")))
+	get_node("Torso/FootFront").set_texture(load(str(folder, "foot.png")))
+	get_node("Torso/FootBack").set_texture(load(str(folder, "foot.png")))
+	get_node("Torso/Tail").set_texture(load(str(folder, "tail.png")))
+
 
 func define_anims(folder):
 	var player = get_node("AnimationPlayer")

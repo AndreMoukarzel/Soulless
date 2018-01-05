@@ -20,7 +20,7 @@ class Unit:
 
 var unit_database = [
 	{ # ID = 0
-		NAME : "Auau",
+		NAME : "Bunny",
 		RACE : "Kobold",
 		ATR : [3, 1, 10], # [ATK, DEF, HP]
 		BASEATK : "Bite",

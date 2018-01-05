@@ -1,7 +1,7 @@
 [gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://Scripts/Combat/Combat.gd" type="Script" id=1]
-[ext_resource path="res://Resources/Combat/BackGrounds/savanna.JPG" type="Texture" id=2]
+[ext_resource path="res://Resources/Combat/BackGrounds/plains.png" type="Texture" id=2]
 [ext_resource path="res://Resources/Combat/PointingFinger.png" type="Texture" id=3]
 [ext_resource path="res://Scenes/Combat/ActionSelector.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Scripts/Combat/CombatTeam.gd" type="Script" id=5]
@@ -93,6 +93,7 @@ autoplay = ""
 [node name="ActionSelector" parent="." instance=ExtResource( 4 )]
 
 visible = false
+z = 10
 
 [node name="Allies" type="Node2D" parent="."]
 
