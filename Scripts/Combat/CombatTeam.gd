@@ -3,8 +3,8 @@ extends Node2D
 signal all_acted() # All units were selected as next actor in this iteration
 
 const SWAPTIME = 0.3
-var TOPMARGIN = 200
-var BOTMARGIN = 100
+var TOPMARGIN = 500
+var BOTMARGIN = 0
 var HORMARGIN = 200
 
 onready var unit_db = get_node("/root/Units")
@@ -38,13 +38,15 @@ func set_all_positions():
 		get_node(str(units[0].id)).set_scale(Vector2(1, 1))
 	if units[1] != null: # Top
 		get_node(str(units[1].id)).set_position(Vector2(center.x * 0.6 - HORMARGIN, center.y/2))
-		get_node(str(units[1].id)).set_scale(Vector2(0.95, 0.95))
+		get_node(str(units[1].id)).set_scale(Vector2(0.90, 0.90))
+		get_node(str(units[1].id)).set_z(-3)
 	if units[2] != null: # Mid
 		get_node(str(units[2].id)).set_position(Vector2(center.x * 0.8 - HORMARGIN, center.y))
 		get_node(str(units[2].id)).set_scale(Vector2(1, 1))
 	if units[3] != null: # Bot
 		get_node(str(units[3].id)).set_position(Vector2(center.x * 0.6 - HORMARGIN, center.y * 1.5))
-		get_node(str(units[3].id)).set_scale(Vector2(1.05, 1.05))
+		get_node(str(units[3].id)).set_scale(Vector2(1.1, 1.1))
+		get_node(str(units[3].id)).set_z(3)
 
 
 func get_cap_index():
