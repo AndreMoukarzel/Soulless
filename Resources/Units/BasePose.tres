@@ -709,4 +709,26 @@ tracks/63/keys = {
 "update": 1,
 "values": [ -1 ]
 }
+tracks/64/type = "value"
+tracks/64/path = NodePath("Shadow:scale")
+tracks/64/interp = 1
+tracks/64/loop_wrap = true
+tracks/64/imported = false
+tracks/64/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 1.1, 0.8 ) ]
+}
+tracks/65/type = "value"
+tracks/65/path = NodePath("Shadow:position")
+tracks/65/interp = 1
+tracks/65/loop_wrap = true
+tracks/65/imported = false
+tracks/65/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 0, 75 ) ]
+}
 
