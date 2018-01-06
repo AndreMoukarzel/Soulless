@@ -4,8 +4,8 @@ signal all_acted() # All units were selected as next actor in this iteration
 
 const BODYSIZE = 0.7
 const SWAPTIME = 0.3
-var TOPMARGIN = 500
-var BOTMARGIN = 0
+var TOPMARGIN = 600
+var BOTMARGIN = -200
 var HORMARGIN = 200
 
 onready var unit_db = get_node("/root/Units")

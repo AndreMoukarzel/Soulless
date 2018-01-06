@@ -4,6 +4,7 @@ signal targets_selected
 signal turn_completed
 
 onready var unit_db = get_node("/root/Units")
+onready var EnemyAI = preload("res://Scripts/Combat/EnemyAI.gd")
 
 var next_id = 0
 
@@ -45,6 +46,7 @@ class CombatUnit:
 
 
 func _ready():
+	randomize()
 	set_process_input(false)
 	get_node("ParallaxBackground/TextureRect").set_size(OS.get_window_size())
 	get_node("Enemies").set_position(Vector2(OS.get_window_size().x, 0))
@@ -116,11 +118,11 @@ func next_turn(group):
 		ActSel.update_actions(active_unit.actions, active_unit.skills)
 		ActSel.enable()
 	else:
-		# Test only #
-		get_node(str(group, "/", active_unit.id)).set_rotation(180)
-		#############
-		# choose enemy action here
-
+		var act = EnemyAI.choose_action(active_unit, get_node("Allies").units, get_node("Enemies").units, get_node("Allies").cap_index, get_node("Enemies").cap_index)
+		
+		if act[0] == "Attack":
+			get_node("AttackHandler").attack([active_unit, "Enemies", act[1], "Allies"], null)
+			yield(get_node("AttackHandler"), "attack_finished")
 
 func battle_ended():
 	var dead_allies = get_node("Allies").get_dead_units()

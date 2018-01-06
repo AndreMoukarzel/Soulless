@@ -128,6 +128,7 @@ playback/speed = 1.0
 
 [node name="AttackHandler" type="Node" parent="."]
 
+editor/display_folded = true
 script = ExtResource( 6 )
 
 [node name="Tween" type="Tween" parent="AttackHandler"]
