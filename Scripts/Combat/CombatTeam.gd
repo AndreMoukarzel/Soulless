@@ -2,6 +2,7 @@ extends Node2D
 
 signal all_acted() # All units were selected as next actor in this iteration
 
+const BODYSIZE = 0.7
 const SWAPTIME = 0.3
 var TOPMARGIN = 500
 var BOTMARGIN = 0
@@ -34,19 +35,23 @@ func set_all_positions():
 	
 	# Talvez tenha q add a TOPMARGIN e remover a BOTMARGIN de todos
 	if units[0] != null: # Unit in the back collum
-		get_node(str(units[0].id)).set_position(Vector2(-HORMARGIN, center.y))
-		get_node(str(units[0].id)).set_scale(Vector2(1, 1))
+		var unit = get_node(str(units[0].id))
+		unit.set_position(Vector2(-HORMARGIN, center.y))
+		unit.set_scale(BODYSIZE * Vector2(units[0].size, units[0].size))
 	if units[1] != null: # Top
-		get_node(str(units[1].id)).set_position(Vector2(center.x * 0.6 - HORMARGIN, center.y/2))
-		get_node(str(units[1].id)).set_scale(Vector2(0.90, 0.90))
-		get_node(str(units[1].id)).set_z(-3)
+		var unit = get_node(str(units[1].id))
+		unit.set_position(Vector2(center.x * 0.6 - HORMARGIN, center.y/2))
+		unit.set_scale(0.90 * BODYSIZE * Vector2(units[1].size, units[1].size))
+		unit.set_z(-3)
 	if units[2] != null: # Mid
-		get_node(str(units[2].id)).set_position(Vector2(center.x * 0.8 - HORMARGIN, center.y))
-		get_node(str(units[2].id)).set_scale(Vector2(1, 1))
+		var unit = get_node(str(units[2].id))
+		unit.set_position(Vector2(center.x * 0.8 - HORMARGIN, center.y))
+		unit.set_scale(BODYSIZE * Vector2(units[2].size, units[2].size))
 	if units[3] != null: # Bot
-		get_node(str(units[3].id)).set_position(Vector2(center.x * 0.6 - HORMARGIN, center.y * 1.5))
-		get_node(str(units[3].id)).set_scale(Vector2(1.1, 1.1))
-		get_node(str(units[3].id)).set_z(3)
+		var unit = get_node(str(units[3].id))
+		unit.set_position(Vector2(center.x * 0.6 - HORMARGIN, center.y * 1.5))
+		unit.set_scale(1.1 * BODYSIZE * Vector2(units[3].size, units[3].size))
+		unit.set_z(3)
 
 
 func get_cap_index():
@@ -152,6 +157,7 @@ func swap(unit_id1, unit_id2):
 	twn.start()
 	u1.set_z(0)
 	u2.set_z(0)
+	set_all_positions()
 
 
 # Removes unit from all data
@@ -173,11 +179,14 @@ func flee(unit_id):
 	if not found:
 		return 0
 	
+	var unit_node = get_node(str(unit_id))
 	var twn = get_node("Tween")
-	var pos = get_node(str(unit_id)).get_position()
+	var pos = unit_node.get_position()
 	var i = acted.find(unit_id)
 	
+	get_node(str(unit_id, "/AnimationPlayer")).play("walk")
+	unit_node.set_scale(unit_node.get_scale() * Vector2(-1, 1))
 	if i != -1:
 		acted.remove(i)
-	twn.interpolate_property(get_node(str(unit_id)), "position", pos, Vector2(1000, pos.y), 0.5, Tween.TRANS_LINEAR, Tween.EASE_IN)
+	twn.interpolate_property(unit_node, "position", pos, Vector2(1000, pos.y), 1.5, Tween.TRANS_LINEAR, Tween.EASE_IN)
 	twn.start()

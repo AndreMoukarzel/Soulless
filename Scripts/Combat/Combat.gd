@@ -19,6 +19,7 @@ var change_group = false
 class CombatUnit:
 	var id
 	var name
+	var size
 	var hp = 0
 	var atk = [0, 0]
 	var def = [0, 0]
@@ -28,6 +29,7 @@ class CombatUnit:
 	func _init(Unit, id):
 		self.id = id
 		self.name = Unit.name
+		self.size = Unit.size
 		self.hp = Unit.attributes[2]
 		self.atk[0] = Unit.attributes[0]
 		self.def[0] = Unit.attributes[1]

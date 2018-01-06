@@ -40,6 +40,6 @@ func define_anims(folder):
 	var player = get_node("AnimationPlayer")
 	
 	player.add_animation("idle", load(str(folder, "idle.tres")))
-	player.add_animation("melee", load(str(folder, "melee.tres")))
+	player.add_animation("walk", load(str(folder, "walk.tres")))
 	
 	player.play("idle")

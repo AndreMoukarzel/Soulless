@@ -7,11 +7,13 @@ const ATR = 2
 const BASEATK = 3
 const SKILLS = 4
 const FRAMENUM = 5 # Number of different frames in each body part [Torso, Head, Ears, Arm, Hand, Foot, Tail]. If 0, doesn't have that body part
+const SIZE = 6
 
 
 class Unit:
 	var name
 	var race
+	var size
 	var hp
 	var hp_max
 	var attributes = []
@@ -26,7 +28,8 @@ var unit_database = [
 		ATR : [3, 1, 10], # [ATK, DEF, HP]
 		BASEATK : "Bite",
 		SKILLS : ["Howl", "Bark"],
-		FRAMENUM : [1, 4, 1, 1, 1, 1, 1]
+		FRAMENUM : [1, 4, 1, 1, 1, 1, 1],
+		SIZE : 0.7
 	},
 	{ # ID = 1
 		NAME : "Soulless",
@@ -34,7 +37,8 @@ var unit_database = [
 		ATR : [5, 5, 5], # [ATK, DEF, HP]
 		BASEATK : "Scratch",
 		SKILLS : ["Pounce", "Swiggity Swoogity"],
-		FRAMENUM : [1, 1, 1, 1, 1, 1, 1]
+		FRAMENUM : [1, 1, 1, 1, 1, 1, 1],
+		SIZE : 1.5
 	}
 ]
 
@@ -66,6 +70,9 @@ func get_unit_skills(id):
 func get_unit_framenum(id):
 	return unit_database[id][FRAMENUM]
 
+func get_unit_size(id):
+	return unit_database[id][SIZE]
+
 
 ################## CLASS HANDLING ##################
 func new_unit(name):
@@ -74,6 +81,7 @@ func new_unit(name):
 	var actions = []
 	
 	u.name = name
+	u.size = get_unit_size(id)
 	u.race = get_unit_race(id)
 	u.attributes = get_unit_attributes(id)
 	u.baseatk = get_unit_baseatk(id)
@@ -89,6 +97,8 @@ func instance_body(unit_name, parent, pos, obj_name):
 	var id = get_unit_id(unit_name)
 
 	body.define_unit(unit_name, get_unit_race(id), get_unit_framenum(id)) # Sets correct sprites, animations, sounds...
+	var size = get_unit_size(id)
+	body.set_scale(Vector2(size, size))
 	body.set_position(pos)
 	body.set_name(str(obj_name))
 	parent.add_child(body)

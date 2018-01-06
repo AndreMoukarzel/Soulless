@@ -2,7 +2,7 @@
 
 [ext_resource path="res://Scripts/Body.gd" type="Script" id=1]
 [ext_resource path="res://Resources/Units/Soulless/Soulless/soulless_torso.png" type="Texture" id=2]
-[ext_resource path="res://Resources/Units/Soulless/Soulless/soulless_head.png" type="Texture" id=3]
+[ext_resource path="res://Resources/Units/Kobold/Bunny/bunny_head.png" type="Texture" id=3]
 [ext_resource path="res://Resources/Units/Soulless/Soulless/soulless_ear.png" type="Texture" id=4]
 [ext_resource path="res://Resources/Units/Soulless/Soulless/soulless_arm.png" type="Texture" id=5]
 [ext_resource path="res://Resources/Units/Soulless/Soulless/soulless_hand.png" type="Texture" id=6]
@@ -21,10 +21,10 @@ texture = ExtResource( 2 )
 
 [node name="Head" type="Sprite" parent="Torso"]
 
-editor/display_folded = true
 position = Vector2( 0, -50 )
 texture = ExtResource( 3 )
 offset = Vector2( 0, -50 )
+hframes = 4
 __meta__ = {
 "_edit_bone_": true
 }
@@ -46,7 +46,6 @@ offset = Vector2( 5, -50 )
 
 [node name="ArmFront" type="Sprite" parent="Torso"]
 
-editor/display_folded = true
 position = Vector2( 20, -35 )
 z = 1
 texture = ExtResource( 5 )
@@ -60,20 +59,9 @@ __meta__ = {
 position = Vector2( 8, 50 )
 texture = ExtResource( 6 )
 offset = Vector2( 0, 10 )
-__meta__ = {
-"_edit_bone_": true
-}
-
-[node name="Bone" type="Node2D" parent="Torso/ArmFront/Hand"]
-
-position = Vector2( 0, 20 )
-__meta__ = {
-"_edit_bone_": true
-}
 
 [node name="ArmBack" type="Sprite" parent="Torso"]
 
-editor/display_folded = true
 position = Vector2( -28, -35 )
 rotation = 0.0292681
 z = -2
@@ -88,16 +76,6 @@ __meta__ = {
 position = Vector2( 8, 50 )
 texture = ExtResource( 6 )
 offset = Vector2( 0, 10 )
-__meta__ = {
-"_edit_bone_": true
-}
-
-[node name="Bone" type="Node2D" parent="Torso/ArmBack/Hand"]
-
-position = Vector2( 0, 20 )
-__meta__ = {
-"_edit_bone_": true
-}
 
 [node name="FootFront" type="Sprite" parent="Torso"]
 
