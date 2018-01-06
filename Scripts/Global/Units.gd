@@ -6,6 +6,7 @@ const RACE = 1
 const ATR = 2
 const BASEATK = 3
 const SKILLS = 4
+const FRAMENUM = 5 # Number of different frames in each body part [Torso, Head, Ears, Arm, Hand, Foot, Tail]. If 0, doesn't have that body part
 
 
 class Unit:
@@ -24,14 +25,16 @@ var unit_database = [
 		RACE : "Kobold",
 		ATR : [3, 1, 10], # [ATK, DEF, HP]
 		BASEATK : "Bite",
-		SKILLS : ["Howl", "Bark"]
+		SKILLS : ["Howl", "Bark"],
+		FRAMENUM : [1, 4, 1, 1, 1, 1, 1]
 	},
 	{ # ID = 1
 		NAME : "Soulless",
 		RACE : "Soulless",
 		ATR : [5, 5, 5], # [ATK, DEF, HP]
 		BASEATK : "Scratch",
-		SKILLS : ["Pounce", "Swiggity Swoogity"]
+		SKILLS : ["Pounce", "Swiggity Swoogity"],
+		FRAMENUM : [1, 1, 1, 1, 1, 1, 1]
 	}
 ]
 
@@ -60,6 +63,9 @@ func get_unit_baseatk(id):
 func get_unit_skills(id):
 	return unit_database[id][SKILLS]
 
+func get_unit_framenum(id):
+	return unit_database[id][FRAMENUM]
+
 
 ################## CLASS HANDLING ##################
 func new_unit(name):
@@ -82,7 +88,7 @@ func instance_body(unit_name, parent, pos, obj_name):
 	var body = body_scn.instance()
 	var id = get_unit_id(unit_name)
 
-	body.define_unit(unit_name, get_unit_race(id)) # Sets correct sprites, animations, sounds...
+	body.define_unit(unit_name, get_unit_race(id), get_unit_framenum(id)) # Sets correct sprites, animations, sounds...
 	body.set_position(pos)
 	body.set_name(str(obj_name))
 	parent.add_child(body)

@@ -1,13 +1,13 @@
 [gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://Scripts/Body.gd" type="Script" id=1]
-[ext_resource path="res://Resources/Units/Kobold/Bunny/torso.png" type="Texture" id=2]
-[ext_resource path="res://Resources/Units/Kobold/Bunny/head.png" type="Texture" id=3]
-[ext_resource path="res://Resources/Units/Kobold/Bunny/ear.png" type="Texture" id=4]
-[ext_resource path="res://Resources/Units/Kobold/Bunny/arm.png" type="Texture" id=5]
-[ext_resource path="res://Resources/Units/Kobold/Bunny/hand.png" type="Texture" id=6]
-[ext_resource path="res://Resources/Units/Kobold/Bunny/foot.png" type="Texture" id=7]
-[ext_resource path="res://Resources/Units/Kobold/Bunny/tail.png" type="Texture" id=8]
+[ext_resource path="res://Resources/Units/Soulless/Soulless/soulless_torso.png" type="Texture" id=2]
+[ext_resource path="res://Resources/Units/Soulless/Soulless/soulless_head.png" type="Texture" id=3]
+[ext_resource path="res://Resources/Units/Soulless/Soulless/soulless_ear.png" type="Texture" id=4]
+[ext_resource path="res://Resources/Units/Soulless/Soulless/soulless_arm.png" type="Texture" id=5]
+[ext_resource path="res://Resources/Units/Soulless/Soulless/soulless_hand.png" type="Texture" id=6]
+[ext_resource path="res://Resources/Units/Soulless/Soulless/soulless_foot.png" type="Texture" id=7]
+[ext_resource path="res://Resources/Units/Soulless/Soulless/soulless_tail.png" type="Texture" id=8]
 [ext_resource path="res://Resources/Units/shadow.png" type="Texture" id=9]
 [ext_resource path="res://Resources/Units/BasePose.tres" type="Animation" id=10]
 
@@ -17,7 +17,6 @@ script = ExtResource( 1 )
 
 [node name="Torso" type="Sprite" parent="."]
 
-editor/display_folded = true
 texture = ExtResource( 2 )
 
 [node name="Head" type="Sprite" parent="Torso"]
