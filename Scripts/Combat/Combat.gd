@@ -187,6 +187,7 @@ func _on_ActionSelector_selected( name ):
 		get_targets("Enemies", false, "targetable")
 		yield(self, "targets_selected")
 		get_node("AttackHandler").attack([active_unit, "Allies", selected_targets[0], "Enemies"], null)
+		yield(get_node("AttackHandler"), "attack_finished")
 	
 	# Animation and stuff here
 	emit_signal("turn_completed")
