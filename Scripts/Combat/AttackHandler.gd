@@ -21,7 +21,6 @@ func attack(atk_info, skill_info):
 	var pos_destiny = pos_origin - target_node.get_position()
 	
 	pos_destiny.x -= target_team.get_position().x + pos_origin.x - 50
-	print(pos_destiny)
 	if atk_info[1] == "Enemies":
 		pos_destiny.x -= atk_team.get_position().x
 	pos_destiny.y = pos_origin.y - pos_destiny.y
@@ -33,9 +32,11 @@ func attack(atk_info, skill_info):
 	
 	# Only for testing #
 	atk_node.get_node("AnimationPlayer").play("idle")
-	var value = attacker.atk[0] - target.def[0]
+	var value = define_damage(attacker, target)
 	target.hp -= value
 	create_damage(value, target_team.get_unit_pos(target.id))
+	if target.hp <= 0:
+		target_node.get_node("AnimationPlayer").play("die")
 	####################
 	
 	twn.interpolate_property(atk_node, "position", pos_destiny, pos_origin, WALKTIME, Tween.TRANS_QUAD, Tween.EASE_IN_OUT)
@@ -45,6 +46,15 @@ func attack(atk_info, skill_info):
 	atk_node.get_node("AnimationPlayer").play("idle")
 	
 	emit_signal("attack_finished")
+
+
+func define_damage(attacker, target):
+	var damage = attacker.atk[0] - target.def[0]
+	
+	if damage < 0:
+		damage = 1 
+	
+	return damage
 
 
 func create_damage(value, pos):

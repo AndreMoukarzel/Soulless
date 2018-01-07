@@ -41,5 +41,6 @@ func define_anims(folder):
 	
 	player.add_animation("idle", load(str(folder, "idle.tres")))
 	player.add_animation("walk", load(str(folder, "walk.tres")))
+	player.add_animation("die", load(str(folder, "die.tres")))
 	
 	player.play("idle")
