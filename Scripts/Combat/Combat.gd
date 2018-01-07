@@ -104,6 +104,14 @@ func player_turn():
 		ActSel.enable()
 		yield(self, "turn_completed")
 	
+	var result = battle_ended()
+	if result == 1:
+		victory()
+		return
+	elif result == 2:
+		defeat()
+		return
+	
 	if active_group == "Allies":
 		player_turn()
 	else:
@@ -118,6 +126,14 @@ func enemy_turn():
 		if act[0] == "Attack":
 			get_node("AttackHandler").attack([unit, "Enemies", act[1], "Allies"], null)
 			yield(get_node("AttackHandler"), "attack_finished")
+	
+	var result = battle_ended()
+	if result == 1:
+		victory()
+		return
+	elif result == 2:
+		defeat()
+		return
 	
 	if active_group == "Enemies":
 		enemy_turn()
@@ -136,6 +152,14 @@ func battle_ended():
 		# Player lost
 		return 2
 	return 0
+
+
+func victory():
+	print("You won")
+
+
+func defeat():
+	print("Lost, loser")
 
 
 func get_targets(group, exclude_active = false, subgroup = null):
