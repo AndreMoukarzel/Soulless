@@ -33,8 +33,11 @@ func attack(atk_info, skill_info):
 	# Only for testing #
 	atk_node.get_node("AnimationPlayer").play("idle")
 	var value = define_damage(attacker, target)
+	var type = "evil"
+	if atk_info[1] == "Enemies":
+		type = "good"
 	target.hp -= value
-	create_damage(value, target_team.get_unit_pos(target.id))
+	create_damage(value, target_team.get_unit_pos(target.id), type)
 	if target.hp <= 0:
 		target_node.get_node("AnimationPlayer").play("die")
 	####################
@@ -57,11 +60,12 @@ func define_damage(attacker, target):
 	return damage
 
 
-func create_damage(value, pos):
+func create_damage(value, pos, animation):
 	var dmg = dmg_scn.instance()
 	
-	dmg.get_node("Label").set_text(str(value))
-	dmg.set_position(pos)
+	dmg.get_node("Visual/Label").set_text(str(value))
+	dmg.set_position(Vector2(pos.x, pos.y - 100))
+	dmg.get_node("AnimationPlayer").play(animation)
 	get_parent().get_node("CanvasLayer").add_child(dmg)
 	yield(dmg.get_node("AnimationPlayer"), "animation_finished")
 	dmg.queue_free()
