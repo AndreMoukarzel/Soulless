@@ -15,7 +15,7 @@ var active_targets_pos = []
 var current_target_index = 0
 var selected_targets = []
 var target_num = 1
-var change_group = false
+var active_group = "Allies"
 
 class CombatUnit:
 	var id
@@ -65,7 +65,7 @@ func _ready():
 	enemies.append(CombatUnit.new(unit_db.new_unit("Bunny"), 7))
 	get_node("Enemies").populate(enemies, 4)
 	
-	combat_loop()
+	player_turn()
 
 
 func _input(event):
@@ -89,40 +89,41 @@ func _input(event):
 		set_process_input(false)
 
 
-func combat_loop():
-	var combat_ended = 0
-	
-	while not combat_ended:
-		while not change_group and not combat_ended:
-			next_turn("Allies")
-			yield(self, "turn_completed")
-			combat_ended = battle_ended()
-		change_group = false
-		while not change_group and not combat_ended:
-			next_turn("Enemies")
-			combat_ended = battle_ended()
-		change_group = false
-
-
-func next_turn(group):
-	active_unit = get_node(group).get_next_actor()
-	active_pos = get_node(group).get_node(str(active_unit.id)).get_position()
+func player_turn():
+	active_unit = get_node("Allies").get_next_actor()
+	active_pos = get_node("Allies").get_node(str(active_unit.id)).get_position()
 	
 	active_unit.def[1] = 0 # in case active_unit defended last turn
 	
-	if group == "Allies":
+	if active_unit.hp > 0:
 		var ActSel = get_node("ActionSelector")
 		
 		active_pos.x = -active_pos.x + 20 # compensating because node Allies has scale (-1, 1)
 		ActSel.set_position(active_pos)
 		ActSel.update_actions(active_unit.actions, active_unit.skills)
 		ActSel.enable()
+		yield(self, "turn_completed")
+	
+	if active_group == "Allies":
+		player_turn()
 	else:
-		var act = EnemyAI.choose_action(active_unit, get_node("Allies").units, get_node("Enemies").units, get_node("Allies").cap_index, get_node("Enemies").cap_index)
-		
+		enemy_turn()
+
+
+func enemy_turn():
+	var unit = get_node("Enemies").get_next_actor()
+	var act = EnemyAI.choose_action(unit, get_node("Allies").units, get_node("Enemies").units, get_node("Allies").cap_index, get_node("Enemies").cap_index)
+	
+	if act != null:
 		if act[0] == "Attack":
-			get_node("AttackHandler").attack([active_unit, "Enemies", act[1], "Allies"], null)
+			get_node("AttackHandler").attack([unit, "Enemies", act[1], "Allies"], null)
 			yield(get_node("AttackHandler"), "attack_finished")
+	
+	if active_group == "Enemies":
+		enemy_turn()
+	else:
+		player_turn()
+
 
 func battle_ended():
 	var dead_allies = get_node("Allies").get_dead_units()
@@ -196,11 +197,11 @@ func _on_ActionSelector_selected( name ):
 
 
 func _on_Allies_all_acted():
-	change_group = true
+	active_group = "Enemies"
 
 
 func _on_Enemies_all_acted():
-	change_group = true
+	active_group = "Allies"
 ########################################################################
 ########################## AUXILIARY FUNCTIONS #########################
 

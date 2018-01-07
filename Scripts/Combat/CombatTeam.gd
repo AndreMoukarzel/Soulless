@@ -5,7 +5,7 @@ signal all_acted() # All units were selected as next actor in this iteration
 const BODYSIZE = 0.7
 const SWAPTIME = 0.3
 var TOPMARGIN = 600
-var BOTMARGIN = -200
+var BOTMARGIN = -100
 var HORMARGIN = 200
 
 onready var unit_db = get_node("/root/Units")
@@ -72,7 +72,7 @@ func get_next_actor():
 		
 		if not unit_id in acted: # found unit
 			acted.append(unit_id)
-			if acted.size() == unit_num:
+			if acted.size() >= unit_num:
 				emit_signal("all_acted")
 				acted = []
 			return units[i % units.size()]

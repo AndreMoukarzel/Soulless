@@ -22,5 +22,6 @@ static func choose_action(active_unit, allies, enemies, allies_leader, enemies_l
 
 static func get_unit(unit_id, unit_array):
 	for u in unit_array:
-		if u.id == unit_id:
-			return u 
+		if u != null:
+			if u.id == unit_id:
+				return u 
