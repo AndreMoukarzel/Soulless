@@ -19,7 +19,11 @@ func attack(atk_info, skill_info):
 	var twn = get_node("Tween")
 	var pos_origin = atk_node.get_position()
 	var pos_destiny = pos_origin - target_node.get_position()
+	
 	pos_destiny.x -= target_team.get_position().x + pos_origin.x - 50
+	print(pos_destiny)
+	if atk_info[1] == "Enemies":
+		pos_destiny.x -= atk_team.get_position().x
 	pos_destiny.y = pos_origin.y - pos_destiny.y
 	
 	twn.interpolate_property(atk_node, "position", pos_origin, pos_destiny, WALKTIME, Tween.TRANS_QUAD, Tween.EASE_IN_OUT)
