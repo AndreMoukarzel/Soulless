@@ -31,13 +31,14 @@ func attack(atk_info, skill_info):
 	yield(twn, "tween_completed")
 	
 	# Only for testing #
-	atk_node.get_node("AnimationPlayer").play("idle")
+	atk_node.get_node("AnimationPlayer").play(skill_info)
 	var value = define_damage(attacker, target)
 	var type = "evil"
 	if atk_info[1] == "Enemies":
 		type = "good"
 	target.hp -= value
-	create_damage(value, target_team.get_unit_pos(target.id), type)
+	yield(atk_node.get_node("AnimationPlayer"), "animation_finished")
+	create_damage_box(value, target_team.get_unit_pos(target.id), type)
 	if target.hp <= 0:
 		target_node.get_node("AnimationPlayer").play("die")
 	####################
@@ -60,7 +61,7 @@ func define_damage(attacker, target):
 	return damage
 
 
-func create_damage(value, pos, animation):
+func create_damage_box(value, pos, animation):
 	var dmg = dmg_scn.instance()
 	
 	dmg.get_node("Visual/Label").set_text(str(value))

@@ -124,7 +124,7 @@ func enemy_turn():
 	
 	if act != null:
 		if act[0] == "Attack":
-			get_node("AttackHandler").attack([unit, "Enemies", act[1], "Allies"], null)
+			get_node("AttackHandler").attack([unit, "Enemies", act[1], "Allies"], "Bounce")
 			yield(get_node("AttackHandler"), "attack_finished")
 	
 	var result = battle_ended()
@@ -213,7 +213,7 @@ func _on_ActionSelector_selected( name ):
 	else:
 		get_targets("Enemies", false, "targetable")
 		yield(self, "targets_selected")
-		get_node("AttackHandler").attack([active_unit, "Allies", selected_targets[0], "Enemies"], null)
+		get_node("AttackHandler").attack([active_unit, "Allies", selected_targets[0], "Enemies"], "Bounce")
 		yield(get_node("AttackHandler"), "attack_finished")
 	
 	# Animation and stuff here
