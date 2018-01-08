@@ -5,10 +5,10 @@ func play_animation(name):
 	get_node("AnimationPlayer").play(name)
 
 
-func define_unit(name, race, framenum):
+func define_unit(name, race, framenum, attacks):
 	var folder = str("res://Resources/Units/", race, "/", name, "/")
 	define_textures(name, folder, framenum)
-	define_anims(folder)
+	define_anims(folder, attacks)
 	# definir sons
 
 func define_textures(name, folder, framenum):
@@ -36,11 +36,13 @@ func define_textures(name, folder, framenum):
 	get_node("Torso/Tail").set_hframes(framenum[6])
 
 
-func define_anims(folder):
+func define_anims(folder, attacks):
 	var player = get_node("AnimationPlayer")
 	
 	player.add_animation("idle", load(str(folder, "idle.tres")))
 	player.add_animation("walk", load(str(folder, "walk.tres")))
 	player.add_animation("die", load(str(folder, "die.tres")))
+	for atk in attacks:
+		player.add_animation(str(atk), load(str(folder, atk, ".tres")))
 	
 	player.play("idle")

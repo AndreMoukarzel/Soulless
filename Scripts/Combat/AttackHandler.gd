@@ -20,7 +20,7 @@ func attack(atk_info, skill_info):
 	var pos_origin = atk_node.get_position()
 	var pos_destiny = pos_origin - target_node.get_position()
 	
-	pos_destiny.x -= target_team.get_position().x + pos_origin.x - 50
+	pos_destiny.x -= target_team.get_position().x + pos_origin.x - 150
 	if atk_info[1] == "Enemies":
 		pos_destiny.x -= atk_team.get_position().x
 	pos_destiny.y = pos_origin.y - pos_destiny.y

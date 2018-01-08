@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://Scripts/Body.gd" type="Script" id=1]
 [ext_resource path="res://Resources/Units/Soulless/Soulless/soulless_torso.png" type="Texture" id=2]
@@ -10,6 +10,7 @@
 [ext_resource path="res://Resources/Units/Soulless/Soulless/soulless_tail.png" type="Texture" id=8]
 [ext_resource path="res://Resources/Units/shadow.png" type="Texture" id=9]
 [ext_resource path="res://Resources/Units/BasePose.tres" type="Animation" id=10]
+[ext_resource path="res://icon.png" type="Texture" id=11]
 
 [node name="BodyHumanoid" type="Node2D"]
 
@@ -138,5 +139,11 @@ area_mask = 1
 __meta__ = {
 "_edit_lock_": true
 }
+
+[node name="Sprite" type="Sprite" parent="."]
+
+position = Vector2( -300, 0 )
+z = -5
+texture = ExtResource( 11 )
 
 

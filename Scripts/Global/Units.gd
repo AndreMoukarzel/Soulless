@@ -26,8 +26,8 @@ var unit_database = [
 		NAME : "Bunny",
 		RACE : "Kobold",
 		ATR : [3, 1, 10], # [ATK, DEF, HP]
-		BASEATK : "Bite",
-		SKILLS : ["Howl", "Bark"],
+		BASEATK : "Bounce",
+		SKILLS : [],
 		FRAMENUM : [1, 4, 1, 1, 1, 1, 1],
 		SIZE : 0.7
 	},
@@ -95,9 +95,11 @@ func instance_body(unit_name, parent, pos, obj_name):
 	var body_scn = load("res://Scenes/Body.tscn")
 	var body = body_scn.instance()
 	var id = get_unit_id(unit_name)
-
-	body.define_unit(unit_name, get_unit_race(id), get_unit_framenum(id)) # Sets correct sprites, animations, sounds...
 	var size = get_unit_size(id)
+	var attacks = [get_unit_baseatk(id)]
+	attacks += get_unit_skills(id)
+
+	body.define_unit(unit_name, get_unit_race(id), get_unit_framenum(id), attacks) # Sets correct sprites, animations, sounds...
 	body.set_scale(Vector2(size, size))
 	body.set_position(pos)
 	body.set_name(str(obj_name))
