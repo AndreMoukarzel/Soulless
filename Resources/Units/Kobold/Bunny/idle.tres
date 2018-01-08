@@ -270,4 +270,15 @@ tracks/23/keys = {
 "update": 0,
 "values": [ 42.8661, 20.7005, 41.5928, 20.5901 ]
 }
+tracks/24/type = "value"
+tracks/24/path = NodePath("Torso/Head:frame")
+tracks/24/interp = 1
+tracks/24/loop_wrap = true
+tracks/24/imported = false
+tracks/24/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 0 ]
+}
 

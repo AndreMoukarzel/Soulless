@@ -38,7 +38,10 @@ func attack(atk_info, skill_info):
 		type = "good"
 	target.hp -= value
 	yield(atk_node.get_node("AnimationPlayer"), "animation_finished")
+	target_node.get_node("AnimationPlayer").play("hit")
 	create_damage_box(value, target_team.get_unit_pos(target.id), type)
+	yield(target_node.get_node("AnimationPlayer"), "animation_finished")
+	target_node.get_node("AnimationPlayer").play("idle")
 	if target.hp <= 0:
 		target_node.get_node("AnimationPlayer").play("die")
 	####################

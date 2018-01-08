@@ -105,4 +105,15 @@ tracks/8/keys = {
 "update": 0,
 "values": [ Vector2( 1.62903, -12.2176 ), Vector2( 0.814514, 0 ), Vector2( 1.14032, -16.2902 ), Vector2( 1.30322, -4.34405 ) ]
 }
+tracks/9/type = "value"
+tracks/9/path = NodePath("Torso/Head:frame")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/imported = false
+tracks/9/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 0 ]
+}
 

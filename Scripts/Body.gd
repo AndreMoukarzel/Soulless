@@ -41,6 +41,7 @@ func define_anims(folder, attacks):
 	
 	player.add_animation("idle", load(str(folder, "idle.tres")))
 	player.add_animation("walk", load(str(folder, "walk.tres")))
+	player.add_animation("hit", load(str(folder, "hit.tres")))
 	player.add_animation("die", load(str(folder, "die.tres")))
 	for atk in attacks:
 		player.add_animation(str(atk), load(str(folder, atk, ".tres")))
