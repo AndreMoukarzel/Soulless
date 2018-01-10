@@ -2,9 +2,12 @@ extends Node
 
 signal attack_finished
 
+const ATKDIST = 150
 const WALKTIME = 0.6
 
 onready var dmg_scn = preload("res://Scenes/Combat/Damage.tscn")
+
+var pos_origin
 
 # atk_info is [Attacker, Attacker's Team, Target, Target's Team]
 func attack(atk_info, skill_info):
@@ -17,15 +20,9 @@ func attack(atk_info, skill_info):
 	var target_node = target_team.get_node(str(target.id))
 	
 	var twn = get_node("Tween")
-	var pos_origin = atk_node.get_position()
-	var pos_destiny = pos_origin - target_node.get_position()
 	
-	pos_destiny.x -= target_team.get_position().x + pos_origin.x - 150
-	if atk_info[1] == "Enemies":
-		pos_destiny.x -= atk_team.get_position().x
-	pos_destiny.y = pos_origin.y - pos_destiny.y
-	
-	twn.interpolate_property(atk_node, "position", pos_origin, pos_destiny, WALKTIME, Tween.TRANS_QUAD, Tween.EASE_IN_OUT)
+	pos_origin = atk_node.get_position()
+	unit_movement(atk_node, target_node, atk_team, target_team)
 	atk_node.get_node("AnimationPlayer").play("walk")
 	twn.start()
 	yield(twn, "tween_completed")
@@ -46,7 +43,7 @@ func attack(atk_info, skill_info):
 		target_node.get_node("AnimationPlayer").play("die")
 	####################
 	
-	twn.interpolate_property(atk_node, "position", pos_destiny, pos_origin, WALKTIME, Tween.TRANS_QUAD, Tween.EASE_IN_OUT)
+	unit_movement(atk_node, target_node, atk_team, target_team, true)
 	atk_node.get_node("AnimationPlayer").play("walk")
 	twn.start()
 	yield(twn, "tween_completed")
@@ -73,3 +70,44 @@ func create_damage_box(value, pos, animation):
 	get_parent().get_node("CanvasLayer").add_child(dmg)
 	yield(dmg.get_node("AnimationPlayer"), "animation_finished")
 	dmg.queue_free()
+
+
+func unit_movement(atk_node, target_node, atk_team, target_team, reverse = false):
+	var pos_final = Vector2(0, 0)
+	
+	if target_node:
+		var pos_dif = target_team.get_unit_pos(int(target_node.get_name())) - atk_team.get_unit_pos(int(atk_node.get_name()))
+		
+		if pos_dif.x > 0:
+			pos_dif.x -= ATKDIST
+			pos_final.x = pos_origin.x - pos_dif.x
+		elif pos_dif.x < 0:
+			pos_dif.x += ATKDIST
+			pos_final.x = pos_origin.x + pos_dif.x
+		pos_final.y = pos_origin.y + pos_dif.y
+		
+		if not reverse:
+			camera_movement(pos_dif, atk_team)
+			get_node("Tween").interpolate_property(atk_node, "position", atk_node.get_position(), pos_final, WALKTIME, Tween.TRANS_QUAD, Tween.EASE_IN_OUT)
+		else:
+			camera_movement(atk_node.get_position(), atk_team, true)
+			get_node("Tween").interpolate_property(atk_node, "position", atk_node.get_position(), pos_origin, WALKTIME, Tween.TRANS_QUAD, Tween.EASE_IN_OUT)
+
+
+func camera_movement(pos_dif, atk_team, reverse = false):
+	var Cam = get_node("Camera2D")
+	
+	if not reverse:
+		var pos = OS.get_window_size()/2
+		
+		if atk_team.get_name() == "Allies":
+			pos.x -= pos_dif.x/3
+		else: # atk_team == "Enemies"
+			pos.x += pos_dif.x/3
+		pos.y += pos_dif.y/3
+		
+		get_node("Tween").interpolate_property(Cam, "zoom", Vector2(1, 1), Vector2(0.8, 0.8), WALKTIME, Tween.TRANS_QUAD, Tween.EASE_IN_OUT)
+		get_node("Tween").interpolate_property(Cam, "position", OS.get_window_size()/2, pos, WALKTIME, Tween.TRANS_QUAD, Tween.EASE_IN_OUT)
+	else:
+		get_node("Tween").interpolate_property(Cam, "zoom", Vector2(0.8, 0.8), Vector2(1, 1), WALKTIME, Tween.TRANS_QUAD, Tween.EASE_IN_OUT)
+		get_node("Tween").interpolate_property(Cam, "position", Cam.get_position(), OS.get_window_size()/2, WALKTIME, Tween.TRANS_QUAD, Tween.EASE_IN_OUT)

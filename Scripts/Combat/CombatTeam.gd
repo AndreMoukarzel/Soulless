@@ -38,20 +38,22 @@ func set_all_positions():
 		var unit = get_node(str(units[0].id))
 		unit.set_position(Vector2(-HORMARGIN, center.y))
 		unit.set_scale(BODYSIZE * Vector2(units[0].size, units[0].size))
+		unit.set_z(10)
 	if units[1] != null: # Top
 		var unit = get_node(str(units[1].id))
 		unit.set_position(Vector2(center.x * 0.6 - HORMARGIN, center.y/2))
 		unit.set_scale(0.90 * BODYSIZE * Vector2(units[1].size, units[1].size))
-		unit.set_z(-3)
+		unit.set_z(5)
 	if units[2] != null: # Mid
 		var unit = get_node(str(units[2].id))
 		unit.set_position(Vector2(center.x * 0.8 - HORMARGIN, center.y))
 		unit.set_scale(BODYSIZE * Vector2(units[2].size, units[2].size))
+		unit.set_z(10)
 	if units[3] != null: # Bot
 		var unit = get_node(str(units[3].id))
 		unit.set_position(Vector2(center.x * 0.6 - HORMARGIN, center.y * 1.5))
 		unit.set_scale(1.1 * BODYSIZE * Vector2(units[3].size, units[3].size))
-		unit.set_z(3)
+		unit.set_z(15)
 
 
 func get_cap_index():

@@ -48,7 +48,8 @@ class CombatUnit:
 func _ready():
 	randomize()
 	set_process_input(false)
-	get_node("ParallaxBackground/TextureRect").set_size(OS.get_window_size())
+	get_node("BackGround").set_size(OS.get_window_size())
+	get_node("AttackHandler/Camera2D").set_position(OS.get_window_size()/2)
 	get_node("Enemies").set_position(Vector2(OS.get_window_size().x, 0))
 	
 	var allies = []
