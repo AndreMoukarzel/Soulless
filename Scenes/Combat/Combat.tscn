@@ -119,7 +119,6 @@ playback/speed = 1.0
 
 [node name="AttackHandler" type="Node" parent="."]
 
-editor/display_folded = true
 script = ExtResource( 6 )
 
 [node name="Tween" type="Tween" parent="AttackHandler"]
@@ -135,14 +134,14 @@ anchor_mode = 1
 rotating = false
 current = true
 zoom = Vector2( 1, 1 )
-limit_left = 0
-limit_top = 0
+limit_left = -10000000
+limit_top = -10000000
 limit_right = 10000000
 limit_bottom = 10000000
 limit_smoothed = true
 drag_margin_h_enabled = false
 drag_margin_v_enabled = false
-smoothing_enabled = true
+smoothing_enabled = false
 smoothing_speed = 5.0
 drag_margin_left = 0.2
 drag_margin_top = 0.2

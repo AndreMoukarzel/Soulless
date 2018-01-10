@@ -100,14 +100,31 @@ func camera_movement(pos_dif, atk_team, reverse = false):
 	if not reverse:
 		var pos = OS.get_window_size()/2
 		
-		if atk_team.get_name() == "Allies":
-			pos.x -= pos_dif.x/3
-		else: # atk_team == "Enemies"
-			pos.x += pos_dif.x/3
-		pos.y += pos_dif.y/3
+		pos.x += pos_dif.x/3
+		pos.y += pos_dif.y/2
 		
-		get_node("Tween").interpolate_property(Cam, "zoom", Vector2(1, 1), Vector2(0.8, 0.8), WALKTIME, Tween.TRANS_QUAD, Tween.EASE_IN_OUT)
+		get_node("Tween").interpolate_property(Cam, "zoom", Vector2(1, 1), Vector2(0.9, 0.9), WALKTIME, Tween.TRANS_QUAD, Tween.EASE_IN_OUT)
 		get_node("Tween").interpolate_property(Cam, "position", OS.get_window_size()/2, pos, WALKTIME, Tween.TRANS_QUAD, Tween.EASE_IN_OUT)
 	else:
-		get_node("Tween").interpolate_property(Cam, "zoom", Vector2(0.8, 0.8), Vector2(1, 1), WALKTIME, Tween.TRANS_QUAD, Tween.EASE_IN_OUT)
+		get_node("Tween").interpolate_property(Cam, "zoom", Vector2(0.9, 0.9), Vector2(1, 1), WALKTIME, Tween.TRANS_QUAD, Tween.EASE_IN_OUT)
 		get_node("Tween").interpolate_property(Cam, "position", Cam.get_position(), OS.get_window_size()/2, WALKTIME, Tween.TRANS_QUAD, Tween.EASE_IN_OUT)
+
+
+func shake_camera(intensity, duration):
+	var twn = get_node("Tween")
+	var Cam = get_node("Camera2D")
+	var init_pos = Cam.get_position()
+	
+	for i in range(5):
+		var pos = Vector2(0, 0)
+		
+		pos.x = (randi() % intensity) - (randi() % intensity)
+		pos.y = (randi() % intensity) - (randi() % intensity)
+		pos += OS.get_window_size()/2
+		
+		twn.interpolate_property(Cam, "position", Cam.get_position(), pos, 0.1, Tween.TRANS_QUAD, Tween.EASE_IN_OUT)
+		twn.start()
+		yield(twn, "tween_completed")
+	
+	twn.interpolate_property(Cam, "position", Cam.get_position(), init_pos, 0.5, Tween.TRANS_QUAD, Tween.EASE_IN_OUT)
+	twn.start()
