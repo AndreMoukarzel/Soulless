@@ -59,20 +59,21 @@ func _ready():
 	allies.append(CombatUnit.new(unit_db.new_unit("Bunny"), 1))
 	allies.append(CombatUnit.new(unit_db.new_unit("Bunny"), 2))
 	allies.append(CombatUnit.new(unit_db.new_unit("Bunny"), 3))
-	get_node("Allies").populate(allies, 0)
-	
-	var enemies = []
-	enemies.append(CombatUnit.new(unit_db.new_unit("Bunny"), 4))
-	enemies.append(CombatUnit.new(unit_db.new_unit("Bunny"), 5))
-	enemies.append(CombatUnit.new(unit_db.new_unit("Bunny"), 6))
-	enemies.append(CombatUnit.new(unit_db.new_unit("Bunny"), 7))
-	get_node("Enemies").populate(enemies, 4)
 	
 	var known_races = []
 	for u in allies:
 		if not u.race in known_races:
 			known_races.append(u.race)
 	print(known_races)
+	
+	get_node("Allies").populate(allies, 0, known_races)
+	
+	var enemies = []
+	enemies.append(CombatUnit.new(unit_db.new_unit("Bunny"), 4))
+	enemies.append(CombatUnit.new(unit_db.new_unit("Bunny"), 5))
+	enemies.append(CombatUnit.new(unit_db.new_unit("Bunny"), 6))
+	enemies.append(CombatUnit.new(unit_db.new_unit("Bunny"), 7))
+	get_node("Enemies").populate(enemies, 4, known_races)
 	
 	player_turn()
 
@@ -156,7 +157,7 @@ func battle_ended():
 	var allies_cap = get_node("Allies").get_cap_index()
 	var enemies_cap = get_node("Enemies").get_cap_index()
 	
-	if get_node("Enemies").units[enemies_cap].hp <= 0:
+	if get_node("Enemies").units[enemies_cap] == null or get_node("Enemies").units[enemies_cap].hp <= 0:
 		# Enemies lost
 		return 1
 	if get_node("Allies").units[allies_cap].hp <= 0:
@@ -227,7 +228,11 @@ func _on_ActionSelector_selected( name ):
 		# Define flee chance here
 		flee("Allies", active_unit.id)
 	elif name == "Terrify":
-		pass
+		var enemies = get_node("Enemies").get_all_units()
+		
+		for u in enemies:
+			if u.hp > 0:
+				flee("Enemies", u.id)
 	else:
 		get_targets("Enemies", false, "targetable")
 		yield(self, "targets_selected")

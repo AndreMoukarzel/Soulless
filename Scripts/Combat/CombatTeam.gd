@@ -17,14 +17,24 @@ var acted = []
 var unit_num = 0
 
 
-func populate(all_units, captain_id):
+func populate(all_units, captain_id, known_races):
 	for u in all_units:
 		if u == null:
 			units.append(null)
 		else:
 			unit_num += 1
 			units.append(u)
-			unit_db.instance_body(u.name, self, Vector2(0, 0), str(u.id))
+			var u_scn = unit_db.instance_body(u.name, self, Vector2(0, 0), str(u.id))
+			
+			if u.race in known_races: # cria barra de vida
+				var hp_scn = preload("res://Scenes/Combat/HPBar.tscn")
+				var hp_bar = hp_scn.instance()
+				
+				hp_bar.set_max(u.hp)
+				hp_bar.set_value(u.hp)
+				hp_bar.set_name("HPBar")
+				u_scn.add_child(hp_bar)
+				
 	captain = captain_id
 	get_cap_index()
 	set_all_positions()
@@ -39,21 +49,25 @@ func set_all_positions():
 		unit.set_position(Vector2(-HORMARGIN, center.y))
 		unit.set_scale(BODYSIZE * Vector2(units[0].size, units[0].size))
 		unit.set_z(10)
+#		unit.get_node("HPBar").set_scale(Vector2(1, 1) / (BODYSIZE * Vector2(units[0].size, units[0].size)))
 	if units[1] != null: # Top
 		var unit = get_node(str(units[1].id))
 		unit.set_position(Vector2(center.x * 0.6 - HORMARGIN, center.y/2))
 		unit.set_scale(0.90 * BODYSIZE * Vector2(units[1].size, units[1].size))
 		unit.set_z(5)
+#		unit.get_node("HPBar").set_scale(Vector2(1, 1) / (0.90 * BODYSIZE * Vector2(units[1].size, units[1].size)))
 	if units[2] != null: # Mid
 		var unit = get_node(str(units[2].id))
 		unit.set_position(Vector2(center.x * 0.8 - HORMARGIN, center.y))
 		unit.set_scale(BODYSIZE * Vector2(units[2].size, units[2].size))
 		unit.set_z(10)
+#		unit.get_node("HPBar").set_scale(Vector2(1, 1) / (BODYSIZE * Vector2(units[2].size, units[2].size)))
 	if units[3] != null: # Bot
 		var unit = get_node(str(units[3].id))
 		unit.set_position(Vector2(center.x * 0.6 - HORMARGIN, center.y * 1.5))
 		unit.set_scale(1.1 * BODYSIZE * Vector2(units[3].size, units[3].size))
 		unit.set_z(15)
+#		unit.get_node("HPBar").set_scale(Vector2(1, 1) / (1.1 * BODYSIZE * Vector2(units[3].size, units[3].size)))
 
 
 func get_cap_index():
@@ -62,7 +76,7 @@ func get_cap_index():
 			continue
 		if units[i].id == captain:
 			cap_index = i
-			return i
+	return cap_index
 
 
 # Search for next unit, from captain, that has not acted yet
