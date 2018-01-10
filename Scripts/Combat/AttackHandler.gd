@@ -76,7 +76,9 @@ func unit_movement(atk_node, target_node, atk_team, target_team, reverse = false
 	var pos_final = Vector2(0, 0)
 	
 	if target_node:
-		var pos_dif = target_team.get_unit_pos(int(target_node.get_name())) - atk_team.get_unit_pos(int(atk_node.get_name()))
+		var attacker_pos = atk_team.get_unit_pos(int(atk_node.get_name()))
+		var target_pos = target_team.get_unit_pos(int(target_node.get_name()))
+		var pos_dif = target_pos - attacker_pos
 		
 		if pos_dif.x > 0:
 			pos_dif.x -= ATKDIST
@@ -87,21 +89,21 @@ func unit_movement(atk_node, target_node, atk_team, target_team, reverse = false
 		pos_final.y = pos_origin.y + pos_dif.y
 		
 		if not reverse:
-			camera_movement(pos_dif, atk_team)
+			camera_movement(pos_dif, attacker_pos, atk_team)
 			get_node("Tween").interpolate_property(atk_node, "position", atk_node.get_position(), pos_final, WALKTIME, Tween.TRANS_QUAD, Tween.EASE_IN_OUT)
 		else:
-			camera_movement(atk_node.get_position(), atk_team, true)
+			camera_movement(null, null, null, true)
 			get_node("Tween").interpolate_property(atk_node, "position", atk_node.get_position(), pos_origin, WALKTIME, Tween.TRANS_QUAD, Tween.EASE_IN_OUT)
 
 
-func camera_movement(pos_dif, atk_team, reverse = false):
+func camera_movement(pos_dif, attacker_pos, atk_team, reverse = false):
 	var Cam = get_node("Camera2D")
 	
 	if not reverse:
-		var pos = OS.get_window_size()/2
+		var pos = attacker_pos
 		
-		pos.x += pos_dif.x/3
-		pos.y += pos_dif.y/2
+		pos.x += pos_dif.x
+		pos.y += pos_dif.y
 		
 		get_node("Tween").interpolate_property(Cam, "zoom", Vector2(1, 1), Vector2(0.9, 0.9), WALKTIME, Tween.TRANS_QUAD, Tween.EASE_IN_OUT)
 		get_node("Tween").interpolate_property(Cam, "position", OS.get_window_size()/2, pos, WALKTIME, Tween.TRANS_QUAD, Tween.EASE_IN_OUT)
@@ -120,7 +122,7 @@ func shake_camera(intensity, duration):
 		
 		pos.x = (randi() % intensity) - (randi() % intensity)
 		pos.y = (randi() % intensity) - (randi() % intensity)
-		pos += OS.get_window_size()/2
+		pos += init_pos
 		
 		twn.interpolate_property(Cam, "position", Cam.get_position(), pos, 0.1, Tween.TRANS_QUAD, Tween.EASE_IN_OUT)
 		twn.start()

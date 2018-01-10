@@ -62,6 +62,7 @@ func get_cap_index():
 			continue
 		if units[i].id == captain:
 			cap_index = i
+			return i
 
 
 # Search for next unit, from captain, that has not acted yet

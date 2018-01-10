@@ -20,6 +20,7 @@ var active_group = "Allies"
 class CombatUnit:
 	var id
 	var name
+	var race
 	var size
 	var hp = 0
 	var atk = [0, 0]
@@ -30,6 +31,7 @@ class CombatUnit:
 	func _init(Unit, id):
 		self.id = id
 		self.name = Unit.name
+		self.race = Unit.race
 		self.size = Unit.size
 		self.hp = Unit.attributes[2]
 		self.atk[0] = Unit.attributes[0]
@@ -65,6 +67,12 @@ func _ready():
 	enemies.append(CombatUnit.new(unit_db.new_unit("Bunny"), 6))
 	enemies.append(CombatUnit.new(unit_db.new_unit("Bunny"), 7))
 	get_node("Enemies").populate(enemies, 4)
+	
+	var known_races = []
+	for u in allies:
+		if not u.race in known_races:
+			known_races.append(u.race)
+	print(known_races)
 	
 	player_turn()
 
@@ -145,6 +153,15 @@ func enemy_turn():
 func battle_ended():
 	var dead_allies = get_node("Allies").get_dead_units()
 	var dead_enemies = get_node("Enemies").get_dead_units()
+	var allies_cap = get_node("Allies").get_cap_index()
+	var enemies_cap = get_node("Enemies").get_cap_index()
+	
+	if get_node("Enemies").units[enemies_cap].hp <= 0:
+		# Enemies lost
+		return 1
+	if get_node("Allies").units[allies_cap].hp <= 0:
+		# Player lost
+		return 2
 	
 	if dead_enemies.size() == get_node("Enemies").unit_num:
 		# Enemies lost
