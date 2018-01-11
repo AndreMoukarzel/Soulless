@@ -23,6 +23,7 @@ class CombatUnit:
 	var race
 	var size
 	var hp = 0
+	var hp_max
 	var atk = [0, 0]
 	var def = [0, 0]
 	var actions = []
@@ -34,6 +35,7 @@ class CombatUnit:
 		self.race = Unit.race
 		self.size = Unit.size
 		self.hp = Unit.attributes[2]
+		self.hp_max = self.hp
 		self.atk[0] = Unit.attributes[0]
 		self.def[0] = Unit.attributes[1]
 		self.actions.append(str(Unit.baseatk))

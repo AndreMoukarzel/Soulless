@@ -33,14 +33,9 @@ func attack(atk_info, skill_info):
 	var type = "evil"
 	if atk_info[1] == "Enemies":
 		type = "good"
-	target.hp -= value
 	yield(atk_node.get_node("AnimationPlayer"), "animation_finished")
-	target_node.get_node("AnimationPlayer").play("hit")
 	create_damage_box(value, target_team.get_unit_pos(target.id), type)
-	yield(target_node.get_node("AnimationPlayer"), "animation_finished")
-	target_node.get_node("AnimationPlayer").play("idle")
-	if target.hp <= 0:
-		target_node.get_node("AnimationPlayer").play("die")
+	target_team.damage(value, target)
 	####################
 	
 	unit_movement(atk_node, target_node, atk_team, target_team, true)
@@ -66,8 +61,9 @@ func create_damage_box(value, pos, animation):
 	
 	dmg.get_node("Visual/Label").set_text(str(value))
 	dmg.set_position(Vector2(pos.x, pos.y - 100))
+	dmg.set_z(35)
 	dmg.get_node("AnimationPlayer").play(animation)
-	get_parent().get_node("CanvasLayer").add_child(dmg)
+	get_parent().add_child(dmg)
 	yield(dmg.get_node("AnimationPlayer"), "animation_finished")
 	dmg.queue_free()
 
