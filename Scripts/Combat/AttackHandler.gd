@@ -20,8 +20,9 @@ func attack(atk_info, skill_info):
 	var target_node = target_team.get_node(str(target.id))
 	
 	var twn = get_node("Tween")
-	
 	pos_origin = atk_node.get_position()
+	
+	atk_node.get_node("HPBar").hide()
 	unit_movement(atk_node, target_node, atk_team, target_team)
 	atk_node.get_node("AnimationPlayer").play("walk")
 	twn.start()
@@ -42,6 +43,7 @@ func attack(atk_info, skill_info):
 	atk_node.get_node("AnimationPlayer").play("walk")
 	twn.start()
 	yield(twn, "tween_completed")
+	atk_node.get_node("HPBar").show()
 	atk_node.get_node("AnimationPlayer").play("idle")
 	
 	emit_signal("attack_finished")
