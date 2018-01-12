@@ -66,7 +66,6 @@ func _ready():
 	for u in allies:
 		if not u.race in known_races:
 			known_races.append(u.race)
-	print(known_races)
 	
 	get_node("Allies").populate(allies, 0, known_races)
 	
@@ -136,7 +135,7 @@ func enemy_turn():
 	
 	if act != null:
 		if act[0] == "Attack":
-			get_node("AttackHandler").attack([unit, "Enemies", act[1], "Allies"], "Bounce")
+			get_node("AttackHandler").attack([unit, "Enemies", act[1], "Allies"], unit.actions[0])
 			yield(get_node("AttackHandler"), "attack_finished")
 	
 	var result = battle_ended()
@@ -238,7 +237,7 @@ func _on_ActionSelector_selected( name ):
 	else:
 		get_targets("Enemies", false, "targetable")
 		yield(self, "targets_selected")
-		get_node("AttackHandler").attack([active_unit, "Allies", selected_targets[0], "Enemies"], "Bounce")
+		get_node("AttackHandler").attack([active_unit, "Allies", selected_targets[0], "Enemies"], name)
 		yield(get_node("AttackHandler"), "attack_finished")
 	
 	# Animation and stuff here

@@ -3,8 +3,9 @@ extends Node
 signal attack_finished
 
 const ATKDIST = 150
-const WALKTIME = 0.6
+const WALKTIME = 0.7
 
+onready var unit_db = get_node("/root/Skills")
 onready var dmg_scn = preload("res://Scenes/Combat/Damage.tscn")
 
 var pos_origin
@@ -21,7 +22,8 @@ func attack(atk_info, skill_info):
 	
 	var twn = get_node("Tween")
 	pos_origin = atk_node.get_position()
-	
+
+	twn.stop_all()
 	atk_node.get_node("HPBar").hide()
 	unit_movement(atk_node, target_node, atk_team, target_team)
 	atk_node.get_node("AnimationPlayer").play("walk")
