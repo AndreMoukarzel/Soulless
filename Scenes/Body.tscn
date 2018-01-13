@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://Scripts/Body.gd" type="Script" id=1]
 [ext_resource path="res://Resources/Units/Soulless/Soulless/soulless_torso.png" type="Texture" id=2]
@@ -10,6 +10,7 @@
 [ext_resource path="res://Resources/Units/Soulless/Soulless/soulless_tail.png" type="Texture" id=8]
 [ext_resource path="res://Resources/Units/shadow.png" type="Texture" id=9]
 [ext_resource path="res://Resources/Units/BasePose.tres" type="Animation" id=10]
+[ext_resource path="res://Resources/Units/Kobold/Bunny/Bounce.tres" type="Animation" id=11]
 
 [node name="BodyHumanoid" type="Node2D"]
 
@@ -44,7 +45,6 @@ offset = Vector2( 5, -50 )
 
 [node name="ArmFront" type="Sprite" parent="Torso"]
 
-editor/display_folded = true
 position = Vector2( 20, -35 )
 z = 1
 texture = ExtResource( 5 )
@@ -61,7 +61,6 @@ offset = Vector2( 0, 10 )
 
 [node name="ArmBack" type="Sprite" parent="Torso"]
 
-editor/display_folded = true
 position = Vector2( -28, -35 )
 rotation = 0.0292681
 z = -2
@@ -121,6 +120,7 @@ playback_process_mode = 1
 playback_default_blend_time = 0.0
 root_node = NodePath("..")
 anims/BasePose = ExtResource( 10 )
+anims/Bounce = ExtResource( 11 )
 playback/active = true
 playback/speed = 1.0
 blend_times = [  ]
