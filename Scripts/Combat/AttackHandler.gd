@@ -59,6 +59,7 @@ func action_event(skill_name):
 	var type = skill_db.get_skill_type(id)
 	var act_scn = load(str("res://Scenes/Combat/", type, ".tscn"))
 	var act = act_scn.instance()
+	var dmg
 	
 	if atk_team.get_name() == "Allies": # Player Attack
 		var atk_time = skill_db.get_skill_atktime(id)
@@ -70,8 +71,8 @@ func action_event(skill_name):
 		
 		var hit = act.hit
 		var super = act.super
-		var dmg = define_damage()
 		
+		dmg = define_damage()
 		if super:
 			shake_camera(100, 2)
 			dmg *= 2
@@ -89,8 +90,8 @@ func action_event(skill_name):
 		
 		var hit = act.hit
 		var super = act.super
-		var dmg = define_damage()
 		
+		dmg = define_damage()
 		if super:
 			dmg /= 2
 		elif hit:

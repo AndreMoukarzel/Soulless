@@ -188,13 +188,11 @@ func swap(unit_id1, unit_id2):
 	var pos1 = u1.get_position()
 	var pos2 = u2.get_position()
 	
-	u1.set_z(5)
-	u2.set_z(5)
+	u1.set_z_index(35)
+	u2.set_z_index(40)
 	twn.interpolate_property(u1, "position", pos1, pos2, SWAPTIME, 4, 2)
 	twn.interpolate_property(u2, "position", pos2, pos1, SWAPTIME, 4, 2)
 	twn.start()
-	u1.set_z(0)
-	u2.set_z(0)
 	set_all_positions()
 
 

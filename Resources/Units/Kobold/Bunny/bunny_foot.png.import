@@ -6,7 +6,11 @@ path="res://.import/bunny_foot.png-874e04ea4e6f4a3e8f6183f4c2b31f54.stex"
 
 [deps]
 
+source_file="res://Resources/Units/Kobold/Bunny/bunny_foot.png"
 source_md5="2ace394d4bdcaf3cbe8001db222eb9b6"
+
+dest_files=[ "res://.import/bunny_foot.png-874e04ea4e6f4a3e8f6183f4c2b31f54.stex" ]
+dest_md5="45de2ad1c22b69ae3c2af860e4e694cb"
 
 [params]
 

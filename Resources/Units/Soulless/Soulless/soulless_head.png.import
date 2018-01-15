@@ -6,7 +6,11 @@ path="res://.import/soulless_head.png-a8d698084054cffd2299eb557051e28a.stex"
 
 [deps]
 
+source_file="res://Resources/Units/Soulless/Soulless/soulless_head.png"
 source_md5="20b56dc3eefc504d7561cab9e4816861"
+
+dest_files=[ "res://.import/soulless_head.png-a8d698084054cffd2299eb557051e28a.stex" ]
+dest_md5="bdb4c76759654e84bd514d218a9f86ef"
 
 [params]
 
