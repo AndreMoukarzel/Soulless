@@ -5,7 +5,7 @@ signal attack_finished
 const ATKDIST = 150
 const WALKTIME = 0.7
 
-onready var unit_db = get_node("/root/Skills")
+onready var skill_db = get_node("/root/Skills")
 onready var dmg_scn = preload("res://Scenes/Combat/Damage.tscn")
 
 var pos_origin
@@ -31,6 +31,7 @@ func attack(atk_info, skill_info):
 	yield(twn, "tween_completed")
 	
 	# Only for testing #
+	player_attack(skill_info)
 	atk_node.get_node("AnimationPlayer").play(skill_info)
 	var value = define_damage(attacker, target)
 	var type = "evil"
@@ -49,6 +50,25 @@ func attack(atk_info, skill_info):
 	atk_node.get_node("AnimationPlayer").play("idle")
 	
 	emit_signal("attack_finished")
+
+
+func player_attack(skill_name):
+	var id = skill_db.get_skill_id(skill_name)
+	var type = skill_db.get_skill_type(id)
+	var atktime = skill_db.get_skill_atktime(id)
+	var act_scn = load(str("res://Scenes/Combat/", type, ".tscn"))
+	
+	var act = act_scn.instance()
+	act.start(atktime)
+	add_child(act)
+	yield(act, "done")
+	var hit = act.hit
+	var super = act.super
+	
+	act.queue_free()
+	print (hit)
+	if super:
+		print("SUPER")
 
 
 func define_damage(attacker, target):

@@ -17,13 +17,13 @@ config/icon="res://icon.png"
 [autoload]
 
 Units="res://Scripts/Global/Units.gd"
+Skills="res://Scripts/Global/Skills.gd"
 
 [display]
 
 window/size/width=1600
 window/size/height=900
 window/size/resizable=false
-window/size/borderless=true
 
 [gdnative]
 

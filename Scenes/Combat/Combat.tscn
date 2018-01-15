@@ -86,8 +86,7 @@ autoplay = ""
 [node name="ActionSelector" parent="." index="2" instance=ExtResource( 4 )]
 
 visible = false
-z_index = 50
-_sections_unfolded = [ "Z Index" ]
+z_index = 40
 
 [node name="Allies" type="Node2D" parent="." index="3"]
 
