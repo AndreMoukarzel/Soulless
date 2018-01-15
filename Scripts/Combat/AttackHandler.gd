@@ -8,41 +8,43 @@ const WALKTIME = 0.7
 onready var skill_db = get_node("/root/Skills")
 onready var dmg_scn = preload("res://Scenes/Combat/Damage.tscn")
 
+var attacker
+var atk_team
+var atk_node
+# Before getting target, we must check in skill_info if the skill is actually multi-target
+var target
+var target_team
+var target_node
+
 var pos_origin
 
 # atk_info is [Attacker, Attacker's Team, Target, Target's Team]
 func attack(atk_info, skill_info):
-	var attacker = atk_info[0]
-	var atk_team = get_parent().get_node(str(atk_info[1]))
-	var atk_node = atk_team.get_node(str(attacker.id))
-	# Before getting target, we must check in skill_info if the skill is actually multi-target
-	var target = atk_info[2]
-	var target_team = get_parent().get_node(str(atk_info[3]))
-	var target_node = target_team.get_node(str(target.id))
-	
 	var twn = get_node("Tween")
+	
+	attacker = atk_info[0]
+	atk_team = get_parent().get_node(str(atk_info[1]))
+	atk_node = atk_team.get_node(str(attacker.id))
+	# Before getting target, we must check in skill_info if the skill is actually multi-target
+	target = atk_info[2]
+	target_team = get_parent().get_node(str(atk_info[3]))
+	target_node = target_team.get_node(str(target.id))
+	
 	pos_origin = atk_node.get_position()
 
 	twn.stop_all()
 	atk_node.get_node("HPBar").hide()
-	unit_movement(atk_node, target_node, atk_team, target_team)
+	unit_movement()
 	atk_node.get_node("AnimationPlayer").play("walk")
 	twn.start()
 	yield(twn, "tween_completed")
 	
 	# Only for testing #
-	player_attack(skill_info)
-	atk_node.get_node("AnimationPlayer").play(skill_info)
-	var value = define_damage(attacker, target)
-	var type = "evil"
-	if atk_info[1] == "Enemies":
-		type = "good"
+	action_event(skill_info)
 	yield(atk_node.get_node("AnimationPlayer"), "animation_finished")
-	create_damage_box(value, target_team.get_unit_pos(target.id), type)
-	target_team.damage(value, target)
 	####################
 	
-	unit_movement(atk_node, target_node, atk_team, target_team, true)
+	unit_movement(true)
 	atk_node.get_node("AnimationPlayer").play("walk")
 	twn.start()
 	yield(twn, "tween_completed")
@@ -52,26 +54,53 @@ func attack(atk_info, skill_info):
 	emit_signal("attack_finished")
 
 
-func player_attack(skill_name):
+func action_event(skill_name):
 	var id = skill_db.get_skill_id(skill_name)
 	var type = skill_db.get_skill_type(id)
-	var atktime = skill_db.get_skill_atktime(id)
 	var act_scn = load(str("res://Scenes/Combat/", type, ".tscn"))
-	
 	var act = act_scn.instance()
-	act.start(atktime)
-	add_child(act)
-	yield(act, "done")
-	var hit = act.hit
-	var super = act.super
 	
-	act.queue_free()
-	print (hit)
-	if super:
-		print("SUPER")
+	if atk_team.get_name() == "Allies": # Player Attack
+		var atk_time = skill_db.get_skill_atktime(id)
+		
+		atk_node.get_node("AnimationPlayer").play(skill_name)
+		act.start(atk_time)
+		add_child(act)
+		yield(act, "done")
+		
+		var hit = act.hit
+		var super = act.super
+		var dmg = define_damage()
+		
+		if super:
+			shake_camera(100, 2)
+			dmg *= 2
+		elif hit:
+			dmg = int(dmg * 1.5)
+		create_damage_box(dmg, target_team.get_unit_pos(target.id), "evil")
+	
+	else: # Player Defend
+		var def_time = skill_db.get_skill_deftime(id)
+		
+		atk_node.get_node("AnimationPlayer").play(skill_name)
+		act.start(def_time)
+		add_child(act)
+		yield(act, "done")
+		
+		var hit = act.hit
+		var super = act.super
+		var dmg = define_damage()
+		
+		if super:
+			dmg /= 2
+		elif hit:
+			dmg = int(dmg / 1.5)
+		create_damage_box(dmg, target_team.get_unit_pos(target.id), "good")
+		
+	target_team.damage(dmg, target)
 
 
-func define_damage(attacker, target):
+func define_damage():
 	var damage = attacker.atk[0] - target.def[0]
 	
 	if damage < 0:
@@ -92,7 +121,7 @@ func create_damage_box(value, pos, animation):
 	dmg.queue_free()
 
 
-func unit_movement(atk_node, target_node, atk_team, target_team, reverse = false):
+func unit_movement(reverse = false):
 	var pos_final = Vector2(0, 0)
 	
 	if target_node:
