@@ -55,7 +55,7 @@ func set_all_positions():
 		
 		unit.set_position(Vector2(-HORMARGIN, center.y))
 		unit.set_scale(BODYSIZE * Vector2(units[0].size, units[0].size))
-		unit.set_z(10)
+		unit.set_z_index(10)
 		if self.get_name() == "Allies":
 			hp_scale *= Vector2(-1, 1)
 		unit.get_node("HPBar").set_scale(hp_scale)
@@ -65,7 +65,7 @@ func set_all_positions():
 		
 		unit.set_position(Vector2(center.x * 0.6 - HORMARGIN, center.y/2))
 		unit.set_scale(0.9 * BODYSIZE * Vector2(units[1].size, units[1].size))
-		unit.set_z(5)
+		unit.set_z_index(5)
 		if self.get_name() == "Allies":
 			hp_scale *= Vector2(-1, 1)
 		unit.get_node("HPBar").set_scale(hp_scale)
@@ -75,7 +75,7 @@ func set_all_positions():
 		
 		unit.set_position(Vector2(center.x * 0.8 - HORMARGIN, center.y))
 		unit.set_scale(BODYSIZE * Vector2(units[2].size, units[2].size))
-		unit.set_z(10)
+		unit.set_z_index(10)
 		if self.get_name() == "Allies":
 			hp_scale *= Vector2(-1, 1)
 		unit.get_node("HPBar").set_scale(hp_scale)
@@ -85,7 +85,7 @@ func set_all_positions():
 		
 		unit.set_position(Vector2(center.x * 0.6 - HORMARGIN, center.y * 1.5))
 		unit.set_scale(1.1 * BODYSIZE * Vector2(units[3].size, units[3].size))
-		unit.set_z(15)
+		unit.set_z_index(15)
 		if self.get_name() == "Allies":
 			hp_scale *= Vector2(-1, 1)
 		unit.get_node("HPBar").set_scale(hp_scale)

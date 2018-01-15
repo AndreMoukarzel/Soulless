@@ -65,7 +65,7 @@ func create_damage_box(value, pos, animation):
 	
 	dmg.get_node("Visual/Label").set_text(str(value))
 	dmg.set_position(Vector2(pos.x, pos.y - 100))
-	dmg.set_z(35)
+	dmg.set_z_index(35)
 	dmg.get_node("AnimationPlayer").play(animation)
 	get_parent().add_child(dmg)
 	yield(dmg.get_node("AnimationPlayer"), "animation_finished")

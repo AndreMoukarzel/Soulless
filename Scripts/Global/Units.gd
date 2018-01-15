@@ -49,8 +49,8 @@ func _ready():
 	for id in range (unit_database.size()):
 		u_map[unit_database[id][NAME]] = id
 
-func get_unit_id(name):
-	return u_map[name]
+func get_unit_id(unit_name):
+	return u_map[unit_name]
 
 func get_unit_name(id):
 	return unit_database[id][NAME]
@@ -75,12 +75,12 @@ func get_unit_size(id):
 
 
 ################## CLASS HANDLING ##################
-func new_unit(name):
-	var id = get_unit_id(name)
+func new_unit(unit_name):
+	var id = get_unit_id(unit_name)
 	var u = Unit.new()
 	var actions = []
 	
-	u.name = name
+	u.name = unit_name
 	u.size = get_unit_size(id)
 	u.race = get_unit_race(id)
 	u.attributes = get_unit_attributes(id)

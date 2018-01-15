@@ -18,6 +18,7 @@ tracks/0/path = NodePath("Sprite:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
+tracks/0/enabled = true
 tracks/0/keys = {
 "times": PoolRealArray( 0, 0.4 ),
 "transitions": PoolRealArray( 1, 1 ),
@@ -25,11 +26,11 @@ tracks/0/keys = {
 "values": [ Vector2( 0, -50 ), Vector2( 0, -60 ) ]
 }
 
-[node name="Combat" type="Node"]
+[node name="Combat" type="Node" index="0"]
 
 script = ExtResource( 1 )
 
-[node name="BackGround" type="TextureRect" parent="."]
+[node name="BackGround" type="TextureRect" parent="." index="0"]
 
 show_behind_parent = true
 anchor_left = 0.0
@@ -40,8 +41,8 @@ margin_top = -2.0
 margin_right = 1280.0
 margin_bottom = 598.0
 rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
 mouse_filter = 1
+mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
 texture = ExtResource( 2 )
@@ -51,42 +52,44 @@ __meta__ = {
 "_edit_lock_": true
 }
 
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
+[node name="CanvasLayer" type="CanvasLayer" parent="." index="1"]
 
 editor/display_folded = true
 layer = 1
 offset = Vector2( 0, 0 )
 rotation = 0.0
 scale = Vector2( 1, 1 )
+transform = Transform2D( 1, 0, 0, 1, 0, 0 )
 
-[node name="Pointer" type="Node2D" parent="CanvasLayer"]
+[node name="Pointer" type="Node2D" parent="CanvasLayer" index="0"]
 
 editor/display_folded = true
 visible = false
 
-[node name="Sprite" type="Sprite" parent="CanvasLayer/Pointer"]
+[node name="Sprite" type="Sprite" parent="CanvasLayer/Pointer" index="0"]
 
 position = Vector2( 0, -50 )
 rotation = 1.5708
 texture = ExtResource( 3 )
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="CanvasLayer/Pointer"]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="CanvasLayer/Pointer" index="1"]
 
+root_node = NodePath("..")
+autoplay = ""
 playback_process_mode = 1
 playback_default_blend_time = 0.0
-root_node = NodePath("..")
+playback_speed = 1.0
 anims/idle = SubResource( 1 )
-playback/active = true
-playback/speed = 1.0
 blend_times = [  ]
 autoplay = ""
 
-[node name="ActionSelector" parent="." instance=ExtResource( 4 )]
+[node name="ActionSelector" parent="." index="2" instance=ExtResource( 4 )]
 
 visible = false
-z = 30
+z_index = 50
+_sections_unfolded = [ "Z Index" ]
 
-[node name="Allies" type="Node2D" parent="."]
+[node name="Allies" type="Node2D" parent="." index="3"]
 
 editor/display_folded = true
 scale = Vector2( -1, 1 )
@@ -95,14 +98,16 @@ __meta__ = {
 "_edit_lock_": true
 }
 
-[node name="Tween" type="Tween" parent="Allies"]
+[node name="Tween" type="Tween" parent="Allies" index="0"]
 
+repeat = false
 playback_process_mode = 1
+playback_speed = 1.0
 playback/active = false
 playback/repeat = false
 playback/speed = 1.0
 
-[node name="Enemies" type="Node2D" parent="."]
+[node name="Enemies" type="Node2D" parent="." index="4"]
 
 editor/display_folded = true
 script = ExtResource( 5 )
@@ -110,26 +115,30 @@ __meta__ = {
 "_edit_lock_": true
 }
 
-[node name="Tween" type="Tween" parent="Enemies"]
+[node name="Tween" type="Tween" parent="Enemies" index="0"]
 
+repeat = false
 playback_process_mode = 1
+playback_speed = 1.0
 playback/active = false
 playback/repeat = false
 playback/speed = 1.0
 
-[node name="AttackHandler" type="Node" parent="."]
+[node name="AttackHandler" type="Node" parent="." index="5"]
 
 editor/display_folded = true
 script = ExtResource( 6 )
 
-[node name="Tween" type="Tween" parent="AttackHandler"]
+[node name="Tween" type="Tween" parent="AttackHandler" index="0"]
 
+repeat = false
 playback_process_mode = 1
+playback_speed = 1.0
 playback/active = false
 playback/repeat = false
 playback/speed = 1.0
 
-[node name="Camera2D" type="Camera2D" parent="AttackHandler"]
+[node name="Camera2D" type="Camera2D" parent="AttackHandler" index="1"]
 
 anchor_mode = 1
 rotating = false
@@ -144,6 +153,8 @@ drag_margin_h_enabled = false
 drag_margin_v_enabled = false
 smoothing_enabled = false
 smoothing_speed = 5.0
+offset_v = 0.0
+offset_h = 0.0
 drag_margin_left = 0.2
 drag_margin_top = 0.2
 drag_margin_right = 0.2

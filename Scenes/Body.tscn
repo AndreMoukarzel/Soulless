@@ -16,117 +16,131 @@
 
 script = ExtResource( 1 )
 
-[node name="Torso" type="Sprite" parent="."]
+[node name="Torso" type="Sprite" parent="." index="0"]
 
 texture = ExtResource( 2 )
+_sections_unfolded = [ "Z Index" ]
 
-[node name="Head" type="Sprite" parent="Torso"]
+[node name="Head" type="Sprite" parent="Torso" index="0"]
 
 editor/display_folded = true
 position = Vector2( 0, -50 )
 texture = ExtResource( 3 )
 offset = Vector2( 0, -50 )
 hframes = 4
+_sections_unfolded = [ "Z Index" ]
 
-[node name="EarFront" type="Sprite" parent="Torso/Head"]
+[node name="EarFront" type="Sprite" parent="Torso/Head" index="0"]
 
 position = Vector2( 25, -85 )
 rotation = 0.436332
 texture = ExtResource( 4 )
 offset = Vector2( 5, -50 )
+_sections_unfolded = [ "Z Index" ]
 
-[node name="EarBack" type="Sprite" parent="Torso/Head"]
+[node name="EarBack" type="Sprite" parent="Torso/Head" index="1"]
 
 position = Vector2( -15, -85 )
 rotation = 0.436332
-z = -1
+z_index = -1
 texture = ExtResource( 4 )
 offset = Vector2( 5, -50 )
+_sections_unfolded = [ "Z Index" ]
 
-[node name="ArmFront" type="Sprite" parent="Torso"]
+[node name="ArmFront" type="Sprite" parent="Torso" index="1"]
 
+editor/display_folded = true
 position = Vector2( 20, -35 )
-z = 1
+z_index = 1
 texture = ExtResource( 5 )
 offset = Vector2( 5, 30 )
+_sections_unfolded = [ "Z Index" ]
 __meta__ = {
 "_edit_ik_": true
 }
 
-[node name="Hand" type="Sprite" parent="Torso/ArmFront"]
+[node name="Hand" type="Sprite" parent="Torso/ArmFront" index="0"]
 
 position = Vector2( 8, 50 )
 texture = ExtResource( 6 )
 offset = Vector2( 0, 10 )
+_sections_unfolded = [ "Z Index" ]
 
-[node name="ArmBack" type="Sprite" parent="Torso"]
+[node name="ArmBack" type="Sprite" parent="Torso" index="2"]
 
+editor/display_folded = true
 position = Vector2( -28, -35 )
 rotation = 0.0292681
-z = -2
+z_index = -3
 texture = ExtResource( 5 )
 offset = Vector2( 5, 30 )
+_sections_unfolded = [ "Z Index" ]
 __meta__ = {
 "_edit_ik_": true
 }
 
-[node name="Hand" type="Sprite" parent="Torso/ArmBack"]
+[node name="Hand" type="Sprite" parent="Torso/ArmBack" index="0"]
 
 position = Vector2( 8, 50 )
 texture = ExtResource( 6 )
 offset = Vector2( 0, 10 )
+_sections_unfolded = [ "Z Index" ]
 
-[node name="FootFront" type="Sprite" parent="Torso"]
+[node name="FootFront" type="Sprite" parent="Torso" index="3"]
 
 position = Vector2( 30, 30 )
 texture = ExtResource( 7 )
 offset = Vector2( -20, 15 )
+_sections_unfolded = [ "Z Index" ]
 __meta__ = {
 "_edit_ik_": true
 }
 
-[node name="FootBack" type="Sprite" parent="Torso"]
+[node name="FootBack" type="Sprite" parent="Torso" index="4"]
 
 modulate = Color( 0.784314, 0.784314, 0.784314, 1 )
 position = Vector2( -30, 30 )
-z = -1
+z_index = -2
 texture = ExtResource( 7 )
 offset = Vector2( -20, 15 )
+_sections_unfolded = [ "Z Index" ]
 __meta__ = {
 "_edit_ik_": true
 }
 
-[node name="Tail" type="Sprite" parent="Torso"]
+[node name="Tail" type="Sprite" parent="Torso" index="5"]
 
-position = Vector2( 45, 30 )
-z = -1
+position = Vector2( 50, 30 )
+z_index = -1
 texture = ExtResource( 8 )
 offset = Vector2( 9, 0 )
+_sections_unfolded = [ "Z Index" ]
 
-[node name="Shadow" type="Sprite" parent="."]
+[node name="Shadow" type="Sprite" parent="." index="1"]
 
 modulate = Color( 1, 1, 1, 0.627451 )
 position = Vector2( 0, 75 )
 scale = Vector2( 1.1, 0.8 )
-z = -2
+z_index = -4
 texture = ExtResource( 9 )
+_sections_unfolded = [ "Z Index" ]
 __meta__ = {
 "_edit_lock_": true
 }
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." index="2"]
 
+root_node = NodePath("..")
+autoplay = "idle"
 playback_process_mode = 1
 playback_default_blend_time = 0.0
-root_node = NodePath("..")
+playback_speed = 1.0
 anims/BasePose = ExtResource( 10 )
 anims/Bounce = ExtResource( 11 )
-playback/active = true
-playback/speed = 1.0
 blend_times = [  ]
 autoplay = "idle"
 
-[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="." index="3"]
 
 stream = null
 volume_db = 0.0

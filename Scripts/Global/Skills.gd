@@ -22,8 +22,8 @@ func _ready():
 	for id in range (skill_database.size()):
 		s_map[skill_database[id][NAME]] = id
 
-func get_skill_id(name):
-	return s_map[name]
+func get_skill_id(skill_name):
+	return s_map[skill_name]
 
 func get_skill_name(id):
 	return skill_database[id][NAME]

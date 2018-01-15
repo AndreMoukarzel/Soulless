@@ -215,20 +215,20 @@ func get_targets(group, exclude_active = false, subgroup = null):
 
 ####################### EXTERNAL SIGNAL HANDLING #######################
 # Player selected an action
-func _on_ActionSelector_selected( name ):
+func _on_ActionSelector_selected( action ):
 	get_node("ActionSelector").disable()
 	
-	if name == "Defend":
+	if action == "Defend":
 		active_unit.def[1] += 1
-	elif name == "Swap":
+	elif action == "Swap":
 		get_targets("Allies", true)
 		yield(self, "targets_selected")
 		swap("Allies", active_unit.id, selected_targets[0].id)
 		yield(get_node("Allies/Tween"), "tween_completed")
-	elif name == "Flee":
+	elif action == "Flee":
 		# Define flee chance here
 		flee("Allies", active_unit.id)
-	elif name == "Terrify":
+	elif action == "Terrify":
 		var enemies = get_node("Enemies").get_all_units()
 		
 		for u in enemies:
@@ -237,7 +237,7 @@ func _on_ActionSelector_selected( name ):
 	else:
 		get_targets("Enemies", false, "targetable")
 		yield(self, "targets_selected")
-		get_node("AttackHandler").attack([active_unit, "Allies", selected_targets[0], "Enemies"], name)
+		get_node("AttackHandler").attack([active_unit, "Allies", selected_targets[0], "Enemies"], action)
 		yield(get_node("AttackHandler"), "attack_finished")
 	
 	# Animation and stuff here
