@@ -20,15 +20,16 @@ func start(max_time, min_time = max_time - 0.12, super_time = max_time - 0.05):
 
 
 func _input(event):
+	var t = get_node("Timer").time_left
+	t = t2 - t # because timer goes backwards
+	
 	if event.is_action_pressed("ui_accept"):
-		var t = get_node("Timer").time_left
-
-		t = t2 - t # because timer goes backwards
 		if t >= t1 and t <= t2:
 			hit = true
-			if t >= ts:
-				super = true
-		emit_signal("done")
+		set_process_input(false)
+	elif event.is_action_pressed("ui_cancel"):
+		if t >= ts and t <= t2:
+			super = true
 		set_process_input(false)
 
 

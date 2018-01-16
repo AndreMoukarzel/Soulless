@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/hit.wav-ff712a9490870ce7410f1c75c75b2920.sample"
+
+[deps]
+
+source_file="res://Resources/Combat/hit.wav"
+source_md5="421ee33848f7da8670587f16014fc2e8"
+
+dest_files=[ "res://.import/hit.wav-ff712a9490870ce7410f1c75c75b2920.sample" ]
+dest_md5="6752b93358d1bbd16e02944bf63bc7b0"
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=true
+edit/normalize=true
+edit/loop=false
+compress/mode=0
