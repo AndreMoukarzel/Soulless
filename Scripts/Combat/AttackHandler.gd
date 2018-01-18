@@ -59,6 +59,7 @@ func action_event(skill_name):
 	var type = skill_db.get_skill_type(id)
 	var act_scn = load(str("res://Scenes/Combat/", type, ".tscn"))
 	var act = act_scn.instance()
+	var defend = false
 	var dmg
 	
 	if atk_team.get_name() == "Allies": # Player Attack
@@ -94,11 +95,13 @@ func action_event(skill_name):
 		dmg = define_damage()
 		if super:
 			dmg /= 2
+			defend = true
 		elif hit:
 			dmg = int(dmg / 1.5)
+			defend = true
 		create_damage_box(dmg, target_team.get_unit_pos(target.id), "good")
 		
-	target_team.damage(dmg, target)
+	target_team.damage(dmg, target, defend)
 
 
 func define_damage():

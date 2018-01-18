@@ -228,17 +228,20 @@ func flee(unit_id):
 	twn.start()
 
 
-func damage(value, unit):
+func damage(value, unit, defend = false):
 	var hp_bar = get_node(str(unit.id)).get_node("HPBar")
 	var anim = get_node(str(unit.id)).get_node("AnimationPlayer")
 	var label = hp_bar.get_node("Label")
 	var twn = hp_bar.get_node("Tween")
 	
-	anim.play("hit")
+	if defend:
+		anim.play("defend")
+	else:
+		anim.play("hit")
 	unit.hp -= value
 	twn.interpolate_property(hp_bar, "value", hp_bar.get_value(), unit.hp, 0.2, Tween.TRANS_CUBIC, Tween.EASE_IN_OUT)
 	twn.start()
-	label.set_text(str(unit.hp, "/", unit.hp_max))
+	label.set_text(str(max(unit.hp, 0), "/", unit.hp_max))
 	
 	yield(anim, "animation_finished")
 	get_node(str(unit.id)).get_node("AnimationPlayer").play("idle")

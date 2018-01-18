@@ -6,8 +6,7 @@ const RACE = 1
 const ATR = 2
 const BASEATK = 3
 const SKILLS = 4
-const FRAMENUM = 5 # Number of different frames in each body part [Torso, Head, Ears, Arm, Hand, Foot, Tail]. If 0, doesn't have that body part
-const SIZE = 6
+const SIZE = 5
 
 
 class Unit:
@@ -28,7 +27,6 @@ var unit_database = [
 		ATR : [3, 1, 10], # [ATK, DEF, HP]
 		BASEATK : "Bounce",
 		SKILLS : [],
-		FRAMENUM : [1, 4, 1, 1, 2, 1, 1],
 		SIZE : 0.7
 	},
 	{ # ID = 1
@@ -37,7 +35,6 @@ var unit_database = [
 		ATR : [5, 5, 5], # [ATK, DEF, HP]
 		BASEATK : "Scratch",
 		SKILLS : ["Pounce", "Swiggity Swoogity"],
-		FRAMENUM : [1, 1, 1, 1, 1, 1, 1],
 		SIZE : 1.5
 	}
 ]
@@ -66,9 +63,6 @@ func get_unit_baseatk(id):
 
 func get_unit_skills(id):
 	return unit_database[id][SKILLS]
-
-func get_unit_framenum(id):
-	return unit_database[id][FRAMENUM]
 
 func get_unit_size(id):
 	return unit_database[id][SIZE]
@@ -99,7 +93,7 @@ func instance_body(unit_name, parent, pos, obj_name):
 	var attacks = [get_unit_baseatk(id)]
 	attacks += get_unit_skills(id)
 
-	body.define_unit(unit_name, get_unit_race(id), get_unit_framenum(id), attacks) # Sets correct sprites, animations, sounds...
+	body.define_unit(unit_name, attacks) # Sets correct sprites, animations, sounds...
 	body.set_scale(Vector2(size, size))
 	body.set_position(pos)
 	body.set_name(str(obj_name))
