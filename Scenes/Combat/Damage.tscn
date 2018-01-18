@@ -233,7 +233,7 @@ tracks/8/keys = {
 "values": [ Color( 1, 0.960693, 0.371094, 1 ) ]
 }
 
-[node name="DamageBox" type="Node2D" index="0"]
+[node name="DamageBox" type="Node2D"]
 
 position = Vector2( 0, -80 )
 
@@ -294,7 +294,7 @@ autoplay = "damage"
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="." index="2"]
 
 stream = ExtResource( 3 )
-volume_db = 0.0
+volume_db = -25.0
 autoplay = true
 max_distance = 2000.0
 attenuation = 2.37841

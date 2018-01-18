@@ -53,6 +53,8 @@ func _ready():
 	randomize()
 	set_process_input(false)
 	get_node("BackGround").set_size(OS.get_window_size())
+	get_node("CanvasLayer/End/Black").set_size(OS.get_window_size())
+	get_node("CanvasLayer/End/Label").set_position(OS.get_window_size()/2)
 	get_node("AttackHandler/Camera2D").set_position(OS.get_window_size()/2)
 	get_node("Enemies").set_position(Vector2(OS.get_window_size().x, 0))
 	
@@ -175,11 +177,21 @@ func battle_ended():
 
 
 func victory():
-	print("You won")
+	var End = get_node("CanvasLayer/End")
+	
+	End.get_node("Label").set_text("You Won")
+	End.get_node("AnimationPlayer").play("end")
+	yield(End.get_node("AnimationPlayer"), "animation_finished")
+	get_parent().restart()
 
 
 func defeat():
-	print("Lost, loser")
+	var End = get_node("CanvasLayer/End")
+	
+	End.get_node("Label").set_text("IS THIS LOSS?")
+	End.get_node("AnimationPlayer").play("end")
+	yield(End.get_node("AnimationPlayer"), "animation_finished")
+	get_parent().restart()
 
 
 func get_targets(group, exclude_active = false, subgroup = null):
