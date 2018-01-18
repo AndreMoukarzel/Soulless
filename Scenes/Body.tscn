@@ -1,34 +1,38 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://Scripts/Body.gd" type="Script" id=1]
-[ext_resource path="res://Resources/Units/Soulless/Soulless/soulless_torso.png" type="Texture" id=2]
+[ext_resource path="res://Resources/Units/Kobold/Bunny/bunny_torso.png" type="Texture" id=2]
 [ext_resource path="res://Resources/Units/Kobold/Bunny/bunny_head.png" type="Texture" id=3]
-[ext_resource path="res://Resources/Units/Soulless/Soulless/soulless_ear.png" type="Texture" id=4]
-[ext_resource path="res://Resources/Units/Soulless/Soulless/soulless_arm.png" type="Texture" id=5]
-[ext_resource path="res://Resources/Units/Soulless/Soulless/soulless_hand.png" type="Texture" id=6]
-[ext_resource path="res://Resources/Units/Soulless/Soulless/soulless_foot.png" type="Texture" id=7]
-[ext_resource path="res://Resources/Units/Soulless/Soulless/soulless_tail.png" type="Texture" id=8]
+[ext_resource path="res://Resources/Units/Kobold/Bunny/bunny_ear.png" type="Texture" id=4]
+[ext_resource path="res://Resources/Units/Kobold/Bunny/bunny_arm.png" type="Texture" id=5]
+[ext_resource path="res://Resources/Units/Kobold/Bunny/bunny_hand.png" type="Texture" id=6]
+[ext_resource path="res://Resources/Units/Kobold/Bunny/bunny_foot.png" type="Texture" id=7]
+[ext_resource path="res://Resources/Units/Kobold/Bunny/bunny_tail.png" type="Texture" id=8]
 [ext_resource path="res://Resources/Units/shadow.png" type="Texture" id=9]
 [ext_resource path="res://Resources/Units/BasePose.tres" type="Animation" id=10]
-[ext_resource path="res://Resources/Units/Kobold/Bunny/Bounce.tres" type="Animation" id=11]
+[ext_resource path="res://Resources/Units/Kobold/Bunny/Bunny_Bounce.tres" type="Animation" id=11]
+[ext_resource path="res://Resources/Units/Kobold/Bunny/Bunny_create.tres" type="Animation" id=12]
+[ext_resource path="res://Resources/Units/Kobold/Bunny/Bunny_die.tres" type="Animation" id=13]
+[ext_resource path="res://Resources/Units/Kobold/Bunny/Bunny_hit.tres" type="Animation" id=14]
+[ext_resource path="res://Resources/Units/Kobold/Bunny/Bunny_idle.tres" type="Animation" id=15]
+[ext_resource path="res://Resources/Units/Kobold/Bunny/Bunny_walk.tres" type="Animation" id=16]
 
-[node name="BodyHumanoid" type="Node2D"]
+[node name="BodyHumanoid" type="Node2D" index="0"]
 
 script = ExtResource( 1 )
 
 [node name="Torso" type="Sprite" parent="." index="0"]
 
 texture = ExtResource( 2 )
-_sections_unfolded = [ "Z Index" ]
+_sections_unfolded = [ "Animation", "Z Index" ]
 
 [node name="Head" type="Sprite" parent="Torso" index="0"]
 
-editor/display_folded = true
 position = Vector2( 0, -50 )
 texture = ExtResource( 3 )
 offset = Vector2( 0, -50 )
 hframes = 4
-_sections_unfolded = [ "Z Index" ]
+_sections_unfolded = [ "Animation", "Z Index" ]
 
 [node name="EarFront" type="Sprite" parent="Torso/Head" index="0"]
 
@@ -36,7 +40,7 @@ position = Vector2( 25, -85 )
 rotation = 0.436332
 texture = ExtResource( 4 )
 offset = Vector2( 5, -50 )
-_sections_unfolded = [ "Z Index" ]
+_sections_unfolded = [ "Animation", "Z Index" ]
 
 [node name="EarBack" type="Sprite" parent="Torso/Head" index="1"]
 
@@ -45,16 +49,15 @@ rotation = 0.436332
 z_index = -1
 texture = ExtResource( 4 )
 offset = Vector2( 5, -50 )
-_sections_unfolded = [ "Z Index" ]
+_sections_unfolded = [ "Animation", "Z Index" ]
 
 [node name="ArmFront" type="Sprite" parent="Torso" index="1"]
 
-editor/display_folded = true
 position = Vector2( 20, -35 )
 z_index = 1
 texture = ExtResource( 5 )
 offset = Vector2( 5, 30 )
-_sections_unfolded = [ "Z Index" ]
+_sections_unfolded = [ "Animation", "Transform", "Z Index" ]
 __meta__ = {
 "_edit_ik_": true
 }
@@ -64,17 +67,17 @@ __meta__ = {
 position = Vector2( 8, 50 )
 texture = ExtResource( 6 )
 offset = Vector2( 0, 10 )
-_sections_unfolded = [ "Z Index" ]
+hframes = 2
+_sections_unfolded = [ "Animation", "Transform", "Z Index" ]
 
 [node name="ArmBack" type="Sprite" parent="Torso" index="2"]
 
-editor/display_folded = true
 position = Vector2( -28, -35 )
 rotation = 0.0292681
 z_index = -3
 texture = ExtResource( 5 )
 offset = Vector2( 5, 30 )
-_sections_unfolded = [ "Z Index" ]
+_sections_unfolded = [ "Animation", "Z Index" ]
 __meta__ = {
 "_edit_ik_": true
 }
@@ -84,14 +87,15 @@ __meta__ = {
 position = Vector2( 8, 50 )
 texture = ExtResource( 6 )
 offset = Vector2( 0, 10 )
-_sections_unfolded = [ "Z Index" ]
+hframes = 2
+_sections_unfolded = [ "Animation", "Transform", "Z Index" ]
 
 [node name="FootFront" type="Sprite" parent="Torso" index="3"]
 
 position = Vector2( 30, 30 )
 texture = ExtResource( 7 )
 offset = Vector2( -20, 15 )
-_sections_unfolded = [ "Z Index" ]
+_sections_unfolded = [ "Animation", "Z Index" ]
 __meta__ = {
 "_edit_ik_": true
 }
@@ -103,18 +107,18 @@ position = Vector2( -30, 30 )
 z_index = -2
 texture = ExtResource( 7 )
 offset = Vector2( -20, 15 )
-_sections_unfolded = [ "Z Index" ]
+_sections_unfolded = [ "Animation", "Z Index" ]
 __meta__ = {
 "_edit_ik_": true
 }
 
 [node name="Tail" type="Sprite" parent="Torso" index="5"]
 
-position = Vector2( 50, 30 )
+position = Vector2( 45, 30 )
 z_index = -1
 texture = ExtResource( 8 )
 offset = Vector2( 9, 0 )
-_sections_unfolded = [ "Z Index" ]
+_sections_unfolded = [ "Animation", "Z Index" ]
 
 [node name="Shadow" type="Sprite" parent="." index="1"]
 
@@ -123,7 +127,7 @@ position = Vector2( 0, 75 )
 scale = Vector2( 1.1, 0.8 )
 z_index = -4
 texture = ExtResource( 9 )
-_sections_unfolded = [ "Z Index" ]
+_sections_unfolded = [ "Transform", "Z Index" ]
 __meta__ = {
 "_edit_lock_": true
 }
@@ -131,26 +135,18 @@ __meta__ = {
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." index="2"]
 
 root_node = NodePath("..")
-autoplay = "idle"
+autoplay = ""
 playback_process_mode = 1
 playback_default_blend_time = 0.0
 playback_speed = 1.0
 anims/BasePose = ExtResource( 10 )
-anims/Bounce = ExtResource( 11 )
+anims/Bunny_Bounce = ExtResource( 11 )
+anims/Bunny_create = ExtResource( 12 )
+anims/Bunny_die = ExtResource( 13 )
+anims/Bunny_hit = ExtResource( 14 )
+anims/Bunny_idle = ExtResource( 15 )
+anims/Bunny_walk = ExtResource( 16 )
 blend_times = [  ]
-autoplay = "idle"
-
-[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="." index="3"]
-
-stream = null
-volume_db = 0.0
-autoplay = false
-max_distance = 2000.0
-attenuation = 1.0
-bus = "Master"
-area_mask = 1
-__meta__ = {
-"_edit_lock_": true
-}
+autoplay = ""
 
 

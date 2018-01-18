@@ -74,7 +74,7 @@ func action_event(skill_name):
 		
 		dmg = define_damage()
 		if super:
-			shake_camera(100, 2)
+			shake_camera(10, 0.5)
 			dmg *= 2
 		elif hit:
 			dmg = int(dmg * 1.5)
@@ -163,7 +163,7 @@ func camera_movement(pos_dif, attacker_pos, atk_team, reverse = false):
 
 
 func shake_camera(intensity, duration):
-	var twn = get_node("Tween")
+	var twn = get_node("ShakeTween")
 	var Cam = get_node("Camera2D")
 	var init_pos = Cam.get_position()
 	

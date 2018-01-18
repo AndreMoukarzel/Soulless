@@ -28,7 +28,7 @@ var unit_database = [
 		ATR : [3, 1, 10], # [ATK, DEF, HP]
 		BASEATK : "Bounce",
 		SKILLS : [],
-		FRAMENUM : [1, 4, 1, 1, 1, 1, 1],
+		FRAMENUM : [1, 4, 1, 1, 2, 1, 1],
 		SIZE : 0.7
 	},
 	{ # ID = 1
