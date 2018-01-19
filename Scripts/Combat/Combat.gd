@@ -1,5 +1,7 @@
 extends Node
 
+const FLEECHANCE = 60
+
 signal targets_selected
 signal turn_completed
 
@@ -238,14 +240,19 @@ func _on_ActionSelector_selected( action ):
 		swap("Allies", active_unit.id, selected_targets[0].id)
 		yield(get_node("Allies/Tween"), "tween_completed")
 	elif action == "Flee":
-		# Define flee chance here
-		flee("Allies", active_unit.id)
+		if flee_succeeded():
+			flee("Allies", active_unit.id)
+		else:
+			print("Flee failed")
 	elif action == "Terrify":
-		var enemies = get_node("Enemies").get_all_units()
-		
-		for u in enemies:
-			if u.hp > 0:
-				flee("Enemies", u.id)
+		if terrify_succeeded():
+			var enemies = get_targets("Enemies")
+			
+			for u in enemies:
+				if u.hp > 0:
+					flee("Enemies", u.id)
+		else:
+			print("Terrify failed")
 	else:
 		get_targets("Enemies", false, "targetable")
 		yield(self, "targets_selected")
@@ -254,6 +261,31 @@ func _on_ActionSelector_selected( action ):
 	
 	# Animation and stuff here
 	emit_signal("turn_completed")
+
+
+func flee_succeeded():
+	var r = randi() % 100
+	
+	if r < FLEECHANCE:
+		return true
+	return false
+
+
+func terrify_succeeded():
+	var all = get_targets("Enemies")
+	var total = 0
+	
+	for unit in all:
+		total += unit.hp
+	
+	if total > FLEECHANCE:
+		return 0
+	
+	var r = randi() % 100
+	
+	if r < FLEECHANCE - total:
+		return true
+	return false
 
 
 func _on_Allies_all_acted():

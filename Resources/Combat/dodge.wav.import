@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/dodge.wav-996adf0fd0a42ba3d42bfa50231438a3.sample"
+
+[deps]
+
+source_file="res://Resources/Combat/dodge.wav"
+source_md5="8f48f85949cdfe000b77105ffaa45370"
+
+dest_files=[ "res://.import/dodge.wav-996adf0fd0a42ba3d42bfa50231438a3.sample" ]
+dest_md5="53f0cc48ddedf37b507df0b10a055060"
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=true
+edit/normalize=true
+edit/loop=false
+compress/mode=0

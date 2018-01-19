@@ -11,7 +11,6 @@ onready var dmg_scn = preload("res://Scenes/Combat/Damage.tscn")
 var attacker
 var atk_team
 var atk_node
-# Before getting target, we must check in skill_info if the skill is actually multi-target
 var target
 var target_team
 var target_node
@@ -59,7 +58,7 @@ func action_event(skill_name):
 	var type = skill_db.get_skill_type(id)
 	var act_scn = load(str("res://Scenes/Combat/", type, ".tscn"))
 	var act = act_scn.instance()
-	var defend = false
+	var anim = null
 	var dmg
 	
 	if atk_team.get_name() == "Allies": # Player Attack
@@ -94,14 +93,17 @@ func action_event(skill_name):
 		
 		dmg = define_damage()
 		if super:
-			dmg /= 2
-			defend = true
+			dmg = 0
+			anim = "defend" # trocar para dodge quando eu fizer a animação
+			create_damage_box(dmg, target_team.get_unit_pos(target.id), "good", "Dodge")
 		elif hit:
 			dmg = int(dmg / 1.5)
-			defend = true
-		create_damage_box(dmg, target_team.get_unit_pos(target.id), "good")
+			anim = "defend"
+			create_damage_box(dmg, target_team.get_unit_pos(target.id), "good")
+		else:
+			create_damage_box(dmg, target_team.get_unit_pos(target.id), "good")
 		
-	target_team.damage(dmg, target, defend)
+	target_team.damage(dmg, target, anim)
 
 
 func define_damage():
@@ -113,13 +115,14 @@ func define_damage():
 	return damage
 
 
-func create_damage_box(value, pos, animation):
+func create_damage_box(value, pos, animation, sound = "Hit"):
 	var dmg = dmg_scn.instance()
 	
 	dmg.get_node("Visual/Label").set_text(str(value))
 	dmg.set_position(Vector2(pos.x, pos.y - 100))
 	dmg.set_z_index(35)
 	dmg.get_node("AnimationPlayer").play(animation)
+	dmg.get_node(str(sound, "Sound")).play()
 	get_parent().add_child(dmg)
 	yield(dmg.get_node("AnimationPlayer"), "animation_finished")
 	dmg.queue_free()

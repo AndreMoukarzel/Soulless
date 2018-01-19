@@ -228,14 +228,14 @@ func flee(unit_id):
 	twn.start()
 
 
-func damage(value, unit, defend = false):
+func damage(value, unit, animation = null):
 	var hp_bar = get_node(str(unit.id)).get_node("HPBar")
 	var anim = get_node(str(unit.id)).get_node("AnimationPlayer")
 	var label = hp_bar.get_node("Label")
 	var twn = hp_bar.get_node("Tween")
 	
-	if defend:
-		anim.play("defend")
+	if animation:
+		anim.play(animation)
 	else:
 		anim.play("hit")
 	unit.hp -= value
