@@ -94,9 +94,14 @@ func _input(event):
 		if current_target_index < 0:
 			current_target_index = active_targets.size() - 1
 		Pointer.set_position(active_targets_pos[current_target_index])
+	
 	if event.is_action_pressed("ui_accept"):
 		target_num -= 1
 		selected_targets.append(active_targets[current_target_index])
+	elif event.is_action_pressed("ui_cancel"):
+		get_node("ActionSelector").enable()
+		get_node("CanvasLayer/Pointer").hide()
+		set_process_input(false)
 	
 	if target_num == 0:
 		emit_signal("targets_selected")
@@ -233,7 +238,12 @@ func _on_ActionSelector_selected( action ):
 	get_node("ActionSelector").disable()
 	
 	if action == "Defend":
+		var anim_player = get_node(str("Allies/", active_unit.id, "/AnimationPlayer"))
+		
 		active_unit.def[1] += 1
+		anim_player.play("defend")
+		yield(anim_player, "animation_finished")
+		anim_player.play("idle")
 	elif action == "Swap":
 		get_targets("Allies", true)
 		yield(self, "targets_selected")
