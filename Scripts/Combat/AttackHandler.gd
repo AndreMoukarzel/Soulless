@@ -97,7 +97,7 @@ func action_event(skill_name):
 			anim = "defend" # trocar para dodge quando eu fizer a animação
 			create_damage_box(dmg, target_team.get_unit_pos(target.id), "good", "Dodge")
 		elif hit:
-			dmg = int(dmg / 1.5)
+			dmg = int(dmg / 2)
 			anim = "defend"
 			create_damage_box(dmg, target_team.get_unit_pos(target.id), "good")
 		else:
@@ -107,9 +107,9 @@ func action_event(skill_name):
 
 
 func define_damage():
-	var damage = attacker.atk[0] - target.def[0]
+	var damage = (attacker.atk[0] + attacker.atk[1]) - (target.def[0] + target.def[1])
 	
-	if damage < 0:
+	if damage < 1:
 		damage = 1 
 	
 	return damage

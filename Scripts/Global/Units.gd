@@ -33,7 +33,7 @@ var unit_database = [
 		NAME : "Soulless",
 		RACE : "Soulless",
 		ATR : [5, 5, 5], # [ATK, DEF, HP]
-		BASEATK : "Scratch",
+		BASEATK : "Bounce",
 		SKILLS : ["Pounce", "Swiggity Swoogity"],
 		SIZE : 1.5
 	}

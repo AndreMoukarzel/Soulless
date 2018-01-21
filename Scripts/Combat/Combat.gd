@@ -142,6 +142,8 @@ func enemy_turn():
 	var unit = get_node("Enemies").get_next_actor()
 	var act = EnemyAI.choose_action(unit, get_node("Allies").units, get_node("Enemies").units, get_node("Allies").cap_index, get_node("Enemies").cap_index)
 	
+	active_unit.def[1] = 0 # in case active_unit defended last turn
+	
 	if act != null:
 		if act[0] == "Attack":
 			get_node("AttackHandler").attack([unit, "Enemies", act[1], "Allies"], unit.actions[0])
