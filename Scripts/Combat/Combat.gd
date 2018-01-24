@@ -1,6 +1,6 @@
 extends Node
 
-const FLEECHANCE = 60
+const FLEECHANCE = 150
 
 signal targets_selected
 signal turn_completed
@@ -258,7 +258,7 @@ func _on_ActionSelector_selected( action ):
 			print("Flee failed")
 	elif action == "Terrify":
 		if terrify_succeeded():
-			var enemies = get_targets("Enemies")
+			var enemies = get_node("Enemies").get_all_units()
 			
 			for u in enemies:
 				if u.hp > 0:
@@ -284,7 +284,7 @@ func flee_succeeded():
 
 
 func terrify_succeeded():
-	var all = get_targets("Enemies")
+	var all = get_node("Enemies").get_all_units()
 	var total = 0
 	
 	for unit in all:

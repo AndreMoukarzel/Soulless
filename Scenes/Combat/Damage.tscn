@@ -336,9 +336,11 @@ tracks/10/keys = {
 "values": [ ExtResource( 4 ) ]
 }
 
-[node name="DamageBox" type="Node2D"]
+[node name="DamageBox" type="Node2D" index="0"]
 
 position = Vector2( 0, -80 )
+scale = Vector2( 1.5, 1.5 )
+_sections_unfolded = [ "Transform" ]
 
 [node name="Visual" type="Node2D" parent="." index="0"]
 
