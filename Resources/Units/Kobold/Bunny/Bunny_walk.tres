@@ -2,7 +2,7 @@
 
 [resource]
 
-resource_name = "Bunny_walk"
+resource_name = "walk"
 length = 0.6
 loop = true
 step = 0.1

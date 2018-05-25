@@ -2,7 +2,7 @@
 
 [resource]
 
-resource_name = "Bunny_die"
+resource_name = "die"
 length = 0.8
 loop = false
 step = 0.1

@@ -86,14 +86,13 @@ func new_unit(unit_name):
 
 ################# VISUAL HANDLING #################
 func instance_body(unit_name, parent, pos, obj_name):
-	var body_scn = load("res://Scenes/Body.tscn")
+	var body_scn = load(str("res://Scenes/Units/", unit_name, ".tscn"))
 	var body = body_scn.instance()
 	var id = get_unit_id(unit_name)
 	var size = get_unit_size(id)
 	var attacks = [get_unit_baseatk(id)]
 	attacks += get_unit_skills(id)
 
-	body.define_unit(unit_name, attacks) # Sets correct sprites, animations, sounds...
 	body.set_scale(Vector2(size, size))
 	body.set_position(pos)
 	body.set_name(str(obj_name))

@@ -1,6 +1,6 @@
 extends Node
 
-const FLEECHANCE = 150
+const FLEECHANCE = 70
 
 signal targets_selected
 signal turn_completed
@@ -57,7 +57,7 @@ func _ready():
 	get_node("BackGround").set_size(OS.get_window_size())
 	get_node("CanvasLayer/End/Black").set_size(OS.get_window_size())
 	get_node("CanvasLayer/End/Label").set_position(OS.get_window_size()/2)
-	get_node("AttackHandler/Camera2D").set_position(OS.get_window_size()/2)
+	get_node("AttackHandler/ScreenShake/Camera2D").set_position(OS.get_window_size()/2)
 	get_node("Enemies").set_position(Vector2(OS.get_window_size().x, 0))
 	
 	var allies = []

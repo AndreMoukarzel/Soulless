@@ -74,7 +74,7 @@ func action_event(skill_name):
 		
 		dmg = define_damage()
 		if super:
-			shake_camera(10, 0.5)
+			shake_camera(0.4)
 			dmg *= 2
 		elif hit:
 			dmg = int(dmg * 1.5)
@@ -153,7 +153,7 @@ func unit_movement(reverse = false):
 
 
 func camera_movement(pos_dif, attacker_pos, atk_team, reverse = false):
-	var Cam = get_node("Camera2D")
+	var Cam = get_node("ScreenShake/Camera2D")
 	
 	if not reverse:
 		var pos = attacker_pos
@@ -168,21 +168,5 @@ func camera_movement(pos_dif, attacker_pos, atk_team, reverse = false):
 		get_node("Tween").interpolate_property(Cam, "position", Cam.get_position(), OS.get_window_size()/2, WALKTIME, Tween.TRANS_QUAD, Tween.EASE_IN_OUT)
 
 
-func shake_camera(intensity, duration):
-	var twn = get_node("ShakeTween")
-	var Cam = get_node("Camera2D")
-	var init_pos = Cam.get_position()
-	
-	for i in range(5):
-		var pos = Vector2(0, 0)
-		
-		pos.x = (randi() % intensity) - (randi() % intensity)
-		pos.y = (randi() % intensity) - (randi() % intensity)
-		pos += init_pos
-		
-		twn.interpolate_property(Cam, "position", Cam.get_position(), pos, 0.1, Tween.TRANS_QUAD, Tween.EASE_IN_OUT)
-		twn.start()
-		yield(twn, "tween_completed")
-	
-	twn.interpolate_property(Cam, "position", Cam.get_position(), init_pos, 0.5, Tween.TRANS_QUAD, Tween.EASE_IN_OUT)
-	twn.start()
+func shake_camera(intensity):
+	get_node("ScreenShake").add_shake(intensity)

@@ -2,7 +2,7 @@
 
 [resource]
 
-resource_name = "Bunny_idle"
+resource_name = "idle"
 length = 1.0
 loop = true
 step = 0.1
