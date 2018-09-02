@@ -1,0 +1,44 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://Characters/BaseChar.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Characters/Mole/mole_torso.png" type="Texture" id=2]
+[ext_resource path="res://Characters/Mole/mole_head.png" type="Texture" id=3]
+[ext_resource path="res://Characters/Mole/mole_foot.png" type="Texture" id=4]
+[ext_resource path="res://Characters/Mole/mole_hand.png" type="Texture" id=5]
+
+[node name="Mole" instance=ExtResource( 1 )]
+
+HP = 15
+DEF = 2
+
+[node name="Torso" parent="." index="0"]
+
+texture = ExtResource( 2 )
+
+[node name="Head" parent="Torso" index="0"]
+
+position = Vector2( -20, -30 )
+texture = ExtResource( 3 )
+hframes = 1
+
+[node name="FootBack" parent="Torso" index="1"]
+
+position = Vector2( -30, 50 )
+texture = ExtResource( 4 )
+
+[node name="FootFront" parent="Torso" index="2"]
+
+position = Vector2( 30, 50 )
+texture = ExtResource( 4 )
+
+[node name="HandL" parent="Torso" index="3"]
+
+position = Vector2( -40, -10 )
+texture = ExtResource( 5 )
+
+[node name="HandR" parent="Torso" index="4"]
+
+position = Vector2( 15, -12 )
+texture = ExtResource( 5 )
+
+
