@@ -7,10 +7,7 @@ path="res://.import/shine.png-6c381eb4dd8bc411fb8bc5013f463d6d.stex"
 [deps]
 
 source_file="res://Resources/Particles/shine.png"
-source_md5="e07c3d4a0db5baa330f433e569f056dc"
-
 dest_files=[ "res://.import/shine.png-6c381eb4dd8bc411fb8bc5013f463d6d.stex" ]
-dest_md5="ab9d7339ce52a8532af7b7232c0737a8"
 
 [params]
 
