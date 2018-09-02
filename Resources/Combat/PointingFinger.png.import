@@ -7,10 +7,7 @@ path="res://.import/PointingFinger.png-900bd72d0bc5a3e02d31bbc3846df961.stex"
 [deps]
 
 source_file="res://Resources/Combat/PointingFinger.png"
-source_md5="8c6dec8da42b294d0a74008e1e84cb86"
-
 dest_files=[ "res://.import/PointingFinger.png-900bd72d0bc5a3e02d31bbc3846df961.stex" ]
-dest_md5="f2b7122170745b98ca76acf38bdb08d4"
 
 [params]
 

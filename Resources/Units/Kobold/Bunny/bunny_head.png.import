@@ -7,10 +7,7 @@ path="res://.import/bunny_head.png-8d2d9d4123a971962a9f097a0bf235ac.stex"
 [deps]
 
 source_file="res://Resources/Units/Kobold/Bunny/bunny_head.png"
-source_md5="4b981542394d7396bcabfea00daf7d90"
-
 dest_files=[ "res://.import/bunny_head.png-8d2d9d4123a971962a9f097a0bf235ac.stex" ]
-dest_md5="c0aee12add32020f40332d7141c1c084"
 
 [params]
 

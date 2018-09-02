@@ -7,10 +7,7 @@ path="res://.import/shadow.png-b99f8f7496605d1c97ccea65a3715edd.stex"
 [deps]
 
 source_file="res://Resources/Units/shadow.png"
-source_md5="6ca0d31f10e1d07518265bac7813f8f3"
-
 dest_files=[ "res://.import/shadow.png-b99f8f7496605d1c97ccea65a3715edd.stex" ]
-dest_md5="87bb61f5c5df3e52d7bef16ea322d5bc"
 
 [params]
 

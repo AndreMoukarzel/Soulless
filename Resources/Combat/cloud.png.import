@@ -7,10 +7,7 @@ path="res://.import/cloud.png-cdad10b3c3b8d46901ccf4b5449e2c09.stex"
 [deps]
 
 source_file="res://Resources/Combat/cloud.png"
-source_md5="293193bf5ead5d6b0d4b1f723d829971"
-
 dest_files=[ "res://.import/cloud.png-cdad10b3c3b8d46901ccf4b5449e2c09.stex" ]
-dest_md5="7dcbd8b2d4612ebeea40b1755ba65899"
 
 [params]
 

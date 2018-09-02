@@ -7,10 +7,7 @@ path="res://.import/bunny_ear.png-dbe6f7f041ffd1127de0d8f0a6e6a853.stex"
 [deps]
 
 source_file="res://Resources/Units/Kobold/Bunny/bunny_ear.png"
-source_md5="bd15b7c04e2d6e4b2e4a3132b8440ec3"
-
 dest_files=[ "res://.import/bunny_ear.png-dbe6f7f041ffd1127de0d8f0a6e6a853.stex" ]
-dest_md5="9d24e3aed1f6b4dc004dce3920559a8a"
 
 [params]
 

@@ -7,10 +7,7 @@ path="res://.import/soulless_foot.png-9b111eca879b9bbaa797d6e36eba5cc4.stex"
 [deps]
 
 source_file="res://Resources/Units/Soulless/Soulless/soulless_foot.png"
-source_md5="261efdcfc101334918f7c13e79fd9b64"
-
 dest_files=[ "res://.import/soulless_foot.png-9b111eca879b9bbaa797d6e36eba5cc4.stex" ]
-dest_md5="d3dc07f70c8a07a0867e549a060d0953"
 
 [params]
 

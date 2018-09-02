@@ -7,10 +7,7 @@ path="res://.import/dark circle.png-835aa5a89a8a570ee672e03e91e8c6ce.stex"
 [deps]
 
 source_file="res://Resources/Combat/dark circle.png"
-source_md5="db30f94fd586fc05d2c8c87ad028c8f6"
-
 dest_files=[ "res://.import/dark circle.png-835aa5a89a8a570ee672e03e91e8c6ce.stex" ]
-dest_md5="3907e6899f404b8c8f5c09989179432e"
 
 [params]
 

@@ -7,10 +7,7 @@ path="res://.import/soulless_tail.png-609f57cc4523dc6deb0f1dbb3369f507.stex"
 [deps]
 
 source_file="res://Resources/Units/Soulless/Soulless/soulless_tail.png"
-source_md5="886ba8b64094afcdbd3eceab7c9676e1"
-
 dest_files=[ "res://.import/soulless_tail.png-609f57cc4523dc6deb0f1dbb3369f507.stex" ]
-dest_md5="928472bbf650fab83ff78ef24e92237f"
 
 [params]
 

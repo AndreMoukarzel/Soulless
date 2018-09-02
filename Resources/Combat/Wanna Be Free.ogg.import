@@ -7,10 +7,7 @@ path="res://.import/Wanna Be Free.ogg-52feadad2074f0b4392b9fd793008540.oggstr"
 [deps]
 
 source_file="res://Resources/Combat/Wanna Be Free.ogg"
-source_md5="5982a4c5f65a4a3d718181631159fd10"
-
 dest_files=[ "res://.import/Wanna Be Free.ogg-52feadad2074f0b4392b9fd793008540.oggstr" ]
-dest_md5="e221b09aae23fb54029a82fb4001525f"
 
 [params]
 

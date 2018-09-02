@@ -7,10 +7,7 @@ path="res://.import/SkillMenuBg.png-40e87cfba72a110991af6ab7aaec69a4.stex"
 [deps]
 
 source_file="res://Resources/Combat/SkillMenuBg.png"
-source_md5="b306e0d60df71e429de0db54bc5541fb"
-
 dest_files=[ "res://.import/SkillMenuBg.png-40e87cfba72a110991af6ab7aaec69a4.stex" ]
-dest_md5="e2bf521f2883a3336e86b69469e82988"
 
 [params]
 

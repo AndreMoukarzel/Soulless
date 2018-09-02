@@ -7,10 +7,7 @@ path="res://.import/bunny_hand.png-bae1358d22eae702090c6186f3e1b1e6.stex"
 [deps]
 
 source_file="res://Resources/Units/Kobold/Bunny/bunny_hand.png"
-source_md5="d2b6332f16c40073c45dc05acd64d4a4"
-
 dest_files=[ "res://.import/bunny_hand.png-bae1358d22eae702090c6186f3e1b1e6.stex" ]
-dest_md5="ae02bad9d2eda92dd3c6e01563229ac5"
 
 [params]
 

@@ -240,7 +240,8 @@ editor_draw_drag_margin = false
 
 stream = ExtResource( 9 )
 volume_db = 0.0
-autoplay = true
+pitch_scale = 1.0
+autoplay = false
 mix_target = 0
 bus = "Master"
 

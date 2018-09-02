@@ -7,10 +7,7 @@ path="res://.import/bunny_torso.png-dc3b02c39715099a252965fbd27aea16.stex"
 [deps]
 
 source_file="res://Resources/Units/Kobold/Bunny/bunny_torso.png"
-source_md5="0efd995ce0c7d2ef48c5bbb329a8b472"
-
 dest_files=[ "res://.import/bunny_torso.png-dc3b02c39715099a252965fbd27aea16.stex" ]
-dest_md5="c8e6606013c901976df75596f5b24fb4"
 
 [params]
 
