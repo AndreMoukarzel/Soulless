@@ -74,11 +74,11 @@ func spin(clockwise = true):
 		rot *= -1
 	
 	set_process_input(false)
-	Twn.interpolate_property(self, "rotation_degrees", get_rotation_degrees(), get_rotation_degrees() + rot, SPINSPD, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
+	Twn.interpolate_property(self, "rotation_degrees", get_rotation_degrees(), get_rotation_degrees() - rot, SPINSPD, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
 	var Acts = get_children()
 	Acts.pop_front() # Discards Tween node
 	for Act in Acts: # Rotates children in oposite direction, so the continue facing up
-		Twn.interpolate_property(Act, "rotation_degrees", Act.get_rotation_degrees(), Act.get_rotation_degrees() - rot, SPINSPD, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
+		Twn.interpolate_property(Act, "rotation_degrees", Act.get_rotation_degrees(), Act.get_rotation_degrees() + rot, SPINSPD, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
 	Twn.start()
 	yield(Twn, "tween_completed")
 	set_process_input(true)
@@ -86,11 +86,11 @@ func spin(clockwise = true):
 
 func change_action(clockwise = true):
 	if clockwise:
-		hl = (hl + 1) % action_num
-	else:
 		hl -= 1
 		if hl < 0:
 			hl = action_num - 1
+	else:
+		hl = (hl + 1) % action_num
 	spin(clockwise)
 	emit_signal("changed_to", get_current_Action().get_name())
 	if DEBUG:
