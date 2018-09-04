@@ -63,11 +63,11 @@ func _ready():
 	allies.append("Bunny")
 	allies.append("Mole")
 	
-	get_node("Allies").populate(allies)
+	get_node("Allies").populate(allies, true)
 	
 	var enemies = []
 	enemies.append("Bunny")
-	get_node("Enemies").populate(enemies)
+	get_node("Enemies").populate(enemies, false)
 	
 #	player_turn()
 

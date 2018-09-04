@@ -8,8 +8,6 @@ var TOPMARGIN = 600
 var BOTMARGIN = -100
 var HORMARGIN = 200
 
-var hp_bar_scn = preload("res://Scenes/Combat/HPBar.tscn")
-
 var captain = null
 var cap_index = 0 # captain pos in array
 var units = []
@@ -17,14 +15,11 @@ var acted = []
 var unit_num = 0
 
 
-func populate(all_units):
+func populate(all_units, invert_interface):
 	for u in all_units:
 		var u_scn = load("res://Characters/" + u + "/" + u + ".tscn")
 		var unit = u_scn.instance()
-		
-		var hp_scn = preload("res://Scenes/Combat/HPBar.tscn")
-		var hp_bar = hp_scn.instance()
-		hp_bar.add_to_unit(unit)
+		unit.set_HpBar(invert_interface)
 		add_child(unit)
 	
 	set_all_positions()
