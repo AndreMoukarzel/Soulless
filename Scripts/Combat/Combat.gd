@@ -69,7 +69,7 @@ func _ready():
 	enemies.append("Bunny")
 	get_node("Enemies").populate(enemies, false)
 	
-#	player_turn()
+	player_turn()
 
 
 func _input(event):
@@ -100,16 +100,13 @@ func _input(event):
 
 func player_turn():
 	active_unit = get_node("Allies").get_next_actor()
-	active_pos = get_node("Allies").get_node(str(active_unit.id)).get_position()
+	active_pos = active_unit.get_global_position()
 	
-	active_unit.def[1] = 0 # in case active_unit defended last turn
-	
-	if active_unit.hp > 0:
+	if active_unit.HP > 0:
 		var ActSel = get_node("ActionSelector")
 		
-		active_pos.x = -active_pos.x + 20 # compensating because node Allies has scale (-1, 1)
 		ActSel.set_position(active_pos)
-		ActSel.update_actions(active_unit.actions, active_unit.skills)
+		ActSel.update_actions(["Kill", "Murder", "Rob", "Rape", "Shoot"])
 		ActSel.enable()
 		yield(self, "turn_completed")
 	
