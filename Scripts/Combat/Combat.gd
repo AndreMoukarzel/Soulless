@@ -5,7 +5,6 @@ const FLEECHANCE = 70
 signal targets_selected
 signal turn_completed
 
-onready var unit_db = get_node("/root/Units")
 onready var EnemyAI = preload("res://Scripts/Combat/EnemyAI.gd")
 
 var next_id = 0
@@ -61,24 +60,14 @@ func _ready():
 	get_node("Enemies").set_position(Vector2(OS.get_window_size().x, 0))
 	
 	var allies = []
-	allies.append(CombatUnit.new(unit_db.new_unit("Soulless"), 0))
-	allies.append(CombatUnit.new(unit_db.new_unit("Bunny"), 1))
-	allies.append(CombatUnit.new(unit_db.new_unit("Bunny"), 2))
-	allies.append(CombatUnit.new(unit_db.new_unit("Bunny"), 3))
+	allies.append("Bunny")
+	allies.append("Mole")
 	
-	var known_races = []
-	for u in allies:
-		if not u.race in known_races:
-			known_races.append(u.race)
-	
-	get_node("Allies").populate(allies, 0, known_races)
+	get_node("Allies").populate(allies)
 	
 	var enemies = []
-	enemies.append(CombatUnit.new(unit_db.new_unit("Bunny"), 4))
-	enemies.append(CombatUnit.new(unit_db.new_unit("Bunny"), 5))
-	enemies.append(CombatUnit.new(unit_db.new_unit("Bunny"), 6))
-	enemies.append(CombatUnit.new(unit_db.new_unit("Bunny"), 7))
-	get_node("Enemies").populate(enemies, 4, known_races)
+	enemies.append("Bunny")
+	get_node("Enemies").populate(enemies)
 	
 	player_turn()
 

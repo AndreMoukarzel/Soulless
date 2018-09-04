@@ -8,7 +8,7 @@ var TOPMARGIN = 600
 var BOTMARGIN = -100
 var HORMARGIN = 200
 
-onready var unit_db = get_node("/root/Units")
+var hp_bar_scn = preload("res://Scenes/Combat/HPBar.tscn")
 
 var captain = null
 var cap_index = 0 # captain pos in array
@@ -17,31 +17,16 @@ var acted = []
 var unit_num = 0
 
 
-func populate(all_units, captain_id, known_races):
+func populate(all_units):
 	for u in all_units:
-		if u == null:
-			units.append(null)
-		else:
-			unit_num += 1
-			units.append(u)
-			var u_scn = unit_db.instance_body(u.name, self, Vector2(0, 0), str(u.id))
-			
-			if u.race in known_races: # cria barra de vida
-				var hp_scn = preload("res://Scenes/Combat/HPBar.tscn")
-				var hp_bar = hp_scn.instance()
-				var bar_pos = Vector2(-50, 120)
-				
-				hp_bar.set_max(u.hp_max)
-				hp_bar.set_value(u.hp)
-				hp_bar.set_name("HPBar")
-				if self.get_name() == "Allies":
-					bar_pos.x = -bar_pos.x
-				hp_bar.set_position(bar_pos)
-				hp_bar.get_node("Label").set_text(str(u.hp, "/", u.hp_max))
-				u_scn.add_child(hp_bar)
-				
-	captain = captain_id
-	get_cap_index()
+		var u_scn = load("res://Characters/" + u + "/" + u + ".tscn")
+		var unit = u_scn.instance()
+		
+		var hp_scn = preload("res://Scenes/Combat/HPBar.tscn")
+		var hp_bar = hp_scn.instance()
+		hp_bar.add_to_unit(unit)
+		add_child(unit)
+	
 	set_all_positions()
 
 
@@ -91,62 +76,51 @@ func set_all_positions():
 		unit.get_node("HPBar").set_scale(hp_scale)
 
 
-func get_cap_index():
-	for i in range(units.size()):
-		if units[i] == null:
-			continue
-		if units[i].id == captain:
-			cap_index = i
-	return cap_index
-
-
 # Search for next unit, from captain, that has not acted yet
-func get_next_actor():
-	for i in range(cap_index, cap_index + units.size()):
-		if units[i % units.size()] == null:
-			continue
-			
-		var unit_id = units[i % units.size()].id
-		
-		if not unit_id in acted: # found unit
-			acted.append(unit_id)
-			if acted.size() >= unit_num:
-				emit_signal("all_acted")
-				acted = []
-			return units[i % units.size()]
+#func get_next_actor():
+#	for i in range(cap_index, cap_index + units.size()):
+#		if units[i % units.size()] == null:
+#			continue
+#
+#		var unit_id = units[i % units.size()].id
+#
+#		if not unit_id in acted: # found unit
+#			acted.append(unit_id)
+#			if acted.size() >= unit_num:
+#				emit_signal("all_acted")
+#				acted = []
+#			return units[i % units.size()]
 
 
-func get_targetable_units():
-	var all = []
-	
-	for i in range(1, units.size()):
-		if units[i] != null and units[i].hp > 0:
-			all.append(units[i])
-	
-	if all.size() < 1: # No units in the front row
-		all.append(units[0]) # Unit in the back is targetable
-	
-	return all
+#func get_targetable_units():
+#	var all = []
+#
+#	for i in range(1, units.size()):
+#		if units[i] != null and units[i].hp > 0:
+#			all.append(units[i])
+#
+#	if all.size() < 1: # No units in the front row
+#		all.append(units[0]) # Unit in the back is targetable
+#
+#	return all
 
 
 func get_all_units():
-	var all = []
-	
-	for u in units:
-		if u != null and u.hp > 0:
-			all.append(u)
+	var all = get_children()
+	all.pop_front()
+	print(all)
 	
 	return all
 
 
 func get_dead_units():
-	var all = []
+	var dead = []
 	
-	for u in units:
-		if u != null and u.hp <= 0:
-			all.append(u)
+	for u in get_all_units():
+		if u.HP <= 0:
+			dead.append(u)
 	
-	return all
+	return dead
 
 
 func get_unit_pos(unit_id):
