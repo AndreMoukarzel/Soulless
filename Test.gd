@@ -38,11 +38,18 @@ func print_unit_info(unit):
 	print(unit_info)
 
 func display_animations(unit):
-	var anim_player = unit.get_node("AnimationPlayer")
-	var anim_list = anim_player.get_animation_list()
+	var AnimPlayer = unit.get_node("AnimationPlayer")
+	var anim_list = AnimPlayer.get_animation_list()
 	
 	for anim in anim_list:
-		$AnimationTimer.start()
-		anim_player.play(anim)
+		var length = AnimPlayer.get_animation(anim).length
+		set_AnimTimer(length)
+		AnimPlayer.play(anim)
 		yield($AnimationTimer, "timeout")
 	emit_signal("animations_finished")
+
+# Set timer with wait_time = time and start it. Used in display_animations()
+func set_AnimTimer(time):
+	var AnimTimer = $AnimationTimer
+	AnimTimer.set_wait_time(time)
+	AnimTimer.start()
