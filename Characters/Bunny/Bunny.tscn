@@ -1666,7 +1666,7 @@ tracks/20/keys = {
 "values": [ 0.0 ]
 }
 
-[node name="Bunny" index="0" instance=ExtResource( 1 )]
+[node name="Bunny" instance=ExtResource( 1 )]
 
 Size = 0.7
 HP = 10

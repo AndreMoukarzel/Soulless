@@ -23,12 +23,26 @@ func _input(event):
 		change_action(true)
 	
 	if event.is_action_pressed("ui_accept"):
-		emit_signal("selected", get_current_Action().get_name())
 		if DEBUG:
 			print ("Selected ", get_current_Action().get_name())
+		emit_signal("selected", get_current_Action().get_name())
+
+# Resets ActionSelector to initial state
+func clear():
+	var Actions = get_children()
+	Actions.pop_front() # Discards Tween node
+	for Action in Actions:
+		Action.set_name("OldAction")
+		Action.queue_free()
+	
+	hl = 0
+	action_num = 0
+	rotation_step = 0
+	set_rotation_degrees(0)
 
 
 func update_actions(action_list):
+	clear()
 	var angle = 0
 	var angle_step = int(360 / action_list.size())
 	for action in action_list:

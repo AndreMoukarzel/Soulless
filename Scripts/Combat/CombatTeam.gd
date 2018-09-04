@@ -35,8 +35,11 @@ func set_all_positions():
 func get_next_actor():
 	if act_queue.empty():
 		act_queue = get_idle_units()
-	
-	return act_queue.pop_front()
+	var actor = act_queue.pop_front()
+	if act_queue.empty():
+		emit_signal("all_acted") # signals for team change in combat
+		
+	return actor
 
 
 #func get_targetable_units():
@@ -127,33 +130,19 @@ func get_unit_pos(unit_id):
 # Removes unit from all data
 # Animates unit's escape
 # Does not consider if unit is captain or not
-#func flee(unit_id):
-#	var found = false
-#
-#	for i in range(units.size()):
-#		if units[i] == null:
-#			continue
-#
-#		if units[i].id == unit_id:
-#			units[i] = null
-#			found = true
-#			unit_num -= 1
-#			break
-#
-#	if not found:
-#		return 0
-#
-#	var unit_node = get_node(str(unit_id))
-#	var twn = get_node("Tween")
-#	var pos = unit_node.get_position()
-#	var i = acted.find(unit_id)
-#
-#	get_node(str(unit_id, "/AnimationPlayer")).play("walk")
-#	unit_node.set_scale(unit_node.get_scale() * Vector2(-1, 1))
-#	if i != -1:
-#		acted.remove(i)
-#	twn.interpolate_property(unit_node, "position", pos, Vector2(1000, pos.y), 1.5, Tween.TRANS_LINEAR, Tween.EASE_IN)
-#	twn.start()
+func flee(Unit):
+	var Unit_index = get_children().find(Unit)
+	
+	if Unit_index == -1: # not found
+		return 0
+	
+	var Twn = get_node("Tween")
+	var pos = Unit.get_position()
+	Unit.flee()
+	Twn.interpolate_property(Unit, "position", pos, Vector2(1000, pos.y), 1.5, Tween.TRANS_LINEAR, Tween.EASE_IN)
+	Twn.start()
+	yield(Twn, "tween_completed")
+	get_children()[Unit_index].queue_free()
 
 
 func damage(value, unit, animation = null):

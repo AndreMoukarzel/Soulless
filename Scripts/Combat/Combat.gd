@@ -104,9 +104,13 @@ func player_turn():
 	
 	if active_unit.HP > 0:
 		var ActSel = get_node("ActionSelector")
+		var action_list = []
 		
 		ActSel.set_position(active_pos)
-		ActSel.update_actions(["Kill", "Murder", "Rob", "Rape", "Shoot"])
+		action_list.append(active_unit.Signature1)
+		action_list.append(active_unit.Signature2)
+		action_list = action_list + ["Flee", "Swap", "Item"]
+		ActSel.update_actions(action_list)
 		ActSel.enable()
 		yield(self, "turn_completed")
 	
@@ -152,20 +156,11 @@ func enemy_turn():
 func battle_ended():
 	var dead_allies = get_node("Allies").get_dead_units()
 	var dead_enemies = get_node("Enemies").get_dead_units()
-	var allies_cap = get_node("Allies").get_cap_index()
-	var enemies_cap = get_node("Enemies").get_cap_index()
 	
-	if get_node("Enemies").units[enemies_cap] == null or get_node("Enemies").units[enemies_cap].hp <= 0:
+	if dead_enemies.size() == get_node("Enemies").get_all_units().size():
 		# Enemies lost
 		return 1
-	if get_node("Allies").units[allies_cap].hp <= 0:
-		# Player lost
-		return 2
-	
-	if dead_enemies.size() == get_node("Enemies").unit_num:
-		# Enemies lost
-		return 1
-	if dead_allies.size() == get_node("Allies").unit_num:
+	if dead_allies.size() == get_node("Allies").get_all_units().size():
 		# Player lost
 		return 2
 	return 0
@@ -200,8 +195,6 @@ func get_targets(group, exclude_active = false, subgroup = null):
 	
 	if not subgroup:
 		active_targets = team.get_all_units()
-	elif subgroup == "dead":
-		active_targets = team.get_dead_units()
 	elif subgroup == "targetable":
 		active_targets = team.get_targetable_units()
 	
@@ -225,21 +218,14 @@ func get_targets(group, exclude_active = false, subgroup = null):
 func _on_ActionSelector_selected( action ):
 	get_node("ActionSelector").disable()
 	
-	if action == "Defend":
-		var anim_player = get_node(str("Allies/", active_unit.id, "/AnimationPlayer"))
-		
-		active_unit.def[1] += 1
-		anim_player.play("defend")
-		yield(anim_player, "animation_finished")
-		anim_player.play("idle")
-	elif action == "Swap":
+	if action == "Swap":
 		get_targets("Allies", true)
 		yield(self, "targets_selected")
 		swap("Allies", active_unit.id, selected_targets[0].id)
 		yield(get_node("Allies/Tween"), "tween_completed")
 	elif action == "Flee":
 		if flee_succeeded():
-			flee("Allies", active_unit.id)
+			flee("Allies", active_unit)
 		else:
 			print("Flee failed")
 	elif action == "Terrify":
@@ -295,10 +281,10 @@ func _on_Enemies_all_acted():
 ########################################################################
 ########################## AUXILIARY FUNCTIONS #########################
 
-func swap(group, unit_id1, unit_id2):
-	get_node(group).swap(unit_id1, unit_id2)
+func swap(group, Unit1, Unit2):
+	get_node(group).swap(Unit1, Unit2)
 
-func flee(group, unit_id):
-	get_node(group).flee(unit_id)
+func flee(group, Unit):
+	get_node(group).flee(Unit)
 
 ########################################################################

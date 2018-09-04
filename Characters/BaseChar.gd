@@ -45,6 +45,13 @@ func defend(base_damage, percentage_of_damage_taken):
 	$AnimationPlayer.play("defend")
 	yield($AnimationPlayer, "animation_finished")
 
+func flee():
+	set_scale(Vector2(-Size, Size))
+	get_node("AnimationPlayer").play("walk")
+
 func die():
 	$AnimationPlayer.play("die")
 	emit_signal("died")
+
+func play_animation(name):
+	get_node("AnimationPlayer").play(name)
