@@ -163,7 +163,9 @@ z_index = 40
 
 editor/display_folded = true
 scale = Vector2( -1, 1 )
+z_index = 5
 script = ExtResource( 6 )
+_sections_unfolded = [ "Z Index" ]
 __meta__ = {
 "_edit_lock_": true
 }
@@ -180,7 +182,9 @@ playback/speed = 1.0
 [node name="Enemies" type="Node2D" parent="." index="4"]
 
 editor/display_folded = true
+z_index = 5
 script = ExtResource( 6 )
+_sections_unfolded = [ "Z Index" ]
 __meta__ = {
 "_edit_lock_": true
 }
@@ -239,7 +243,8 @@ editor_draw_drag_margin = false
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." index="6"]
 
 stream = ExtResource( 9 )
-volume_db = 0.0
+volume_db = -18.92
+pitch_scale = 1.0
 autoplay = true
 mix_target = 0
 bus = "Master"

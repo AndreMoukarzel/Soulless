@@ -493,7 +493,7 @@ tracks/39/keys = {
 "values": [ -4 ]
 }
 
-[node name="BaseChar" type="Node2D" index="0"]
+[node name="BaseChar" type="Node2D"]
 
 script = ExtResource( 1 )
 Size = 1.0

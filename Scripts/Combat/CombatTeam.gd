@@ -32,48 +32,12 @@ func populate(all_units):
 
 func set_all_positions():
 	var center = Vector2(-OS.get_window_size().x/4, (OS.get_window_size().y - TOPMARGIN - BOTMARGIN)/2 + TOPMARGIN/2)
+	var units = get_all_units()
+	var i = 0
 	
-	# Talvez tenha q add a TOPMARGIN e remover a BOTMARGIN de todos
-	if units[0] != null: # Unit in the back collum
-		var unit = get_node(str(units[0].id))
-		var hp_scale = Vector2(1, 1) / (BODYSIZE * Vector2(units[0].size, units[0].size))
-		
-		unit.set_position(Vector2(-HORMARGIN, center.y))
-		unit.set_scale(BODYSIZE * Vector2(units[0].size, units[0].size))
-		unit.set_z_index(10)
-		if self.get_name() == "Allies":
-			hp_scale *= Vector2(-1, 1)
-		unit.get_node("HPBar").set_scale(hp_scale)
-	if units[1] != null: # Top
-		var unit = get_node(str(units[1].id))
-		var hp_scale = Vector2(1, 1) / (0.9 * BODYSIZE * Vector2(units[1].size, units[1].size))
-		
-		unit.set_position(Vector2(center.x * 0.6 - HORMARGIN, center.y/2))
-		unit.set_scale(0.9 * BODYSIZE * Vector2(units[1].size, units[1].size))
-		unit.set_z_index(5)
-		if self.get_name() == "Allies":
-			hp_scale *= Vector2(-1, 1)
-		unit.get_node("HPBar").set_scale(hp_scale)
-	if units[2] != null: # Mid
-		var unit = get_node(str(units[2].id))
-		var hp_scale = Vector2(1, 1) / (BODYSIZE * Vector2(units[2].size, units[2].size))
-		
-		unit.set_position(Vector2(center.x * 0.8 - HORMARGIN, center.y))
-		unit.set_scale(BODYSIZE * Vector2(units[2].size, units[2].size))
-		unit.set_z_index(10)
-		if self.get_name() == "Allies":
-			hp_scale *= Vector2(-1, 1)
-		unit.get_node("HPBar").set_scale(hp_scale)
-	if units[3] != null: # Bot
-		var unit = get_node(str(units[3].id))
-		var hp_scale = Vector2(1, 1) / (1.1 * BODYSIZE * Vector2(units[3].size, units[3].size))
-		
-		unit.set_position(Vector2(center.x * 0.6 - HORMARGIN, center.y * 1.5))
-		unit.set_scale(1.1 * BODYSIZE * Vector2(units[3].size, units[3].size))
-		unit.set_z_index(15)
-		if self.get_name() == "Allies":
-			hp_scale *= Vector2(-1, 1)
-		unit.get_node("HPBar").set_scale(hp_scale)
+	for u in units:
+		u.set_position(center + Vector2(i * 200, 0))
+		i += 1
 
 
 # Search for next unit, from captain, that has not acted yet

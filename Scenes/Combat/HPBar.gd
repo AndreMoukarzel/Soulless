@@ -1,6 +1,8 @@
 extends ProgressBar
 
 func add_to_unit(Unit):
+	var scale = 1/Unit.Size
+	set_scale(Vector2(scale, scale))
 	set_position(Unit.get_position() + Vector2(-50, 120))
 #	if self.get_name() == "Allies":
 #				bar_pos.x = -bar_pos.x

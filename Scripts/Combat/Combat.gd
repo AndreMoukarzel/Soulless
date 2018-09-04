@@ -69,7 +69,7 @@ func _ready():
 	enemies.append("Bunny")
 	get_node("Enemies").populate(enemies)
 	
-	player_turn()
+#	player_turn()
 
 
 func _input(event):

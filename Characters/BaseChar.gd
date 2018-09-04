@@ -11,6 +11,9 @@ export(String) var Signature1
 export(String) var Signature2
 
 
+func _ready():
+	set_scale(Vector2(Size, Size))
+
 func get_damaged(damage, play_anim = true):
 	HP -= int(damage)
 	if play_anim:
