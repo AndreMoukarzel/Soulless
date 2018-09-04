@@ -199,9 +199,7 @@ func get_targets(group, exclude_active = false, subgroup = null):
 		active_targets = team.get_targetable_units()
 	
 	for target in active_targets:
-		var pos = team.get_unit_pos(target.id)
-		
-		active_targets_pos.append(pos)
+		active_targets_pos.append(target.get_global_position())
 	
 	if exclude_active and active_unit in active_targets:
 		var i = active_targets.find(active_unit)
@@ -221,7 +219,7 @@ func _on_ActionSelector_selected( action ):
 	if action == "Swap":
 		get_targets("Allies", true)
 		yield(self, "targets_selected")
-		swap("Allies", active_unit.id, selected_targets[0].id)
+		swap("Allies", active_unit, selected_targets[0])
 		yield(get_node("Allies/Tween"), "tween_completed")
 	elif action == "Flee":
 		if flee_succeeded():

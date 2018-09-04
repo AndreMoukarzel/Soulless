@@ -79,7 +79,6 @@ func get_dead_units():
 	
 	return dead
 
-
 func get_unit_pos(unit_id):
 	var pos = get_node(str(unit_id)).get_position()
 	
@@ -90,42 +89,33 @@ func get_unit_pos(unit_id):
 	
 	return pos
 
+func swap(Unit1, Unit2):
+	var allUnits = get_children()
+	allUnits.pop_front() # Discards Tween node
+	
+	var unit_index1 = allUnits.find(Unit1)
+	var unit_index2 = allUnits.find(Unit2)
 
-#func swap(unit_id1, unit_id2):
-#	var i1 = -1
-#	var i2 = -1
-#
-#	for i in range(units.size()):
-#		if units[i] == null:
-#			continue
-#
-#		if units[i].id == unit_id1:
-#			i1 = i
-#		elif units[i].id == unit_id2:
-#			i2 = i
-#
-#	if i1 == -1 or i2 == -1:
-#		print("ERROS: UNIT NOT FOUND IN TEAM")
-#		return
-#
-#	var temp = units[i1]
-#	units[i1] = units[i2]
-#	units[i2] = temp
-#	get_cap_index()
-#
-#	var twn = get_node("Tween")
-#	var u1 = get_node(str(unit_id1))
-#	var u2 = get_node(str(unit_id2))
-#	var pos1 = u1.get_position()
-#	var pos2 = u2.get_position()
-#
-#	u1.set_z_index(35)
-#	u2.set_z_index(40)
-#	twn.interpolate_property(u1, "position", pos1, pos2, SWAPTIME, 4, 2)
-#	twn.interpolate_property(u2, "position", pos2, pos1, SWAPTIME, 4, 2)
-#	twn.start()
-#	set_all_positions()
+	if unit_index1 == -1 or unit_index2 == -1:
+		print("ERROS: UNIT NOT FOUND IN TEAM")
+		return
 
+	move_child(Unit1, unit_index2 + 1) # +1 in indexes is so Tween node remains in correct relative position
+	move_child(Unit2, unit_index1 + 1)
+
+	var Twn = get_node("Tween")
+	var pos1 = Unit1.get_position()
+	var pos2 = Unit2.get_position()
+
+	Unit1.set_z_index(5)
+	Unit2.set_z_index(10)
+	Twn.interpolate_property(Unit1, "position", pos1, pos2, SWAPTIME, 4, 2)
+	Twn.interpolate_property(Unit2, "position", pos2, pos1, SWAPTIME, 4, 2)
+	Twn.start()
+	yield(Twn, "tween_completed")
+	Unit1.set_z_index(0)
+	Unit2.set_z_index(0)
+	
 
 # Removes unit from all data
 # Animates unit's escape
