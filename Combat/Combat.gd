@@ -113,50 +113,38 @@ func player_turn():
 		ActSel.update_actions(action_list)
 		ActSel.enable()
 		yield(self, "turn_completed")
-	
+	end_turn()
+
+
+func enemy_turn():
+	var Unit = get_node("Enemies").get_next_actor()
+#	var act = EnemyAI.choose_action(unit, get_node("Allies").units, get_node("Enemies").units, get_node("Allies").cap_index, get_node("Enemies").cap_index)
+	get_node("AttackHandler").attack(Unit, get_node("Allies").get_front_unit()[0], null)
+	yield(get_node("AttackHandler"), "attack_finished")
+	end_turn()
+
+
+func end_turn():
 	var result = battle_ended()
-	if result == 1:
+	if  result == 1:
 		victory()
 		return
 	elif result == 2:
 		defeat()
 		return
 	
+	# Go to next turn
 	if active_group == "Allies":
 		player_turn()
 	else:
 		enemy_turn()
 
 
-func enemy_turn():
-	var unit = get_node("Enemies").get_next_actor()
-	var act = EnemyAI.choose_action(unit, get_node("Allies").units, get_node("Enemies").units, get_node("Allies").cap_index, get_node("Enemies").cap_index)
-	
-	active_unit.def[1] = 0 # in case active_unit defended last turn
-	
-	if act != null:
-		if act[0] == "Attack":
-			get_node("AttackHandler").attack([unit, "Enemies", act[1], "Allies"], unit.actions[0])
-			yield(get_node("AttackHandler"), "attack_finished")
-	
-	var result = battle_ended()
-	if result == 1:
-		victory()
-		return
-	elif result == 2:
-		defeat()
-		return
-	
-	if active_group == "Enemies":
-		enemy_turn()
-	else:
-		player_turn()
-
-
 func battle_ended():
 	var dead_allies = get_node("Allies").get_dead_units()
 	var dead_enemies = get_node("Enemies").get_dead_units()
 	
+	print(dead_allies.size() == get_node("Allies").get_all_units().size())
 	if dead_enemies.size() == get_node("Enemies").get_all_units().size():
 		# Enemies lost
 		return 1
@@ -224,17 +212,9 @@ func _on_ActionSelector_selected( action ):
 	elif action == "Flee":
 		if flee_succeeded():
 			flee("Allies", active_unit)
+			yield(get_node("Allies/Tween"), "tween_completed")
 		else:
 			print("Flee failed")
-	elif action == "Terrify":
-		if terrify_succeeded():
-			var enemies = get_node("Enemies").get_all_units()
-			
-			for u in enemies:
-				if u.hp > 0:
-					flee("Enemies", u.id)
-		else:
-			print("Terrify failed")
 	else:
 		get_targets("Enemies", false, "targetable")
 		yield(self, "targets_selected")
@@ -252,31 +232,12 @@ func flee_succeeded():
 		return true
 	return false
 
-
-func terrify_succeeded():
-	var all = get_node("Enemies").get_all_units()
-	var total = 0
-	
-	for unit in all:
-		total += unit.hp
-	
-	if total > FLEECHANCE:
-		return 0
-	
-	var r = randi() % 100
-	
-	if r < FLEECHANCE - total:
-		return true
-	return false
-
-
 func _on_Allies_all_acted():
 	active_group = "Enemies"
 
-
 func _on_Enemies_all_acted():
 	active_group = "Allies"
-########################################################################
+
 ########################## AUXILIARY FUNCTIONS #########################
 
 func swap(group, Unit1, Unit2):

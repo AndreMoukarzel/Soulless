@@ -48,7 +48,7 @@ func defend(base_damage, percentage_of_damage_taken):
 	yield($AnimationPlayer, "animation_finished")
 
 func flee():
-	set_scale(Vector2(-Size, Size))
+	flip()
 	get_node("AnimationPlayer").play("walk")
 
 func die():

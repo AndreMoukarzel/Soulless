@@ -4,6 +4,7 @@ signal all_acted() # All units were selected as next actor in this iteration
 
 const BODYSIZE = 0.7
 const SWAPTIME = 0.3
+const FLEETIME = 1.0
 var TOPMARGIN = 600
 var BOTMARGIN = -100
 var HORMARGIN = 200
@@ -70,8 +71,10 @@ func flee(Unit):
 	
 	var Twn = get_node("Tween")
 	var pos = Unit.get_position()
+	Unit.get_node("HPBar").queue_free()
+	Unit.HP = 0 # "Kills" the unit to keep consistence in battle_ended() function in Combat.gd
+	Twn.interpolate_property(Unit, "position", pos, Vector2(1000, pos.y), FLEETIME, Tween.TRANS_LINEAR, Tween.EASE_IN)
 	Unit.flee()
-	Twn.interpolate_property(Unit, "position", pos, Vector2(1000, pos.y), 1.5, Tween.TRANS_LINEAR, Tween.EASE_IN)
 	Twn.start()
 	yield(Twn, "tween_completed")
 	get_children()[Unit_index].queue_free()
