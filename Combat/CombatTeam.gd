@@ -16,7 +16,7 @@ func populate(all_units, invert_interface):
 	for u in all_units:
 		var u_scn = load("res://Characters/" + u + "/" + u + ".tscn")
 		var unit = u_scn.instance()
-		unit.set_HpBar(invert_interface)
+		unit.set_HPBar(invert_interface)
 		add_child(unit)
 	
 	set_all_positions()

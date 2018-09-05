@@ -1,9 +1,8 @@
 [gd_scene load_steps=2 format=2]
 
-[ext_resource path="res://Combat/BonusDmg.gd" type="Script" id=1]
+[ext_resource path="res://Combat/Attack/TimedHit.gd" type="Script" id=1]
 
-
-[node name="BonusDmg" type="Node"]
+[node name="TimedHit" type="Node"]
 
 script = ExtResource( 1 )
 

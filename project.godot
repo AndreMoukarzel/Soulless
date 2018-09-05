@@ -16,8 +16,7 @@ config/icon="res://Characters/Mole/mole_head.png"
 
 [autoload]
 
-Units="res://Scripts/Global/Units.gd"
-Skills="res://Scripts/Global/Skills.gd"
+SkillDatabase="*res://Combat/SkillDatabase.gd"
 
 [display]
 

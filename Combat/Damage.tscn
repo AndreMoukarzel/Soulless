@@ -336,7 +336,7 @@ tracks/10/keys = {
 "values": [ ExtResource( 4 ) ]
 }
 
-[node name="DamageBox" type="Node2D" index="0"]
+[node name="DamageBox" type="Node2D"]
 
 position = Vector2( 0, -80 )
 scale = Vector2( 1.5, 1.5 )
@@ -359,6 +359,7 @@ margin_top = -25.0
 margin_right = 25.0
 margin_bottom = 25.0
 rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
 mouse_filter = 2
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
@@ -425,12 +426,12 @@ playback_speed = 1.0
 anims/evil = SubResource( 4 )
 anims/good = SubResource( 5 )
 blend_times = [  ]
-autoplay = "damage"
 
 [node name="HitSound" type="AudioStreamPlayer2D" parent="." index="2"]
 
 stream = ExtResource( 5 )
 volume_db = -5.0
+pitch_scale = 1.0
 autoplay = false
 max_distance = 2000.0
 attenuation = 2.37841
@@ -441,6 +442,7 @@ area_mask = 1
 
 stream = ExtResource( 6 )
 volume_db = -5.0
+pitch_scale = 1.0
 autoplay = true
 max_distance = 2000.0
 attenuation = 2.37841

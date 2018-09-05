@@ -144,7 +144,6 @@ func battle_ended():
 	var dead_allies = get_node("Allies").get_dead_units()
 	var dead_enemies = get_node("Enemies").get_dead_units()
 	
-	print(dead_allies.size() == get_node("Allies").get_all_units().size())
 	if dead_enemies.size() == get_node("Enemies").get_all_units().size():
 		# Enemies lost
 		return 1

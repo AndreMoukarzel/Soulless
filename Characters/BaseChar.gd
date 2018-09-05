@@ -13,12 +13,13 @@ export(String) var Signature1
 export(String) var Signature2
 
 var HpBar_scn = preload("res://Combat/HPBar.tscn")
+onready var HPmax = HP
 
 func _ready():
 	set_scale(Vector2(Size, Size))
 
 # Invert should be true if unit is on Allies team
-func set_HpBar(invert):
+func set_HPBar(invert):
 	var HpBar = HpBar_scn.instance()
 	var scale = 1/Size
 	
@@ -34,17 +35,26 @@ func set_HpBar(invert):
 	
 	add_child(HpBar)
 
+func update_HPBar(new_value):
+	var Twn = $"HPBar/Tween"
+	Twn.interpolate_property($HPBar, "value", $HPBar.get_value(), new_value, 0.3, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
+	Twn.start()
+	$"HPBar/Label".set_text(str(HP, "/", HPmax))
+
 func get_damaged(damage, play_anim = true):
 	HP -= int(damage)
+	print(HP)
+	update_HPBar(HP)
 	if play_anim:
-		$AnimationPlayer.play("hit")
+		play_animation("hit")
 		yield($AnimationPlayer, "animation_finished")
+		play_animation("idle")
 	if HP <= 0:
 		die()
 
 func defend(base_damage, percentage_of_damage_taken):
 	get_damaged(base_damage * percentage_of_damage_taken, false)
-	$AnimationPlayer.play("defend")
+	play_animation("defend")
 	yield($AnimationPlayer, "animation_finished")
 
 func flee():
@@ -52,7 +62,7 @@ func flee():
 	get_node("AnimationPlayer").play("walk")
 
 func die():
-	$AnimationPlayer.play("die")
+	play_animation("died")
 	emit_signal("died")
 
 func play_animation(name):

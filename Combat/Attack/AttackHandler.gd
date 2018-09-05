@@ -5,14 +5,11 @@ signal attack_finished
 const ATKDIST = 150 # Distance between attacker and target when attacking
 const WALKTIME = 0.7
 
-onready var skill_db = get_node("/root/Skills")
 onready var dmg_scn = preload("res://Combat/Damage.tscn")
 
 
-# atk_info is [Attacker, Attacker's Team, Target, Target's Team]
-func attack(Attacker, Target, skill_info):
+func attack(Attacker, Target, skill_name):
 	var twn = get_node("Tween")
-	
 	var pos_origin = Attacker.get_global_position()
 	
 	twn.stop_all()
@@ -22,8 +19,8 @@ func attack(Attacker, Target, skill_info):
 	yield(twn, "tween_completed")
 	
 	# Only for testing #
-#	action_event(skill_info)
-#	yield(Attacker.get_node("AnimationPlayer"), "animation_finished")
+	execute_attack(Attacker, Target, skill_name)
+	yield(Attacker.get_node("AnimationPlayer"), "animation_finished")
 	####################
 	
 	Attacker.flip()
@@ -37,66 +34,53 @@ func attack(Attacker, Target, skill_info):
 	emit_signal("attack_finished")
 
 
-#func action_event(skill_name):
-#	var id = skill_db.get_skill_id(skill_name)
-#	var type = skill_db.get_skill_type(id)
-#	var act_scn = load(str("res://Scenes/Combat/", type, ".tscn"))
-#	var act = act_scn.instance()
-#	var anim = null
-#	var dmg
-#
-#	if atk_team.get_name() == "Allies": # Player Attack
-#		var atk_time = skill_db.get_skill_atktime(id)
-#
-#		atk_node.get_node("AnimationPlayer").play(skill_name)
-#		act.start(atk_time)
-#		add_child(act)
-#		yield(act, "done")
-#
-#		var hit = act.hit
-#		var super = act.super
-#
-#		dmg = define_damage()
-#		if super:
-#			shake_camera(0.4)
-#			dmg *= 2
-#		elif hit:
-#			dmg = int(dmg * 1.5)
-#		create_damage_box(dmg, target_team.get_unit_pos(target.id), "evil")
-#
-#	else: # Player Defend
-#		var def_time = skill_db.get_skill_deftime(id)
-#
-#		atk_node.get_node("AnimationPlayer").play(skill_name)
-#		act.start(def_time)
-#		add_child(act)
-#		yield(act, "done")
-#
-#		var hit = act.hit
-#		var super = act.super
-#
-#		dmg = define_damage()
-#		if super:
-#			dmg = 0
+func execute_attack(Attacker, Target, skill_name):
+	var skill_id = SkillDatabase.get_skill_id(skill_name)
+	var skill_args = SkillDatabase.get_skill_arguments(skill_id)
+	var AtkTeam = Attacker.get_parent()
+	var AtkIter = instance_attack_interaction(skill_id)
+	
+	add_child(AtkIter)
+	Attacker.play_animation(skill_name)
+	AtkIter.start(skill_args[0])
+	yield(AtkIter, "done")
+	
+	var hit = AtkIter.hit
+	var super = AtkIter.super
+	var dmg = define_damage(Attacker, Target)
+	if AtkTeam.get_name() == "Allies": # Player is the attacker
+		if super:
+			shake_camera(0.4)
+			dmg *= 2
+		elif hit:
+			dmg = int(dmg * 1.5)
+	else: # Player is defending
+		if super:
+			dmg = 0
 #			anim = "defend" # trocar para dodge quando eu fizer a animação
 #			create_damage_box(dmg, target_team.get_unit_pos(target.id), "good", "Dodge")
-#		elif hit:
-#			dmg = int(dmg / 2)
+		elif hit:
+			dmg = int(dmg / 2)
 #			anim = "defend"
 #			create_damage_box(dmg, target_team.get_unit_pos(target.id), "good")
-#		else:
-#			create_damage_box(dmg, target_team.get_unit_pos(target.id), "good")
-#
-#	target_team.damage(dmg, target, anim)
+	create_damage_box(dmg, Target.get_global_position(), "good")
+	Target.get_damaged(dmg)
 
 
-#func define_damage():
-#	var damage = (attacker.atk[0] + attacker.atk[1]) - (target.def[0] + target.def[1])
-#
-#	if damage < 1:
-#		damage = 1 
-#
-#	return damage
+func instance_attack_interaction(skill_id):
+	var type = SkillDatabase.get_skill_type(skill_id)
+	var AtkInter_scn = load(str("res://Combat/Attack/", type, ".tscn"))
+	var AtkInter = AtkInter_scn.instance()
+	return AtkInter
+
+
+func define_damage(Attacker, Target):
+	var damage = Attacker.ATK - Target.DEF
+
+	if damage < 1:
+		damage = 1 
+
+	return damage
 
 
 func create_damage_box(value, pos, animation, sound = "Hit"):
@@ -129,30 +113,6 @@ func move_Attacker_to_Target(Attacker, Target):
 		atk_dist *= -1
 	
 	move_Unit(Attacker, atkr_pos, trgt_pos + Vector2(atk_dist, 0))
-
-#func unit_movement(reverse = false):
-#	var pos_final = Vector2(0, 0)
-#
-#	if target_node:
-#		var attacker_pos = atk_team.get_unit_pos(int(atk_node.get_name()))
-#		var target_pos = target_team.get_unit_pos(int(target_node.get_name()))
-#		var pos_dif = target_pos - attacker_pos
-#
-#		if pos_dif.x > 0:
-#			pos_dif.x -= ATKDIST
-#			pos_final.x = pos_origin.x - pos_dif.x
-#		elif pos_dif.x < 0:
-#			pos_dif.x += ATKDIST
-#			pos_final.x = pos_origin.x + pos_dif.x
-#		pos_final.y = pos_origin.y + pos_dif.y
-#
-#		if not reverse:
-#			camera_movement(pos_dif, attacker_pos, atk_team)
-#			get_node("Tween").interpolate_property(atk_node, "position", atk_node.get_position(), pos_final, WALKTIME, Tween.TRANS_QUAD, Tween.EASE_IN_OUT)
-#		else:
-#			camera_movement(null, null, null, true)
-#			get_node("Tween").interpolate_property(atk_node, "position", atk_node.get_position(), pos_origin, WALKTIME, Tween.TRANS_QUAD, Tween.EASE_IN_OUT)
-
 
 func camera_movement(pos_dif, attacker_pos, atk_team, reverse = false):
 	var Cam = get_node("ScreenShake/Camera2D")

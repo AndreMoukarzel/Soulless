@@ -2,15 +2,15 @@ extends Node
 
 const NAME = 0
 const TYPE = 1
-const ATKTIME = 2
-const DEFTIME = 3
+const ARGUMENTS = 2 # Arguments change depending on the TYPE of skill
+const DESCRIPTION = 3 # Info that shows while player is hovering over the skill in ActionSelector
 
 var skill_database = [
 	{ # ID = 0
 		NAME : "Bounce",
-		TYPE : "BonusDmg",
-		ATKTIME : 0.5,
-		DEFTIME : 0.5
+		TYPE : "TimedHit",
+		ARGUMENTS : [0.5],
+		DESCRIPTION : "I like trains"
 	}
 ]
 
@@ -30,8 +30,8 @@ func get_skill_name(id):
 func get_skill_type(id):
 	return skill_database[id][TYPE]
 
-func get_skill_atktime(id):
-	return skill_database[id][ATKTIME]
+func get_skill_arguments(id):
+	return skill_database[id][ARGUMENTS]
 
-func get_skill_deftime(id):
-	return skill_database[id][DEFTIME]
+func get_skill_description(id):
+	return skill_database[id][DESCRIPTION]
