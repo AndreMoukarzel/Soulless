@@ -17,12 +17,10 @@ func attack(Attacker, Target, skill_name):
 	Attacker.get_node("HPBar").hide()
 	move_Attacker_to_Target(Attacker, Target)
 	yield(twn, "tween_completed")
-	
-	# Only for testing #
+	############# Attack Processing ################
 	execute_attack(Attacker, Target, skill_name)
 	yield(Attacker.get_node("AnimationPlayer"), "animation_finished")
-	####################
-	
+	################################################
 	Attacker.flip()
 	move_Unit(Attacker, Attacker.get_global_position(), pos_origin)
 	yield(twn, "tween_completed")
@@ -54,34 +52,31 @@ func execute_attack(Attacker, Target, skill_name):
 			dmg *= 2
 		elif hit:
 			dmg = int(dmg * 1.5)
+		create_damage_box(dmg, Target.get_global_position(), "good")
+		Target.get_damaged(dmg)
 	else: # Player is defending
 		if super:
 			dmg = 0
-#			anim = "defend" # trocar para dodge quando eu fizer a animação
-#			create_damage_box(dmg, target_team.get_unit_pos(target.id), "good", "Dodge")
+			create_damage_box(dmg, Target.get_global_position(), "good", "Dodge")
+			Target.get_damaged(dmg)
 		elif hit:
-			dmg = int(dmg / 2)
-#			anim = "defend"
-#			create_damage_box(dmg, target_team.get_unit_pos(target.id), "good")
-	create_damage_box(dmg, Target.get_global_position(), "good")
-	Target.get_damaged(dmg)
+			create_damage_box(dmg, Target.get_global_position(), "good")
+			Target.defend(dmg, 0.5)
 
 
 func instance_attack_interaction(skill_id):
 	var type = SkillDatabase.get_skill_type(skill_id)
 	var AtkInter_scn = load(str("res://Combat/Attack/", type, ".tscn"))
 	var AtkInter = AtkInter_scn.instance()
+	
 	return AtkInter
-
 
 func define_damage(Attacker, Target):
 	var damage = Attacker.ATK - Target.DEF
-
 	if damage < 1:
 		damage = 1 
 
 	return damage
-
 
 func create_damage_box(value, pos, animation, sound = "Hit"):
 	var dmg = dmg_scn.instance()
@@ -95,7 +90,7 @@ func create_damage_box(value, pos, animation, sound = "Hit"):
 	yield(dmg.get_node("AnimationPlayer"), "animation_finished")
 	dmg.queue_free()
 
-
+####################### CHARACTER MOVEMENT #######################
 func move_Unit(Unit, starting_pos, ending_pos):
 	if not Unit:
 		breakpoint
@@ -114,6 +109,7 @@ func move_Attacker_to_Target(Attacker, Target):
 	
 	move_Unit(Attacker, atkr_pos, trgt_pos + Vector2(atk_dist, 0))
 
+######################## CAMERA MOVEMENT ########################
 func camera_movement(pos_dif, attacker_pos, atk_team, reverse = false):
 	var Cam = get_node("ScreenShake/Camera2D")
 	

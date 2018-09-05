@@ -56,6 +56,8 @@ func defend(base_damage, percentage_of_damage_taken):
 	get_damaged(base_damage * percentage_of_damage_taken, false)
 	play_animation("defend")
 	yield($AnimationPlayer, "animation_finished")
+	if HP > 0:
+		play_animation("idle")
 
 func flee():
 	flip()

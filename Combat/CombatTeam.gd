@@ -21,7 +21,6 @@ func populate(all_units, invert_interface):
 	
 	set_all_positions()
 
-
 func set_all_positions():
 	var center = Vector2(-OS.get_window_size().x/4, (OS.get_window_size().y - TOPMARGIN - BOTMARGIN)/2 + TOPMARGIN/2)
 	var units = get_all_units()
@@ -59,7 +58,6 @@ func swap(Unit1, Unit2):
 	Unit1.set_z_index(0)
 	Unit2.set_z_index(0)
 
-
 # Removes unit from all data
 # Animates unit's escape
 # Does not consider if unit is captain or not
@@ -79,29 +77,7 @@ func flee(Unit):
 	yield(Twn, "tween_completed")
 	get_children()[Unit_index].queue_free()
 
-
-func damage(value, unit, animation = null):
-	var hp_bar = get_node(str(unit.id)).get_node("HPBar")
-	var anim = get_node(str(unit.id)).get_node("AnimationPlayer")
-	var label = hp_bar.get_node("Label")
-	var twn = hp_bar.get_node("Tween")
-	
-	if animation:
-		anim.play(animation)
-	else:
-		anim.play("hit")
-	unit.hp -= value
-	twn.interpolate_property(hp_bar, "value", hp_bar.get_value(), unit.hp, 0.2, Tween.TRANS_CUBIC, Tween.EASE_IN_OUT)
-	twn.start()
-	label.set_text(str(max(unit.hp, 0), "/", unit.hp_max))
-	
-	yield(anim, "animation_finished")
-	get_node(str(unit.id)).get_node("AnimationPlayer").play("idle")
-	if unit.hp <= 0:
-		get_node(str(unit.id)).get_node("AnimationPlayer").play("die")
-
-
-############ GETTERS ############
+####################### GETTERS #######################
 # All "unit" getters return an array
 
 # Search for next unit that will act
@@ -113,19 +89,6 @@ func get_next_actor():
 		emit_signal("all_acted") # signals for team change in combat
 		
 	return actor
-
-
-#func get_targetable_units():
-#	var all = []
-#
-#	for i in range(1, units.size()):
-#		if units[i] != null and units[i].hp > 0:
-#			all.append(units[i])
-#
-#	if all.size() < 1: # No units in the front row
-#		all.append(units[0]) # Unit in the back is targetable
-#
-#	return all
 
 func get_all_units():
 	var all = get_children()

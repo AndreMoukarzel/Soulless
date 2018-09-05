@@ -18,37 +18,6 @@ var selected_targets = []
 var target_num = 1
 var active_group = "Allies"
 
-class CombatUnit:
-	var id
-	var name
-	var race
-	var size
-	var hp = 0
-	var hp_max
-	var atk = [0, 0]
-	var def = [0, 0]
-	var actions = []
-	var skills = []
-	
-	func _init(Unit, id):
-		self.id = id
-		self.name = Unit.name
-		self.race = Unit.race
-		self.size = Unit.size
-		self.hp = Unit.attributes[2]
-		self.hp_max = self.hp
-		self.atk[0] = Unit.attributes[0]
-		self.def[0] = Unit.attributes[1]
-		self.actions.append(str(Unit.baseatk))
-		self.actions.append("Skills")
-		self.actions.append("Swap")
-		self.actions.append("Defend")
-		if Unit.race == "Soulless":
-			self.actions.append("Terrify")
-		else:
-			self.actions.append("Flee")
-		self.skills = Unit.skills
-
 
 func _ready():
 	randomize()
