@@ -2,6 +2,8 @@ extends Node2D
 
 signal died
 
+const FLIPTIME = 0.15
+
 export(float, 0.1, 10.0, 0.1) var Size = 1.0
 export(int) var HP = 1
 export(int) var ATK = 1
@@ -55,3 +57,10 @@ func die():
 
 func play_animation(name):
 	get_node("AnimationPlayer").play(name)
+
+func flip():
+	var end_scale = Vector2(1, 1)
+	if $Body.scale.x > 0:
+		end_scale = Vector2(-1, 1)
+	$Tween.interpolate_property($Body, "scale", $Body.get_scale(), end_scale, FLIPTIME, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
+	$Tween.start()

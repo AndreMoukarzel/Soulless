@@ -196,7 +196,7 @@ func get_targets(group, exclude_active = false, subgroup = null):
 	if not subgroup:
 		active_targets = team.get_all_units()
 	elif subgroup == "targetable":
-		active_targets = team.get_targetable_units()
+		active_targets = team.get_front_unit()
 	
 	for target in active_targets:
 		active_targets_pos.append(target.get_global_position())
@@ -238,7 +238,7 @@ func _on_ActionSelector_selected( action ):
 	else:
 		get_targets("Enemies", false, "targetable")
 		yield(self, "targets_selected")
-		get_node("AttackHandler").attack([active_unit, "Allies", selected_targets[0], "Enemies"], action)
+		get_node("AttackHandler").attack(active_unit, selected_targets[0], action)
 		yield(get_node("AttackHandler"), "attack_finished")
 	
 	# Animation and stuff here

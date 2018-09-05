@@ -29,65 +29,7 @@ func set_all_positions():
 	for u in units:
 		u.set_position(center + Vector2(i * 200, 0))
 		i += 1
-
-
-# Search for next unit that will act
-func get_next_actor():
-	if act_queue.empty():
-		act_queue = get_idle_units()
-	var actor = act_queue.pop_front()
-	if act_queue.empty():
-		emit_signal("all_acted") # signals for team change in combat
 		
-	return actor
-
-
-#func get_targetable_units():
-#	var all = []
-#
-#	for i in range(1, units.size()):
-#		if units[i] != null and units[i].hp > 0:
-#			all.append(units[i])
-#
-#	if all.size() < 1: # No units in the front row
-#		all.append(units[0]) # Unit in the back is targetable
-#
-#	return all
-
-
-func get_all_units():
-	var all = get_children()
-	all.pop_front()
-	
-	return all
-
-func get_idle_units():
-	var idle = []
-	
-	for u in get_all_units():
-		if u.HP >= 0: # ignores dead and stunned units
-			idle.append(u)
-	
-	return idle
-
-func get_dead_units():
-	var dead = []
-	
-	for u in get_all_units():
-		if u.HP <= 0:
-			dead.append(u)
-	
-	return dead
-
-func get_unit_pos(unit_id):
-	var pos = get_node(str(unit_id)).get_position()
-	
-	if self.get_name() == "Allies":
-		# Scene's scale is (-1, 1)
-		pos.x = -pos.x
-	pos += self.get_position()
-	
-	return pos
 
 func swap(Unit1, Unit2):
 	var allUnits = get_children()
@@ -115,7 +57,7 @@ func swap(Unit1, Unit2):
 	yield(Twn, "tween_completed")
 	Unit1.set_z_index(0)
 	Unit2.set_z_index(0)
-	
+
 
 # Removes unit from all data
 # Animates unit's escape
@@ -154,3 +96,76 @@ func damage(value, unit, animation = null):
 	get_node(str(unit.id)).get_node("AnimationPlayer").play("idle")
 	if unit.hp <= 0:
 		get_node(str(unit.id)).get_node("AnimationPlayer").play("die")
+
+
+############ GETTERS ############
+# All "unit" getters return an array
+
+# Search for next unit that will act
+func get_next_actor():
+	if act_queue.empty():
+		act_queue = get_idle_units()
+	var actor = act_queue.pop_front()
+	if act_queue.empty():
+		emit_signal("all_acted") # signals for team change in combat
+		
+	return actor
+
+
+#func get_targetable_units():
+#	var all = []
+#
+#	for i in range(1, units.size()):
+#		if units[i] != null and units[i].hp > 0:
+#			all.append(units[i])
+#
+#	if all.size() < 1: # No units in the front row
+#		all.append(units[0]) # Unit in the back is targetable
+#
+#	return all
+
+func get_all_units():
+	var all = get_children()
+	all.pop_front()
+	
+	return all
+
+func get_front_unit():
+	return [get_all_units().pop_front()]
+
+func get_idle_units():
+	var idle = []
+	
+	for u in get_all_units():
+		if u.HP >= 0: # ignores dead and stunned units
+			idle.append(u)
+	
+	return idle
+
+func get_alive_units():
+	var alive = []
+	
+	for u in get_all_units():
+		if u.HP >= 0: # ignores dead and stunned units
+			alive.append(u)
+	
+	return alive
+
+func get_dead_units():
+	var dead = []
+	
+	for u in get_all_units():
+		if u.HP <= 0:
+			dead.append(u)
+	
+	return dead
+
+func get_unit_pos(unit_id):
+	var pos = get_node(str(unit_id)).get_position()
+	
+	if self.get_name() == "Allies":
+		# Scene's scale is (-1, 1)
+		pos.x = -pos.x
+	pos += self.get_position()
+	
+	return pos
