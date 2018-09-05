@@ -5,7 +5,7 @@ const FLEECHANCE = 70
 signal targets_selected
 signal turn_completed
 
-onready var EnemyAI = preload("res://Scripts/Combat/EnemyAI.gd")
+onready var EnemyAI = preload("res://Combat/EnemyAI.gd")
 
 var next_id = 0
 

@@ -6,7 +6,7 @@ const ATKDIST = 150
 const WALKTIME = 0.7
 
 onready var skill_db = get_node("/root/Skills")
-onready var dmg_scn = preload("res://Scenes/Combat/Damage.tscn")
+onready var dmg_scn = preload("res://Combat/Damage.tscn")
 
 var attacker
 var atk_team
