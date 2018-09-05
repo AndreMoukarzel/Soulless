@@ -16,6 +16,7 @@ func attack(Attacker, Target, skill_info):
 	var pos_origin = Attacker.get_global_position()
 	
 	twn.stop_all()
+	Attacker.set_z_index(30)
 	Attacker.get_node("HPBar").hide()
 	move_Attacker_to_Target(Attacker, Target)
 	yield(twn, "tween_completed")
@@ -31,6 +32,7 @@ func attack(Attacker, Target, skill_info):
 	Attacker.flip()
 	Attacker.play_animation("idle")
 	Attacker.get_node("HPBar").show()
+	Attacker.set_z_index(0)
 	
 	emit_signal("attack_finished")
 

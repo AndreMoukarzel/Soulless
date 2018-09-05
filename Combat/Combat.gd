@@ -118,8 +118,8 @@ func player_turn():
 
 func enemy_turn():
 	var Unit = get_node("Enemies").get_next_actor()
-#	var act = EnemyAI.choose_action(unit, get_node("Allies").units, get_node("Enemies").units, get_node("Allies").cap_index, get_node("Enemies").cap_index)
-	get_node("AttackHandler").attack(Unit, get_node("Allies").get_front_unit()[0], null)
+	var act = EnemyAI.choose_action(Unit, $Allies, $Enemies)
+	get_node("AttackHandler").attack(Unit, act[1], act[0])
 	yield(get_node("AttackHandler"), "attack_finished")
 	end_turn()
 
@@ -207,11 +207,11 @@ func _on_ActionSelector_selected( action ):
 	if action == "Swap":
 		get_targets("Allies", true)
 		yield(self, "targets_selected")
-		swap("Allies", active_unit, selected_targets[0])
+		get_node("Allies").swap(active_unit, selected_targets[0])
 		yield(get_node("Allies/Tween"), "tween_completed")
 	elif action == "Flee":
 		if flee_succeeded():
-			flee("Allies", active_unit)
+			get_node("Allies").flee(active_unit)
 			yield(get_node("Allies/Tween"), "tween_completed")
 		else:
 			print("Flee failed")
@@ -237,13 +237,5 @@ func _on_Allies_all_acted():
 
 func _on_Enemies_all_acted():
 	active_group = "Allies"
-
-########################## AUXILIARY FUNCTIONS #########################
-
-func swap(group, Unit1, Unit2):
-	get_node(group).swap(Unit1, Unit2)
-
-func flee(group, Unit):
-	get_node(group).flee(Unit)
 
 ########################################################################
