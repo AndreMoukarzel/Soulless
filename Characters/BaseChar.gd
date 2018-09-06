@@ -43,7 +43,6 @@ func update_HPBar(new_value):
 
 func get_damaged(damage, play_anim = true):
 	HP -= int(damage)
-	print(HP)
 	update_HPBar(HP)
 	if play_anim:
 		play_animation("hit")

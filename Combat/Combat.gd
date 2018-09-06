@@ -78,7 +78,7 @@ func player_turn():
 		ActSel.set_position(active_pos)
 		action_list.append(active_unit.Signature1)
 		action_list.append(active_unit.Signature2)
-		action_list = action_list + ["Flee", "Swap", "Item"]
+		action_list = action_list + ["Flee", "Swap", "Wait", "Item"]
 		ActSel.update_actions(action_list)
 		ActSel.enable()
 		yield(self, "turn_completed")
@@ -183,13 +183,13 @@ func _on_ActionSelector_selected( action ):
 			yield(get_node("Allies/Tween"), "tween_completed")
 		else:
 			print("Flee failed")
+	elif action == "Wait":
+		pass
 	else:
 		get_targets("Enemies", false, "targetable")
 		yield(self, "targets_selected")
 		get_node("AttackHandler").attack(active_unit, selected_targets[0], action)
 		yield(get_node("AttackHandler"), "attack_finished")
-	
-	# Animation and stuff here
 	emit_signal("turn_completed")
 
 
