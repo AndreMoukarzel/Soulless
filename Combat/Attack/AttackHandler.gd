@@ -5,6 +5,8 @@ signal attack_finished
 const ATKDIST = 150 # Distance between attacker and target when attacking
 const WALKTIME = 0.7
 
+export (bool)var DEBUG = 0
+
 onready var dmg_scn = preload("res://Combat/Damage.tscn")
 
 
@@ -15,12 +17,18 @@ func attack(Attacker, Target, skill_name):
 	twn.stop_all()
 	Attacker.set_z_index(30)
 	Attacker.get_node("HPBar").hide()
+	if DEBUG:
+		print("Moving ", Attacker.get_name(), " to ", Target.get_name())
 	move_Attacker_to_Target(Attacker, Target)
 	yield(twn, "tween_completed")
 	############# Attack Processing ################
+	if DEBUG:
+		print("Starting ", Attacker.get_name(), "'s attack")
 	execute_attack(Attacker, Target, skill_name)
 	yield(Attacker.get_node("AnimationPlayer"), "animation_finished")
 	################################################
+	if DEBUG:
+		print("Moving ", Attacker.get_name(), " back to position")
 	Attacker.flip()
 	move_Unit(Attacker, Attacker.get_global_position(), pos_origin)
 	yield(twn, "tween_completed")
@@ -29,6 +37,8 @@ func attack(Attacker, Target, skill_name):
 	Attacker.get_node("HPBar").show()
 	Attacker.set_z_index(0)
 	
+	if DEBUG:
+		print("Attack handling finished")
 	emit_signal("attack_finished")
 
 
@@ -60,9 +70,11 @@ func execute_attack(Attacker, Target, skill_name):
 			create_damage_box(dmg, Target.get_global_position(), "good", "Dodge")
 			Target.get_damaged(dmg)
 		elif hit:
-			create_damage_box(dmg, Target.get_global_position(), "good")
+			create_damage_box(dmg/2, Target.get_global_position(), "good")
 			Target.defend(dmg, 0.5)
-
+		else:
+			create_damage_box(dmg, Target.get_global_position(), "good")
+			Target.get_damaged(dmg)
 
 func instance_attack_interaction(skill_id):
 	var type = SkillDatabase.get_skill_type(skill_id)
@@ -81,6 +93,8 @@ func define_damage(Attacker, Target):
 func create_damage_box(value, pos, animation, sound = "Hit"):
 	var dmg = dmg_scn.instance()
 	
+	if DEBUG:
+		print("Damage dealt: ", value)
 	dmg.get_node("Visual/Label").set_text(str(value))
 	dmg.set_position(Vector2(pos.x, pos.y - 100))
 	dmg.set_z_index(35)

@@ -52,9 +52,9 @@ func update_actions(action_list):
 	rotation_step = angle_step
 	action_num = action_list.size()
 	hl = action_num - 1
-	emit_signal("changed_to", get_current_Action().get_name())
+	emit_signal("changed_to", action_list[0])
 	if DEBUG:
-		print ("Changed_to ", get_current_Action().get_name())
+		print ("Changed_to ", action_list[0])
 
 
 func instance_Action(action_name, angle):
