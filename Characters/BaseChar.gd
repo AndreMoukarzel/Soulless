@@ -39,7 +39,7 @@ func update_HPBar(new_value):
 	var Twn = $"HPBar/Tween"
 	Twn.interpolate_property($HPBar, "value", $HPBar.get_value(), new_value, 0.3, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
 	Twn.start()
-	$"HPBar/Label".set_text(str(HP, "/", HPmax))
+	$"HPBar/Label".set_text(str(max(HP, 0), "/", HPmax))
 
 func get_damaged(damage, play_anim = true):
 	HP -= int(damage)
@@ -68,7 +68,7 @@ func flee():
 	get_node("AnimationPlayer").play("walk")
 
 func die():
-	play_animation("died")
+	play_animation("die")
 	emit_signal("died")
 
 func play_animation(name):
