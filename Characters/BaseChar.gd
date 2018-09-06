@@ -59,6 +59,11 @@ func defend(base_damage, percentage_of_damage_taken):
 	if HP > 0:
 		play_animation("idle")
 
+func dodge():
+	flip()
+	yield($Tween, "tween_completed")
+	flip()
+
 func flee():
 	flip()
 	get_node("AnimationPlayer").play("walk")

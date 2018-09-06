@@ -1450,7 +1450,7 @@ tracks/20/keys = {
 "values": [ 0.0 ]
 }
 
-[node name="Bunny" index="0" instance=ExtResource( 1 )]
+[node name="Bunny" instance=ExtResource( 1 )]
 
 Size = 0.7
 HP = 10
@@ -1458,10 +1458,21 @@ ATK = 3
 Signature1 = "Bounce"
 Signature2 = "Kick"
 
+[node name="Torso" parent="Body" index="0"]
+
+position = Vector2( 0, 40 )
+rotation = 1.58948
+
+[node name="Head" parent="Body/Torso" index="0"]
+
+position = Vector2( 2.589, -56.3671 )
+rotation = 0.149234
+frame = 3
+
 [node name="EarBack" type="Sprite" parent="Body/Torso/Head" index="0"]
 
-position = Vector2( -13.4868, -88.5712 )
-rotation = 0.296209
+position = Vector2( -1.66809, -92.7523 )
+rotation = -0.132531
 z_index = -1
 texture = ExtResource( 2 )
 offset = Vector2( 6.72003, -53.2964 )
@@ -1469,20 +1480,43 @@ _sections_unfolded = [ "Transform", "Z Index" ]
 
 [node name="EarFront" type="Sprite" parent="Body/Torso/Head" index="1"]
 
-position = Vector2( 27.748, -90.5235 )
-rotation = 0.458102
+position = Vector2( 34, -85 )
+rotation = 0.0952147
 texture = ExtResource( 2 )
 offset = Vector2( 7.35248, -51.6562 )
 _sections_unfolded = [ "Transform" ]
 
+[node name="FootBack" parent="Body/Torso" index="1"]
+
+position = Vector2( -13.7344, 29.4866 )
+rotation = -0.0138291
+
+[node name="FootFront" parent="Body/Torso" index="2"]
+
+position = Vector2( 32.299, 37.2321 )
+rotation = -0.392542
+
+[node name="HandL" parent="Body/Torso" index="3"]
+
+position = Vector2( -25.7905, -21.629 )
+
+[node name="HandR" parent="Body/Torso" index="4"]
+
+position = Vector2( 9.50031, -22.4435 )
+
 [node name="Tail" type="Sprite" parent="Body/Torso" index="5"]
 
 position = Vector2( 41.6436, 43.6026 )
-rotation = 0.26732
+rotation = 0.673212
 z_index = -1
 texture = ExtResource( 3 )
 offset = Vector2( 12.1351, 1.21609 )
 _sections_unfolded = [ "Z Index" ]
+
+[node name="Shadow" parent="Body" index="1"]
+
+position = Vector2( 23, 75 )
+scale = Vector2( 2, 1.5 )
 
 [node name="AnimationPlayer" parent="." index="1"]
 

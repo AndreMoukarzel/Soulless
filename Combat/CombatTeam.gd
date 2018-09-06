@@ -53,8 +53,12 @@ func swap(Unit1, Unit2):
 	Unit2.set_z_index(10)
 	Twn.interpolate_property(Unit1, "position", pos1, pos2, SWAPTIME, 4, 2)
 	Twn.interpolate_property(Unit2, "position", pos2, pos1, SWAPTIME, 4, 2)
+	Unit1.play_animation("walk")
+	Unit2.play_animation("walk")
 	Twn.start()
 	yield(Twn, "tween_completed")
+	Unit1.play_animation("idle")
+	Unit2.play_animation("idle")
 	Unit1.set_z_index(0)
 	Unit2.set_z_index(0)
 
