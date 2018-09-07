@@ -97,6 +97,7 @@ transform = Transform2D( 1, 0, 0, 1, 0, 0 )
 
 [node name="Pointer" type="Node2D" parent="CanvasLayer" index="0"]
 
+visible = false
 _sections_unfolded = [ "Transform" ]
 
 [node name="Sprite" type="Sprite" parent="CanvasLayer/Pointer" index="0"]
