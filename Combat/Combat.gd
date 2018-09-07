@@ -46,12 +46,12 @@ func _input(event):
 	
 	if event.is_action_pressed("ui_up") or event.is_action_pressed("ui_right"):
 		current_target_index = (current_target_index + 1) % active_targets.size()
-		Pointer.set_position(active_targets_pos[current_target_index])
+		Pointer.set_position(active_targets_pos[current_target_index] - Vector2(0, 200))
 	elif event.is_action_pressed("ui_down") or event.is_action_pressed("ui_left"):
 		current_target_index -= 1
 		if current_target_index < 0:
 			current_target_index = active_targets.size() - 1
-		Pointer.set_position(active_targets_pos[current_target_index])
+		Pointer.set_position(active_targets_pos[current_target_index]- Vector2(0, 200))
 	
 	if event.is_action_pressed("ui_accept"):
 		target_num -= 1
@@ -162,7 +162,7 @@ func get_targets(group, exclude_active = false, subgroup = null):
 		active_targets.remove(i)
 		active_targets_pos.remove(i)
 	
-	get_node("CanvasLayer/Pointer").set_position(active_targets_pos[0])
+	get_node("CanvasLayer/Pointer").set_position(active_targets_pos[0] - Vector2(0, 200))
 	get_node("CanvasLayer/Pointer").show()
 	set_process_input(true)
 
