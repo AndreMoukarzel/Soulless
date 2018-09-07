@@ -1,6 +1,7 @@
 extends Node
 
 signal attack_finished
+signal attack_interaction_done
 
 const ATKDIST = 150 # Distance between attacker and target when attacking
 const WALKTIME = 0.7
@@ -46,42 +47,54 @@ func execute_attack(Attacker, Target, skill_name):
 	var skill_id = SkillDatabase.get_skill_id(skill_name)
 	var skill_args = SkillDatabase.get_skill_arguments(skill_id)
 	var AtkTeam = Attacker.get_parent()
-	var AtkIter = instance_attack_interaction(skill_id)
+	var atk_type = SkillDatabase.get_skill_type(skill_id)
 	
-	add_child(AtkIter)
-	Attacker.play_animation(skill_name)
-	AtkIter.start(skill_args[0])
-	yield(AtkIter, "done")
-	
-	var hit = AtkIter.hit
-	var super = AtkIter.super
-	var dmg = define_damage(Attacker, Target)
-	if AtkTeam.get_name() == "Allies": # Player is the attacker
-		if super:
-			shake_camera(0.4)
-			dmg *= 2
-		elif hit:
-			dmg = int(dmg * 1.5)
-		create_damage_box(dmg, Target.get_global_position(), "good")
-		Target.get_damaged(dmg)
-	else: # Player is defending
-		if super:
-			dmg = 0
-			create_damage_box(dmg, Target.get_global_position(), "good", "Dodge")
-			Target.get_damaged(dmg)
-		elif hit:
-			create_damage_box(dmg/2, Target.get_global_position(), "good")
-			Target.defend(dmg, 0.5)
-		else:
-			create_damage_box(dmg, Target.get_global_position(), "good")
-			Target.get_damaged(dmg)
+	if atk_type == "TimedHit":
+		timedHit(Attacker, Target, skill_name, skill_args, AtkTeam.get_name() == "Allies")
+	yield(self, "attack_interaction_done")
 
-func instance_attack_interaction(skill_id):
-	var type = SkillDatabase.get_skill_type(skill_id)
-	var AtkInter_scn = load(str("res://Combat/Attack/", type, ".tscn"))
+
+func instance_attack_interaction(attack_type):
+	var AtkInter_scn = load(str("res://Combat/Attack/", attack_type, ".tscn"))
 	var AtkInter = AtkInter_scn.instance()
 	
 	return AtkInter
+
+
+# if attacking = false, the player is defending against a hit
+func timedHit(Attacker, Target, attack_name, time_array, attacking):
+	var previous_time = 0
+	var TimedHit = instance_attack_interaction("TimedHit")
+	add_child(TimedHit)
+	
+	for time in time_array:
+		Attacker.play_animation(attack_name)
+		TimedHit.start(time - previous_time)
+		previous_time = time
+		yield(TimedHit, "done")
+		
+		var dmg = define_damage(Attacker, Target)
+		if TimedHit.super:
+			if attacking:
+				shake_camera(0.4)
+				create_damage_box(2 * dmg, Target.get_global_position(), "good")
+				Target.get_damaged(2 * dmg)
+			else:
+				Target.dodge()
+		elif TimedHit.regular:
+			if attacking:
+				create_damage_box(int(1.5 * dmg), Target.get_global_position(), "good")
+				Target.get_damaged(int(1.5 * dmg))
+			else:
+				create_damage_box(dmg/2, Target.get_global_position(), "good")
+				Target.defend(dmg, 0.5)
+		else:
+			create_damage_box(dmg, Target.get_global_position(), "good")
+			Target.get_damaged(dmg)
+	
+	TimedHit.queue_free()
+	emit_signal("attack_interaction_done")
+
 
 func define_damage(Attacker, Target):
 	var damage = Attacker.ATK - Target.DEF
@@ -89,6 +102,7 @@ func define_damage(Attacker, Target):
 		damage = 1 
 
 	return damage
+
 
 func create_damage_box(value, pos, animation, sound = "Hit"):
 	var dmg = dmg_scn.instance()
@@ -138,7 +152,6 @@ func camera_movement(pos_dif, attacker_pos, atk_team, reverse = false):
 	else:
 		get_node("Tween").interpolate_property(Cam, "zoom", Vector2(0.9, 0.9), Vector2(1, 1), WALKTIME, Tween.TRANS_QUAD, Tween.EASE_IN_OUT)
 		get_node("Tween").interpolate_property(Cam, "position", Cam.get_position(), OS.get_window_size()/2, WALKTIME, Tween.TRANS_QUAD, Tween.EASE_IN_OUT)
-
 
 func shake_camera(intensity):
 	get_node("ScreenShake").add_shake(intensity)

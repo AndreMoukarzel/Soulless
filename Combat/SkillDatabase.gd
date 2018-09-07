@@ -5,6 +5,9 @@ const TYPE = 1
 const ARGUMENTS = 2 # Arguments change depending on the TYPE of skill
 const DESCRIPTION = 3 # Info that shows while player is hovering over the skill in ActionSelector
 
+# ARGUMENTS #
+# TimedHit: An array of float values. Each float is the time of a hit (could be a multi-hit attack).
+
 var skill_database = [
 	{ # ID = 0
 		NAME : "Bounce",

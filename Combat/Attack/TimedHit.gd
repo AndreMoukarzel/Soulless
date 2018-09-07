@@ -5,8 +5,8 @@ signal done
 var t1
 var t2
 var ts
-var hit = false
-var super = false
+var regular = false
+var super = false # Used a riskier button, with more precise timing than regular hit
 
 
 func start(max_time, min_time = max_time - 0.12, super_time = max_time - 0.05):
@@ -25,7 +25,7 @@ func _input(event):
 	
 	if event.is_action_pressed("ui_accept"):
 		if t >= t1 and t <= t2:
-			hit = true
+			regular = true
 		set_process_input(false)
 	elif event.is_action_pressed("ui_cancel"):
 		if t >= ts and t <= t2:
