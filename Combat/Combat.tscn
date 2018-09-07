@@ -1,14 +1,16 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://Combat/Combat.gd" type="Script" id=1]
 [ext_resource path="res://Resources/Combat/BackGrounds/plains.png" type="Texture" id=2]
 [ext_resource path="res://Combat/Pointer.png" type="Texture" id=3]
-[ext_resource path="res://Resources/black.png" type="Texture" id=4]
-[ext_resource path="res://Combat/ActionSelector/ActionSelector.tscn" type="PackedScene" id=5]
-[ext_resource path="res://Combat/CombatTeam.gd" type="Script" id=6]
-[ext_resource path="res://Combat/Attack/AttackHandler.gd" type="Script" id=7]
-[ext_resource path="res://ScreenShake.gd" type="Script" id=8]
-[ext_resource path="res://Resources/Combat/Wanna Be Free.ogg" type="AudioStream" id=9]
+[ext_resource path="res://Resources/Combat/SkillMenuBg.png" type="Texture" id=4]
+[ext_resource path="res://Resources/Fonts/Folktale.ttf" type="DynamicFontData" id=5]
+[ext_resource path="res://Resources/black.png" type="Texture" id=6]
+[ext_resource path="res://Combat/ActionSelector/ActionSelector.tscn" type="PackedScene" id=7]
+[ext_resource path="res://Combat/CombatTeam.gd" type="Script" id=8]
+[ext_resource path="res://Combat/Attack/AttackHandler.gd" type="Script" id=9]
+[ext_resource path="res://ScreenShake.gd" type="Script" id=10]
+[ext_resource path="res://Resources/Combat/Wanna Be Free.ogg" type="AudioStream" id=11]
 
 [sub_resource type="Animation" id=1]
 
@@ -41,9 +43,16 @@ tracks/1/keys = {
 "values": [ 0, 1 ]
 }
 
-[sub_resource type="Animation" id=2]
+[sub_resource type="DynamicFont" id=2]
 
-resource_name = "end"
+size = 25
+use_mipmaps = false
+use_filter = false
+font_data = ExtResource( 5 )
+_sections_unfolded = [ "Font" ]
+
+[sub_resource type="Animation" id=3]
+
 length = 2.0
 loop = false
 step = 0.1
@@ -97,6 +106,7 @@ transform = Transform2D( 1, 0, 0, 1, 0, 0 )
 
 [node name="Pointer" type="Node2D" parent="CanvasLayer" index="0"]
 
+editor/display_folded = true
 visible = false
 _sections_unfolded = [ "Transform" ]
 
@@ -116,8 +126,50 @@ playback_speed = 1.0
 anims/idle = SubResource( 1 )
 blend_times = [  ]
 
-[node name="End" type="Node2D" parent="CanvasLayer" index="1"]
+[node name="SkillDescription" type="Node2D" parent="CanvasLayer" index="1"]
 
+editor/display_folded = true
+visible = false
+position = Vector2( 300, 25 )
+_sections_unfolded = [ "Transform" ]
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Sprite" type="Sprite" parent="CanvasLayer/SkillDescription" index="0"]
+
+modulate = Color( 1, 1, 1, 0.845294 )
+scale = Vector2( 3, 1.5 )
+texture = ExtResource( 4 )
+centered = false
+_sections_unfolded = [ "Offset", "Transform", "Visibility" ]
+
+[node name="Description" type="Label" parent="CanvasLayer/SkillDescription" index="1"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_right = 900.0
+margin_bottom = 60.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 4
+custom_fonts/font = SubResource( 2 )
+text = "Descpription"
+align = 1
+valign = 1
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+_sections_unfolded = [ "custom_fonts" ]
+
+[node name="End" type="Node2D" parent="CanvasLayer" index="2"]
+
+editor/display_folded = true
 modulate = Color( 1, 1, 1, 0 )
 _sections_unfolded = [ "Visibility" ]
 
@@ -133,7 +185,7 @@ mouse_filter = 1
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
-texture = ExtResource( 4 )
+texture = ExtResource( 6 )
 expand = true
 stretch_mode = 0
 
@@ -162,10 +214,10 @@ autoplay = ""
 playback_process_mode = 1
 playback_default_blend_time = 0.0
 playback_speed = 1.0
-anims/end = SubResource( 2 )
+anims/end = SubResource( 3 )
 blend_times = [  ]
 
-[node name="ActionSelector" parent="." index="2" instance=ExtResource( 5 )]
+[node name="ActionSelector" parent="." index="2" instance=ExtResource( 7 )]
 
 visible = false
 z_index = 40
@@ -176,7 +228,7 @@ DEBUG = false
 editor/display_folded = true
 scale = Vector2( -1, 1 )
 z_index = 5
-script = ExtResource( 6 )
+script = ExtResource( 8 )
 _sections_unfolded = [ "Transform", "Z Index" ]
 __meta__ = {
 "_edit_lock_": true
@@ -195,7 +247,7 @@ playback/speed = 1.0
 
 editor/display_folded = true
 z_index = 5
-script = ExtResource( 6 )
+script = ExtResource( 8 )
 _sections_unfolded = [ "Z Index" ]
 __meta__ = {
 "_edit_lock_": true
@@ -212,8 +264,8 @@ playback/speed = 1.0
 
 [node name="AttackHandler" type="Node" parent="." index="5"]
 
-script = ExtResource( 7 )
-DEBUG = false
+script = ExtResource( 9 )
+DEBUG = true
 
 [node name="Tween" type="Tween" parent="AttackHandler" index="0"]
 
@@ -226,7 +278,11 @@ playback/speed = 1.0
 
 [node name="ScreenShake" type="Position2D" parent="AttackHandler" index="1"]
 
-script = ExtResource( 8 )
+script = ExtResource( 10 )
+__meta__ = {
+"_edit_group_": true,
+"_edit_lock_": true
+}
 
 [node name="Camera2D" type="Camera2D" parent="AttackHandler/ScreenShake" index="0"]
 
@@ -255,12 +311,14 @@ editor_draw_drag_margin = false
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." index="6"]
 
-stream = ExtResource( 9 )
+stream = ExtResource( 11 )
 volume_db = -18.92
 pitch_scale = 1.0
 autoplay = true
 mix_target = 0
 bus = "Master"
+
+[connection signal="changed_to" from="ActionSelector" to="." method="_on_ActionSelector_changed_to"]
 
 [connection signal="selected" from="ActionSelector" to="." method="_on_ActionSelector_selected"]
 

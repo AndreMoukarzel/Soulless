@@ -58,6 +58,7 @@ func _input(event):
 		selected_targets.append(active_targets[current_target_index])
 	elif event.is_action_pressed("ui_cancel"):
 		get_node("ActionSelector").enable()
+		get_node("CanvasLayer/SkillDescription").show()
 		get_node("CanvasLayer/Pointer").hide()
 		set_process_input(false)
 	
@@ -81,6 +82,7 @@ func player_turn():
 		action_list = action_list + ["Flee", "Swap", "Wait", "Item"]
 		ActSel.update_actions(action_list)
 		ActSel.enable()
+		get_node("CanvasLayer/SkillDescription").show()
 		yield(self, "turn_completed")
 	end_turn()
 
@@ -167,10 +169,18 @@ func get_targets(group, exclude_active = false, subgroup = null):
 	set_process_input(true)
 
 
+func flee_succeeded():
+	var r = randi() % 100
+	
+	if r < FLEECHANCE:
+		return true
+	return false
+
 ####################### EXTERNAL SIGNAL HANDLING #######################
 # Player selected an action
 func _on_ActionSelector_selected( action ):
 	get_node("ActionSelector").disable()
+	get_node("CanvasLayer/SkillDescription").hide()
 	
 	if action == "Swap":
 		get_targets("Allies", true)
@@ -192,13 +202,14 @@ func _on_ActionSelector_selected( action ):
 		yield(get_node("AttackHandler"), "attack_finished")
 	emit_signal("turn_completed")
 
-
-func flee_succeeded():
-	var r = randi() % 100
-	
-	if r < FLEECHANCE:
-		return true
-	return false
+# Player is scrolling
+func _on_ActionSelector_changed_to(name):
+	var id = SkillDatabase.get_skill_id(name)
+	if id == -1:
+		$CanvasLayer/SkillDescription/Description.set_text("Not present in database")
+		return
+	var description = SkillDatabase.get_skill_description(id)
+	$CanvasLayer/SkillDescription/Description.set_text(description)
 
 func _on_Allies_all_acted():
 	active_group = "Enemies"
