@@ -98,6 +98,7 @@ __meta__ = {
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." index="1"]
 
+editor/display_folded = true
 layer = 1
 offset = Vector2( 0, 0 )
 rotation = 0.0
@@ -130,7 +131,6 @@ blend_times = [  ]
 
 editor/display_folded = true
 visible = false
-position = Vector2( 300, 25 )
 _sections_unfolded = [ "Transform" ]
 __meta__ = {
 "_edit_group_": true

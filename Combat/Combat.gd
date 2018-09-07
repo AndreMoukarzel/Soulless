@@ -27,6 +27,7 @@ func _ready():
 	get_node("AttackHandler/ScreenShake/Camera2D").set_position(OS.get_window_size()/2)
 	get_node("Allies").set_position(Vector2(0, YTEAMPOS))
 	get_node("Enemies").set_position(Vector2(OS.get_window_size().x, YTEAMPOS))
+	get_node("CanvasLayer/SkillDescription").set_position(Vector2((OS.get_window_size().x - get_node("CanvasLayer/SkillDescription/Sprite").scale.x * 300)/2,25))
 	
 	var allies = []
 	allies.append("Bunny")
