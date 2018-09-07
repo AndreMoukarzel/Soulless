@@ -2,12 +2,12 @@
 
 importer="wav"
 type="AudioStreamSample"
-path="res://.import/dodge.wav-996adf0fd0a42ba3d42bfa50231438a3.sample"
+path="res://.import/dodge.wav-957b3b61d2eda8826b9020f6785fba34.sample"
 
 [deps]
 
-source_file="res://Resources/Combat/dodge.wav"
-dest_files=[ "res://.import/dodge.wav-996adf0fd0a42ba3d42bfa50231438a3.sample" ]
+source_file="res://Characters/dodge.wav"
+dest_files=[ "res://.import/dodge.wav-957b3b61d2eda8826b9020f6785fba34.sample" ]
 
 [params]
 

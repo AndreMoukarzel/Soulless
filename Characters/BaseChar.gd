@@ -59,6 +59,7 @@ func defend(base_damage, percentage_of_damage_taken):
 		play_animation("idle")
 
 func dodge():
+	$DodgeSound.play()
 	flip()
 	yield($Tween, "tween_completed")
 	flip()
