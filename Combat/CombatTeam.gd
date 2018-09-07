@@ -116,7 +116,7 @@ func get_alive_units():
 	var alive = []
 	
 	for u in get_all_units():
-		if u.HP >= 0: # ignores dead and stunned units
+		if u.HP > 0: # ignores dead and stunned units
 			alive.append(u)
 	
 	return alive
