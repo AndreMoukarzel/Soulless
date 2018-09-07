@@ -1450,13 +1450,13 @@ tracks/20/keys = {
 "values": [ 0.0 ]
 }
 
-[node name="Bunny" index="0" instance=ExtResource( 1 )]
+[node name="Bunny" instance=ExtResource( 1 )]
 
 Size = 0.7
 HP = 10
 ATK = 3
-Signature1 = "Bounce"
-Signature2 = "Kick"
+Signature1 = "Kick"
+Signature2 = "Carrot Toss"
 
 [node name="EarBack" type="Sprite" parent="Body/Torso/Head" index="0"]
 

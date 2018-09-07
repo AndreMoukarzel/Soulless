@@ -166,7 +166,7 @@ editor/display_folded = true
 scale = Vector2( -1, 1 )
 z_index = 5
 script = ExtResource( 6 )
-_sections_unfolded = [ "Z Index" ]
+_sections_unfolded = [ "Transform", "Z Index" ]
 __meta__ = {
 "_edit_lock_": true
 }

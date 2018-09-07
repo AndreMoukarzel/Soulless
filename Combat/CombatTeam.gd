@@ -5,14 +5,13 @@ signal all_acted() # All units were selected as next actor in this iteration
 const BODYSIZE = 0.7
 const SWAPTIME = 0.3
 const FLEETIME = 1.0
-var TOPMARGIN = 600
-var BOTMARGIN = -100
-var HORMARGIN = 200
+const POSVAR = 20
 
 var act_queue = []
 
 
 func populate(all_units, invert_interface):
+	randomize()
 	for u in all_units:
 		var u_scn = load("res://Characters/" + u + "/" + u + ".tscn")
 		var unit = u_scn.instance()
@@ -22,12 +21,13 @@ func populate(all_units, invert_interface):
 	set_all_positions()
 
 func set_all_positions():
-	var center = Vector2(-OS.get_window_size().x/4, (OS.get_window_size().y - TOPMARGIN - BOTMARGIN)/2 + TOPMARGIN/2)
+	var center = Vector2(-OS.get_window_size().x/4, OS.get_window_size().y/2)
 	var units = get_all_units()
 	var i = 0
 	
 	for u in units:
-		u.set_position(center + Vector2(i * 200, 0))
+		var y = (randi() % 2 * POSVAR) - POSVAR
+		u.set_position(center + Vector2(i * 200, y))
 		i += 1
 		
 

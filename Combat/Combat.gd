@@ -1,13 +1,12 @@
 extends Node
 
 const FLEECHANCE = 70
+const YTEAMPOS = 180
 
 signal targets_selected
 signal turn_completed
 
 onready var EnemyAI = preload("res://Combat/EnemyAI.gd")
-
-var next_id = 0
 
 var active_unit = null
 var active_pos = Vector2(0, 0)
@@ -26,7 +25,8 @@ func _ready():
 	get_node("CanvasLayer/End/Black").set_size(OS.get_window_size())
 	get_node("CanvasLayer/End/Label").set_position(OS.get_window_size()/2)
 	get_node("AttackHandler/ScreenShake/Camera2D").set_position(OS.get_window_size()/2)
-	get_node("Enemies").set_position(Vector2(OS.get_window_size().x, 0))
+	get_node("Allies").set_position(Vector2(0, YTEAMPOS))
+	get_node("Enemies").set_position(Vector2(OS.get_window_size().x, YTEAMPOS))
 	
 	var allies = []
 	allies.append("Bunny")

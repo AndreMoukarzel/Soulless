@@ -10,7 +10,7 @@ const DESCRIPTION = 3 # Info that shows while player is hovering over the skill 
 
 var skill_database = [
 	{ # ID = 0
-		NAME : "Bounce",
+		NAME : "Kick",
 		TYPE : "TimedHit",
 		ARGUMENTS : [0.5],
 		DESCRIPTION : "I like trains"
