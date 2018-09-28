@@ -98,7 +98,6 @@ __meta__ = {
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." index="1"]
 
-editor/display_folded = true
 layer = 1
 offset = Vector2( 0, 0 )
 rotation = 0.0
@@ -264,6 +263,7 @@ playback/speed = 1.0
 
 [node name="AttackHandler" type="Node" parent="." index="5"]
 
+editor/display_folded = true
 script = ExtResource( 9 )
 DEBUG = true
 

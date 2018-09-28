@@ -197,10 +197,11 @@ func _on_ActionSelector_selected( action ):
 	elif action == "Wait":
 		pass
 	else:
-		get_targets("Enemies", false, "targetable")
-		yield(self, "targets_selected")
-		get_node("AttackHandler").attack(active_unit, selected_targets[0], action)
-		yield(get_node("AttackHandler"), "attack_finished")
+		if SkillDatabase.get_skill_id(action) != -1:
+			get_targets("Enemies", false, "targetable")
+			yield(self, "targets_selected")
+			get_node("AttackHandler").attack(active_unit, selected_targets[0], action)
+			yield(get_node("AttackHandler"), "attack_finished")
 	emit_signal("turn_completed")
 
 # Player is scrolling

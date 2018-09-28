@@ -32,13 +32,13 @@ var skill_database = [
 		TYPE : null,
 		ARGUMENTS : null,
 		DESCRIPTION : "Run for it! Has a chance to fail..."
-	},
-	{
-		NAME : "Item",
-		TYPE : null,
-		ARGUMENTS : null,
-		DESCRIPTION : "Lol this doesn't even exist yet."
 	}
+#	{
+#		NAME : "Item",
+#		TYPE : null,
+#		ARGUMENTS : null,
+#		DESCRIPTION : "Lol this doesn't even exist yet."
+#	}
 ]
 
 ################# DATABASE HANDLING #################
