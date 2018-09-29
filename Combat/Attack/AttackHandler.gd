@@ -51,6 +51,8 @@ func execute_attack(Attacker, Target, skill_name):
 	
 	if atk_type == "TimedHit":
 		timedHit(Attacker, Target, skill_name, skill_args, AtkTeam.get_name() == "Allies")
+	elif atk_type == "HoldRelease":
+		HoldRelease(Attacker, Target, skill_name, skill_args, AtkTeam.get_name() == "Allies")
 	yield(self, "attack_interaction_done")
 
 
@@ -93,6 +95,48 @@ func timedHit(Attacker, Target, attack_name, time_array, attacking):
 			Target.get_damaged(dmg)
 	
 	TimedHit.queue_free()
+	emit_signal("attack_interaction_done")
+
+
+# if attacking = false, the player is defending against a hit
+func HoldRelease(Attacker, Target, attack_name, hold_time, attacking):
+	var dmg = define_damage(Attacker, Target)
+	Attacker.play_animation("idle")
+	
+	if attacking:
+		var HoldRelease = instance_attack_interaction("HoldRelease")
+		add_child(HoldRelease)
+		HoldRelease.start(hold_time, Attacker, attack_name)
+		yield(HoldRelease, "done")
+		
+		if HoldRelease.success:
+			shake_camera(0.4)
+			create_damage_box(dmg, Target.get_global_position(), "good")
+			Target.get_damaged(dmg)
+		else:
+			print("xableu")
+			create_damage_box(dmg/3, Target.get_global_position(), "good")
+			Target.get_damaged(dmg/3)
+		
+		HoldRelease.queue_free()
+	else:
+		var TimedHit = instance_attack_interaction("TimedHit")
+		add_child(TimedHit)
+		Attacker.play_animation(attack_name)
+		TimedHit.start(hold_time)
+		yield(TimedHit, "done")
+		
+		if TimedHit.super:
+			Target.dodge()
+		elif TimedHit.regular():
+			create_damage_box(dmg/2, Target.get_global_position(), "good")
+			Target.defend(dmg, 0.5)
+		else:
+			create_damage_box(dmg, Target.get_global_position(), "good")
+			Target.get_damaged(dmg)
+		
+		TimedHit.queue_free()
+	
 	emit_signal("attack_interaction_done")
 
 

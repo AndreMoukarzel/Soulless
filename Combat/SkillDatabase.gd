@@ -10,12 +10,6 @@ const DESCRIPTION = 3 # Info that shows while player is hovering over the skill 
 
 var skill_database = [
 	{
-		NAME : "Kick",
-		TYPE : "TimedHit",
-		ARGUMENTS : [0.5],
-		DESCRIPTION : "I like trains"
-	},
-	{
 		NAME : "Wait",
 		TYPE : null,
 		ARGUMENTS : null,
@@ -32,13 +26,19 @@ var skill_database = [
 		TYPE : null,
 		ARGUMENTS : null,
 		DESCRIPTION : "Run for it! Has a chance to fail..."
+	},
+		{
+		NAME : "Kick",
+		TYPE : "TimedHit",
+		ARGUMENTS : [0.5],
+		DESCRIPTION : "I like trains"
+	},
+	{
+		NAME : "Claw",
+		TYPE : "HoldRelease",
+		ARGUMENTS : 2.0,
+		DESCRIPTION : "Scratch an enemy"
 	}
-#	{
-#		NAME : "Item",
-#		TYPE : null,
-#		ARGUMENTS : null,
-#		DESCRIPTION : "Lol this doesn't even exist yet."
-#	}
 ]
 
 ################# DATABASE HANDLING #################

@@ -1156,39 +1156,34 @@ Signature2 = "Roll"
 
 [node name="Torso" parent="Body" index="0"]
 
-position = Vector2( 7.69914, 0 )
-rotation = -0.121797
+position = Vector2( 10, 0 )
 texture = ExtResource( 2 )
 
 [node name="Head" parent="Body/Torso" index="0"]
 
-position = Vector2( -8.51638, -32.4951 )
-rotation = -0.214349
+position = Vector2( -18.9193, -26.7578 )
+rotation = -0.353951
 texture = ExtResource( 3 )
 hframes = 1
 
 [node name="FootBack" parent="Body/Torso" index="1"]
 
-position = Vector2( -32.7494, 46.202 )
-rotation = 0.126582
+position = Vector2( -30, 50 )
 texture = ExtResource( 4 )
 
 [node name="FootFront" parent="Body/Torso" index="2"]
 
-position = Vector2( 25.7432, 56.3695 )
-rotation = 0.11128
+position = Vector2( 30, 53.2422 )
 texture = ExtResource( 4 )
 
 [node name="HandL" parent="Body/Torso" index="3"]
 
-position = Vector2( -28.0856, -11.255 )
-rotation = -0.107696
+position = Vector2( -36.2175, -12.1615 )
 texture = ExtResource( 5 )
 
 [node name="HandR" parent="Body/Torso" index="4"]
 
-position = Vector2( 12.6056, -15.814 )
-rotation = 0.173986
+position = Vector2( 15, -12 )
 texture = ExtResource( 5 )
 
 [node name="AnimationPlayer" parent="." index="1"]
