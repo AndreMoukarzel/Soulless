@@ -61,10 +61,7 @@ func _input(event):
 		target_num -= 1
 		selected_targets.append(active_targets[current_target_index])
 	elif event.is_action_pressed("ui_cancel"):
-		get_node("ActionSelector").enable()
-		get_node("CanvasLayer/SkillDescription").show()
-		get_node("CanvasLayer/Pointer").hide()
-		set_process_input(false)
+		cancel_action()
 	
 	if target_num == 0:
 		emit_signal("targets_selected")
@@ -168,6 +165,9 @@ func get_targets(group, exclude_active = false, subgroup = null):
 		active_targets.remove(i)
 		active_targets_pos.remove(i)
 	
+	if active_targets.empty():
+		return
+		
 	get_node("CanvasLayer/Pointer").set_position(active_targets_pos[0] - Vector2(0, 200))
 	get_node("CanvasLayer/Pointer").show()
 	set_process_input(true)
@@ -178,13 +178,23 @@ func flee_succeeded():
 	
 	if r < FLEECHANCE:
 		return true
+	warning("flee failed")
+	return false
+
+
+func warning(text):
 	var Wrn = Warning_scn.instance()
-	var text = "Flee failed"
 	var offset = text.length()/2 * 20 
 	Wrn.set_position(Vector2(OS.get_real_window_size().x/2 - offset, 100))
 	add_child(Wrn)
 	Wrn.create(text, 2.0, true, 40)
-	return false
+
+
+func cancel_action():
+	get_node("ActionSelector").enable()
+	get_node("CanvasLayer/SkillDescription").show()
+	get_node("CanvasLayer/Pointer").hide()
+	set_process_input(false)
 
 ####################### EXTERNAL SIGNAL HANDLING #######################
 # Player selected an action
@@ -194,9 +204,14 @@ func _on_ActionSelector_selected( action ):
 	
 	if action == "Swap":
 		get_targets("Allies", true)
-		yield(self, "targets_selected")
-		get_node("Allies").swap(active_unit, selected_targets[0])
-		yield(get_node("Allies/Tween"), "tween_completed")
+		if not active_targets.empty():
+			yield(self, "targets_selected")
+			get_node("Allies").swap(active_unit, selected_targets[0])
+			yield(get_node("Allies/Tween"), "tween_completed")
+		else:
+			warning("nobody to swap with")
+			cancel_action()
+			return
 	elif action == "Flee":
 		if flee_succeeded():
 			get_node("Allies").flee(active_unit)
