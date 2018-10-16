@@ -1,10 +1,12 @@
 extends Node
 
-const FLEECHANCE = 70
+const FLEECHANCE = 30
 const YTEAMPOS = 180
 
 signal targets_selected
 signal turn_completed
+
+export (PackedScene)var Warning_scn
 
 onready var EnemyAI = preload("res://Combat/EnemyAI.gd")
 
@@ -175,6 +177,12 @@ func flee_succeeded():
 	
 	if r < FLEECHANCE:
 		return true
+	var Wrn = Warning_scn.instance()
+	var text = "Flee failed"
+	var offset = text.length()/2 * 20 
+	Wrn.set_position(Vector2(OS.get_real_window_size().x/2 - offset, 100))
+	add_child(Wrn)
+	Wrn.create(text, 2.0, true, 40)
 	return false
 
 ####################### EXTERNAL SIGNAL HANDLING #######################

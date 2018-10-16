@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/Buzz.wav-870d3f28c0c39d2f40827b90ea131309.sample"
+
+[deps]
+
+source_file="res://Warning/Buzz.wav"
+dest_files=[ "res://.import/Buzz.wav-870d3f28c0c39d2f40827b90ea131309.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=true
+edit/normalize=true
+edit/loop=false
+compress/mode=0

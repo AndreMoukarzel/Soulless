@@ -2,12 +2,12 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/plains.png-95aeee4720f079ae5c054998c166c65c.stex"
+path="res://.import/plains.png-588e87798ad6609250c43820acc55db5.stex"
 
 [deps]
 
-source_file="res://Resources/Combat/BackGrounds/plains.png"
-dest_files=[ "res://.import/plains.png-95aeee4720f079ae5c054998c166c65c.stex" ]
+source_file="res://Combat/BackGrounds/plains.png"
+dest_files=[ "res://.import/plains.png-588e87798ad6609250c43820acc55db5.stex" ]
 
 [params]
 

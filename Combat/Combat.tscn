@@ -1,7 +1,7 @@
 [gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://Combat/Combat.gd" type="Script" id=1]
-[ext_resource path="res://Resources/Combat/BackGrounds/plains.png" type="Texture" id=2]
+[ext_resource path="res://Combat/BackGrounds/plains.png" type="Texture" id=2]
 [ext_resource path="res://Combat/Pointer.png" type="Texture" id=3]
 [ext_resource path="res://Resources/Combat/SkillMenuBg.png" type="Texture" id=4]
 [ext_resource path="res://Resources/Fonts/Folktale.ttf" type="DynamicFontData" id=5]
@@ -11,6 +11,7 @@
 [ext_resource path="res://Combat/Attack/AttackHandler.gd" type="Script" id=9]
 [ext_resource path="res://ScreenShake.gd" type="Script" id=10]
 [ext_resource path="res://Resources/Combat/Wanna Be Free.ogg" type="AudioStream" id=11]
+
 
 [sub_resource type="Animation" id=1]
 
