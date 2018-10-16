@@ -36,7 +36,7 @@ var skill_database = [
 	{
 		NAME : "Claw",
 		TYPE : "HoldRelease",
-		ARGUMENTS : 2.0,
+		ARGUMENTS : 1.8,
 		DESCRIPTION : "Scratch an enemy"
 	}
 ]

@@ -114,7 +114,6 @@ func HoldRelease(Attacker, Target, attack_name, hold_time, attacking):
 			create_damage_box(dmg, Target.get_global_position(), "good")
 			Target.get_damaged(dmg)
 		else:
-			print("xableu")
 			create_damage_box(dmg/3, Target.get_global_position(), "good")
 			Target.get_damaged(dmg/3)
 		
