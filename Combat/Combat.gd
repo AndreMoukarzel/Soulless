@@ -188,6 +188,8 @@ func warning(text):
 	Wrn.set_position(Vector2(OS.get_real_window_size().x/2 - offset, 100))
 	add_child(Wrn)
 	Wrn.create(text, 2.0, true, 40)
+	
+	return Wrn
 
 
 func cancel_action():
