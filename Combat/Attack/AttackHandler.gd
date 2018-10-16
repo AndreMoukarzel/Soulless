@@ -114,14 +114,19 @@ func HoldRelease(Attacker, Target, attack_name, hold_time, attacking):
 			create_damage_box(dmg, Target.get_global_position(), "good")
 			Target.get_damaged(dmg)
 		else:
-			create_damage_box(dmg/3, Target.get_global_position(), "good")
-			Target.get_damaged(dmg/3)
+			print(HoldRelease.multiplier)
+			create_damage_box(int(dmg * HoldRelease.multiplier), Target.get_global_position(), "good")
+			Target.get_damaged(int(dmg * HoldRelease.multiplier))
 		
 		HoldRelease.queue_free()
 	else:
 		var TimedHit = instance_attack_interaction("TimedHit")
+		var HoldRelease = instance_attack_interaction("HoldRelease")
+		HoldRelease.get_node("HoldReleaseVisual").set_scale(Vector2(-1, 1))
 		add_child(TimedHit)
-		Attacker.play_animation(attack_name)
+		add_child(HoldRelease)
+		HoldRelease.start(hold_time, Attacker, attack_name)
+		HoldRelease.begin()
 		TimedHit.start(hold_time)
 		yield(TimedHit, "done")
 		

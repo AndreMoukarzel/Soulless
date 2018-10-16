@@ -7,6 +7,7 @@ const EXTRA = 0.12 # Extra time to make success a little easier
 var holdt
 var Atkr
 var atk_name
+var multiplier = 0.0 # If not success, the closer to succes the higher the damage, to a max of 0.8
 var success = false
 
 
@@ -37,6 +38,13 @@ func _physics_process(delta):
 		
 		if t <= EXTRA * 2: # EXTRA is doubled here so player have success margin before and after hit time
 			success = true
+		else:
+			if t < EXTRA * 2.5:
+				multiplier = 0.8
+			elif t < EXTRA * 4:
+				multiplier = 0.5
+			else:
+				multiplier = 0.3
 		set_physics_process(false)
 
 func _on_Timer_timeout():
