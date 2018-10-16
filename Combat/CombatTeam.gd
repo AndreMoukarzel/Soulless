@@ -106,9 +106,9 @@ func get_front_unit():
 func get_idle_units():
 	var idle = []
 	
-	for u in get_all_units():
-		if u.HP >= 0: # ignores dead and stunned units
-			idle.append(u)
+	for u in get_alive_units():
+		# ignores dead and stunned units
+		idle.append(u)
 	
 	return idle
 
@@ -116,7 +116,7 @@ func get_alive_units():
 	var alive = []
 	
 	for u in get_all_units():
-		if u.HP > 0: # ignores dead and stunned units
+		if u.HP > 0: # ignores dead units
 			alive.append(u)
 	
 	return alive

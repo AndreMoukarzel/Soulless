@@ -38,6 +38,7 @@ func _ready():
 	get_node("Allies").populate(allies, true)
 	
 	var enemies = []
+	enemies.append("Mole")
 	enemies.append("Bunny")
 	get_node("Enemies").populate(enemies, false)
 	
@@ -157,7 +158,7 @@ func get_targets(group, exclude_active = false, subgroup = null):
 	if not subgroup:
 		active_targets = team.get_all_units()
 	elif subgroup == "targetable":
-		active_targets = team.get_front_unit()
+		active_targets = team.get_alive_units()
 	
 	for target in active_targets:
 		active_targets_pos.append(target.get_global_position())
