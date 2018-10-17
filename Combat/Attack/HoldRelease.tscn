@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://Combat/Attack/HoldRelease.gd" type="Script" id=1]
 [ext_resource path="res://Combat/Attack/HoldReleaseVisual/HoldReleaseVisual.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Warning/Buzz.wav" type="AudioStream" id=3]
 
 [node name="HoldRelease" type="Node" index="0"]
 
@@ -17,6 +18,15 @@ autostart = false
 [node name="HoldReleaseVisual" parent="." index="1" instance=ExtResource( 2 )]
 
 visible = false
+
+[node name="Buzz" type="AudioStreamPlayer" parent="." index="2"]
+
+stream = ExtResource( 3 )
+volume_db = 0.0
+pitch_scale = 1.0
+autoplay = false
+mix_target = 0
+bus = "Master"
 
 [connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
 

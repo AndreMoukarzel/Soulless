@@ -39,6 +39,7 @@ func _physics_process(delta):
 		if t <= EXTRA * 2: # EXTRA is doubled here so player have success margin before and after hit time
 			success = true
 		else:
+			too_early()
 			if t < EXTRA * 2.5:
 				multiplier = 0.8
 			elif t < EXTRA * 4:
@@ -46,6 +47,11 @@ func _physics_process(delta):
 			else:
 				multiplier = 0.3
 		set_physics_process(false)
+
+func too_early():
+	$Buzz.play()
+	$HoldReleaseVisual/Timer.stop()
+	$HoldReleaseVisual._on_Timer_timeout()
 
 func _on_Timer_timeout():
 	set_physics_process(false)
