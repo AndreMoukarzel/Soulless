@@ -156,6 +156,8 @@ func get_targets(group, exclude_active = false, subgroup = null):
 		active_targets = team.get_all_units()
 	elif subgroup == "targetable":
 		active_targets = team.get_alive_units()
+	elif subgroup == "current":
+		active_targets = [active_unit]
 	
 	for target in active_targets:
 		active_targets_pos.append(target.get_global_position())
@@ -196,6 +198,7 @@ func cancel_action():
 	get_node("ActionSelector").enable()
 	get_node("CanvasLayer/SkillDescription").show()
 	get_node("CanvasLayer/Pointer").hide()
+	selected_targets = []
 	set_process_input(false)
 
 ####################### EXTERNAL SIGNAL HANDLING #######################
@@ -215,12 +218,20 @@ func _on_ActionSelector_selected( action ):
 			cancel_action()
 			return
 	elif action == "Flee":
+		get_targets("Allies", false, "current")
+		yield(self, "targets_selected")
+		if selected_targets.empty():
+			return
 		if flee_succeeded():
 			get_node("Allies").flee(active_unit)
 			yield(get_node("Allies/Tween"), "tween_completed")
 		else:
 			print("Flee failed")
 	elif action == "Wait":
+		get_targets("Allies", false, "current")
+		yield(self, "targets_selected")
+		if selected_targets.empty():
+			return
 		pass
 	else:
 		if SkillDatabase.get_skill_id(action) != -1:
@@ -228,6 +239,7 @@ func _on_ActionSelector_selected( action ):
 			yield(self, "targets_selected")
 			get_node("AttackHandler").attack(active_unit, selected_targets[0], action)
 			yield(get_node("AttackHandler"), "attack_finished")
+	
 	emit_signal("turn_completed")
 
 # Player is scrolling
