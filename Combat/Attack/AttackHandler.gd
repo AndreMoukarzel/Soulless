@@ -122,10 +122,13 @@ func HoldRelease(Attacker, Target, attack_name, hold_time, attacking):
 	else:
 		var TimedHit = instance_attack_interaction("TimedHit")
 		var HoldRelease = instance_attack_interaction("HoldRelease")
-		HoldRelease.get_node("HoldReleaseVisual").set_scale(Vector2(-1, 1))
+		var Visual = HoldRelease.get_node("HoldReleaseVisual")
+		add_child(HoldRelease)
 		add_child(TimedHit)
 		Attacker.play_animation(attack_name)
 		TimedHit.start(hold_time)
+		Visual.set_position(Attacker.get_global_position() + Vector2(150, 0))
+		Visual.start(hold_time - 0.12)
 		yield(TimedHit, "done")
 		
 		if TimedHit.super:
@@ -137,6 +140,7 @@ func HoldRelease(Attacker, Target, attack_name, hold_time, attacking):
 			create_damage_box(dmg, Target.get_global_position(), "good")
 			Target.get_damaged(dmg)
 		
+		HoldRelease.queue_free()
 		TimedHit.queue_free()
 	
 	emit_signal("attack_interaction_done")
