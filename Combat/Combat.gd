@@ -61,6 +61,7 @@ func _input(event):
 		target_num -= 1
 		selected_targets.append(active_targets[current_target_index])
 	elif event.is_action_pressed("ui_cancel"):
+		emit_signal("targets_selected") # need to keep ActionSelector from creating a bunch of parallel versions of the same turn
 		cancel_action()
 	
 	if target_num == 0:
@@ -237,8 +238,11 @@ func _on_ActionSelector_selected( action ):
 		if SkillDatabase.get_skill_id(action) != -1:
 			get_targets("Enemies", false, "targetable")
 			yield(self, "targets_selected")
-			get_node("AttackHandler").attack(active_unit, selected_targets[0], action)
-			yield(get_node("AttackHandler"), "attack_finished")
+			if selected_targets:
+				get_node("AttackHandler").attack(active_unit, selected_targets[0], action)
+				yield(get_node("AttackHandler"), "attack_finished")
+			else:
+				return
 	
 	emit_signal("turn_completed")
 
